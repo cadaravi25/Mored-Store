@@ -26,3 +26,6 @@ supabase/.branches/
 Thumbs.db
 desktop.ini
 *.log
+
+# Credenciales iniciales generadas por scripts/crear_usuarias.mjs
+credenciales-iniciales.txt
