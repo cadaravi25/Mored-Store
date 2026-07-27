@@ -12,6 +12,7 @@ interface Variante {
   coleccion: string;
   color_nombre: string;
   color_hex: string | null;
+  foto_url: string | null;
   talla: string;
   sku: string;
   precio_usd: number;
@@ -26,40 +27,36 @@ const dinero = new Intl.NumberFormat("es-VE", {
   currency: "USD",
 });
 
-function Filtro({
-  titulo,
+/** Desplegable nativo: en el teléfono abre el selector del sistema, que es
+ *  grande y familiar, y no ocupa nada de pantalla mientras está cerrado. */
+function Selector({
+  etiqueta,
   opciones,
   valor,
   onChange,
 }: {
-  titulo: string;
+  etiqueta: string;
   opciones: string[];
-  valor: string | null;
-  onChange: (v: string | null) => void;
+  valor: string;
+  onChange: (v: string) => void;
 }) {
-  if (opciones.length < 2) return null;
   return (
-    <div>
-      <p className="mb-1.5 text-xs uppercase tracking-wide text-tinta-suave">
-        {titulo}
-      </p>
-      <div className="flex flex-wrap gap-1.5">
-        {opciones.map((o) => (
-          <button
-            key={o}
-            type="button"
-            onClick={() => onChange(valor === o ? null : o)}
-            className={`rounded-full border px-3 py-1.5 text-sm ${
-              valor === o
-                ? "border-dorado bg-dorado text-crema-alto"
-                : "border-borde bg-crema-alto text-tinta"
-            }`}
-          >
-            {o}
-          </button>
-        ))}
-      </div>
-    </div>
+    <select
+      aria-label={etiqueta}
+      value={valor}
+      onChange={(e) => onChange(e.target.value)}
+      disabled={opciones.length === 0}
+      className={`min-w-0 flex-1 rounded-lg border bg-crema-alto px-3 py-2.5 text-sm outline-none disabled:opacity-40 ${
+        valor ? "border-dorado text-tinta" : "border-borde text-tinta-suave"
+      }`}
+    >
+      <option value="">{etiqueta}</option>
+      {opciones.map((o) => (
+        <option key={o} value={o}>
+          {o}
+        </option>
+      ))}
+    </select>
   );
 }
 
@@ -67,9 +64,9 @@ export default function Buscador() {
   const [termino, setTermino] = useState("");
   const [resultados, setResultados] = useState<Variante[]>([]);
   const [cargando, setCargando] = useState(true);
-  const [color, setColor] = useState<string | null>(null);
-  const [talla, setTalla] = useState<string | null>(null);
-  const [estilo, setEstilo] = useState<string | null>(null);
+  const [color, setColor] = useState("");
+  const [talla, setTalla] = useState("");
+  const [estilo, setEstilo] = useState("");
 
   useEffect(() => {
     const t = setTimeout(async () => {
@@ -84,9 +81,8 @@ export default function Buscador() {
     return () => clearTimeout(t);
   }, [termino]);
 
-  // Los filtros salen de los resultados, no de un catálogo fijo: así solo
-  // ofrecen opciones que devuelven algo. Un filtro que lleva a una pantalla
-  // vacía es peor que no tener filtro.
+  // Las opciones salen de los resultados, no de un catálogo fijo: así los
+  // desplegables no ofrecen nada que lleve a una pantalla vacía.
   const opciones = useMemo(() => {
     const unicos = (f: (v: Variante) => string | null) =>
       [...new Set(resultados.map(f).filter(Boolean) as string[])];
@@ -123,9 +119,10 @@ export default function Buscador() {
   }, [visibles]);
 
   const totalPrendas = visibles.reduce((s, v) => s + v.disponible, 0);
+  const hayFiltro = Boolean(color || talla || estilo);
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       <input
         value={termino}
         onChange={(e) => setTermino(e.target.value)}
@@ -136,71 +133,101 @@ export default function Buscador() {
         className="w-full rounded-xl border border-borde bg-crema-alto px-4 py-3.5 text-base outline-none placeholder:text-tinta-suave/50 focus:border-dorado"
       />
 
-      {(opciones.colores.length > 1 ||
-        opciones.tallas.length > 1 ||
-        opciones.estilos.length > 1) && (
-        <div className="space-y-3 rounded-xl border border-borde bg-crema-alto p-3.5">
-          <Filtro titulo="Color" opciones={opciones.colores} valor={color} onChange={setColor} />
-          <Filtro titulo="Talla" opciones={opciones.tallas} valor={talla} onChange={setTalla} />
-          <Filtro titulo="Estilo" opciones={opciones.estilos} valor={estilo} onChange={setEstilo} />
-        </div>
-      )}
+      <div className="flex gap-2">
+        <Selector etiqueta="Color" opciones={opciones.colores} valor={color} onChange={setColor} />
+        <Selector etiqueta="Talla" opciones={opciones.tallas} valor={talla} onChange={setTalla} />
+        <Selector etiqueta="Estilo" opciones={opciones.estilos} valor={estilo} onChange={setEstilo} />
+      </div>
 
-      <p className="text-sm text-tinta-suave">
-        {cargando
-          ? "Buscando…"
-          : `${grupos.length} ${grupos.length === 1 ? "resultado" : "resultados"} · ${totalPrendas} ${totalPrendas === 1 ? "prenda" : "prendas"}`}
-      </p>
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-sm text-tinta-suave">
+          {cargando
+            ? "Buscando…"
+            : `${grupos.length} ${grupos.length === 1 ? "resultado" : "resultados"} · ${totalPrendas} ${totalPrendas === 1 ? "prenda" : "prendas"}`}
+        </p>
+        {hayFiltro && (
+          <button
+            type="button"
+            onClick={() => {
+              setColor("");
+              setTalla("");
+              setEstilo("");
+            }}
+            className="shrink-0 text-sm text-dorado underline-offset-4 hover:underline"
+          >
+            Quitar filtros
+          </button>
+        )}
+      </div>
 
       <ul className="space-y-2">
         {grupos.map(({ v, tallas }) => (
           <li
             key={v.producto_id + v.color_nombre}
-            className="rounded-xl border border-borde bg-crema-alto p-4"
+            className="flex gap-3.5 rounded-xl border border-borde bg-crema-alto p-3"
           >
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <p className="truncate text-tinta">{v.producto_nombre}</p>
-                <p className="mt-0.5 flex items-center gap-1.5 text-sm text-tinta-suave">
-                  {v.color_hex && (
-                    <span
-                      aria-hidden
-                      className="h-3 w-3 shrink-0 rounded-full border border-black/15"
-                      style={{ backgroundColor: v.color_hex }}
-                    />
-                  )}
-                  {v.color_nombre}
-                </p>
+            {/* Mientras no haya foto, el cuadro muestra el color de la prenda:
+                se reconoce de un vistazo mejor que un recuadro gris vacío. */}
+            {v.foto_url ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={v.foto_url}
+                alt=""
+                className="h-20 w-20 shrink-0 rounded-lg object-cover"
+              />
+            ) : (
+              <div
+                aria-hidden
+                className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg border border-borde"
+                style={{ backgroundColor: v.color_hex ?? "#efe9dd" }}
+              >
+                {!v.color_hex && (
+                  <span className="text-lg text-tinta-suave">
+                    {v.producto_nombre.charAt(0)}
+                  </span>
+                )}
               </div>
-              <span className="shrink-0 text-sm tabular-nums text-tinta-suave">
-                {dinero.format(v.precio_usd)}
-              </span>
-            </div>
+            )}
 
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {tallas
-                .sort(
-                  (a, b) =>
-                    ORDEN_TALLAS.indexOf(a.talla) - ORDEN_TALLAS.indexOf(b.talla),
-                )
-                .map((t) => {
-                  const agotado = t.disponible <= 0;
-                  return (
-                    <span
-                      key={t.variante_id}
-                      className={`rounded-lg border px-3 py-1.5 text-sm tabular-nums ${
-                        agotado
-                          ? "border-borde bg-crema text-tinta-suave/50 line-through"
-                          : "border-dorado-claro bg-dorado-tenue text-tinta"
-                      }`}
-                    >
-                      {t.talla}
-                      <span className="ml-1.5 text-tinta-suave">
-                        {t.disponible}
+            <div className="min-w-0 flex-1">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="truncate text-tinta">{v.producto_nombre}</p>
+                  <p className="mt-0.5 text-sm text-tinta-suave">
+                    {v.color_nombre}
+                  </p>
+                </div>
+                <span className="shrink-0 text-sm tabular-nums text-tinta-suave">
+                  {dinero.format(v.precio_usd)}
+                </span>
+              </div>
+
+              <div className="mt-2.5 flex flex-wrap gap-1.5">
+                {tallas
+                  .sort(
+                    (a, b) =>
+                      ORDEN_TALLAS.indexOf(a.talla) -
+                      ORDEN_TALLAS.indexOf(b.talla),
+                  )
+                  .map((t) => {
+                    const agotado = t.disponible <= 0;
+                    return (
+                      <span
+                        key={t.variante_id}
+                        className={`rounded-lg border px-2.5 py-1 text-sm tabular-nums ${
+                          agotado
+                            ? "border-borde bg-crema text-tinta-suave/50 line-through"
+                            : "border-dorado-claro bg-dorado-tenue text-tinta"
+                        }`}
+                      >
+                        {t.talla}
+                        <span className="ml-1.5 text-tinta-suave">
+                          {t.disponible}
+                        </span>
                       </span>
-                    </span>
-                  );
-                })}
+                    );
+                  })}
+              </div>
             </div>
           </li>
         ))}
@@ -208,7 +235,9 @@ export default function Buscador() {
 
       {!cargando && grupos.length === 0 && (
         <p className="rounded-xl border border-borde bg-crema-alto px-5 py-10 text-center text-tinta-suave">
-          Nada coincide con esa búsqueda.
+          {termino || hayFiltro
+            ? "Nada coincide con esa búsqueda."
+            : "Todavía no hay nada en inventario."}
         </p>
       )}
     </div>
