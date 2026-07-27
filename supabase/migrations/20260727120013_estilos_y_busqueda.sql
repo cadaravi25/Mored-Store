@@ -102,7 +102,11 @@ on conflict do nothing;
 -- coincidencia exacta. Con búsqueda parcial, "s" coincidiría dentro de
 -- "musera" y "top s" devolvería el catálogo entero.
 
-create or replace function buscar_variantes(
+-- La 002 la creó devolviendo otras columnas, y `create or replace` no puede
+-- cambiar la firma de salida. Hay que soltarla antes.
+drop function if exists buscar_variantes(text, text, integer);
+
+create function buscar_variantes(
   p_termino    text,
   p_coleccion  text    default null,
   p_limite     integer default 80
