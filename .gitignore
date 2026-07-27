@@ -1,0 +1,28 @@
+# Dependencias
+node_modules/
+
+# Build
+.next/
+out/
+build/
+dist/
+
+# Entorno: nunca versionar. Las claves reales viven solo en local y en el panel
+# del hosting.
+.env
+.env.local
+.env*.local
+
+# Supabase CLI
+supabase/.temp/
+supabase/.branches/
+
+# Despliegue
+.vercel/
+.netlify/
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
