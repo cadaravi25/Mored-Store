@@ -42,6 +42,10 @@ select id, variante_id, 1
   from pedidos_compra_lineas
  where variante_id is not null;
 
+-- La vista de la 001 lee variante_id, así que hay que soltarla antes de borrar
+-- la columna. Se recrea más abajo, ya sin esa dependencia.
+drop view if exists v_lineas_pendientes;
+
 alter table pedidos_compra_lineas drop column variante_id;
 
 -- Piezas vendibles por pack comprado.

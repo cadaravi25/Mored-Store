@@ -11,14 +11,16 @@
 begin;
 
 create extension if not exists pg_trgm;
-create extension if not exists unaccent;
 
 -- ============================================================================
 -- 1. BÚSQUEDA
 -- ============================================================================
 
--- unaccent() no es inmutable de fábrica y por eso no se puede indexar directo.
--- Este wrapper la fija al diccionario por defecto para poder crear el índice.
+-- Se quitan acentos con translate() y no con la extensión unaccent, por dos
+-- razones: unaccent depende de un diccionario que en Supabase vive en un
+-- esquema que no siempre está en el search_path al resolver el índice, y
+-- además no es inmutable de fábrica. translate() es inmutable de verdad,
+-- no depende de ninguna extensión y cubre de sobra el español.
 create or replace function f_normalizar(texto text)
 returns text
 language sql
@@ -26,7 +28,11 @@ immutable
 strict
 parallel safe
 as $$
-  select lower(unaccent('unaccent'::regdictionary, texto));
+  select lower(translate(
+    texto,
+    'áàäâãÁÀÄÂÃéèëêÉÈËÊíìïîÍÌÏÎóòöôõÓÒÖÔÕúùüûÚÙÜÛñÑçÇ',
+    'aaaaaAAAAAeeeeEEEEiiiiIIIIoooooOOOOOuuuuUUUUnNcC'
+  ));
 $$;
 
 comment on function f_normalizar is
