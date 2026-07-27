@@ -14,6 +14,10 @@ export interface Color {
   nombre: string;
   hex: string | null;
 }
+export interface Estilo {
+  id: string;
+  nombre: string;
+}
 
 interface Linea {
   clave: string;
@@ -63,15 +67,19 @@ function Chip({
 export default function Formulario({
   tipos,
   colores,
+  estilos,
 }: {
   tipos: Tipo[];
   colores: Color[];
+  estilos: Estilo[];
 }) {
   const router = useRouter();
 
   const [coleccion, setColeccion] = useState<"active" | "swim">("active");
   const [tipoId, setTipoId] = useState("");
   const [detalle, setDetalle] = useState("");
+  const [estiloNuevo, setEstiloNuevo] = useState(false);
+  const [listaEstilos, setListaEstilos] = useState(estilos);
   const [color, setColor] = useState("");
   const [talla, setTalla] = useState("");
   const [cantidad, setCantidad] = useState(1);
@@ -95,9 +103,23 @@ export default function Formulario({
 
   const completa = tipoId && color && talla && Number(precioPagado) > 0;
 
-  function agregar() {
+  async function agregar() {
     if (!completa) return;
     const tipo = tipos.find((t) => t.id === tipoId)!;
+    const estilo = detalle.trim();
+
+    // Un estilo escrito a mano se suma a la lista para que la próxima vez sea
+    // un toque. La función de la base descarta duplicados por su cuenta, así
+    // que "Musera" y "musera" no crean dos entradas.
+    if (estiloNuevo && estilo && !listaEstilos.some((e) => e.nombre === estilo)) {
+      const supabase = crearClienteNavegador();
+      const { data: id } = await supabase.rpc("obtener_o_crear_estilo", {
+        p_nombre: estilo,
+      });
+      if (id) setListaEstilos((prev) => [...prev, { id: id as string, nombre: estilo }]);
+      setEstiloNuevo(false);
+    }
+
     setLineas((prev) => [
       ...prev,
       {
@@ -210,16 +232,41 @@ export default function Formulario({
         </div>
 
         <div>
-          <label htmlFor="detalle" className="mb-2 block text-sm text-tinta-suave">
-            Detalle <span className="text-tinta-suave/60">(opcional)</span>
-          </label>
-          <input
-            id="detalle"
-            value={detalle}
-            onChange={(e) => setDetalle(e.target.value)}
-            placeholder="tirantes, manga larga…"
-            className="w-full rounded-lg border border-borde bg-crema px-4 py-3 text-base outline-none focus:border-dorado"
-          />
+          <p className="mb-2 text-sm text-tinta-suave">
+            Estilo <span className="text-tinta-suave/60">(opcional)</span>
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {listaEstilos.map((e) => (
+              <Chip
+                key={e.id}
+                activo={!estiloNuevo && detalle === e.nombre}
+                onClick={() => {
+                  setEstiloNuevo(false);
+                  setDetalle(detalle === e.nombre ? "" : e.nombre);
+                }}
+              >
+                {e.nombre}
+              </Chip>
+            ))}
+            <Chip
+              activo={estiloNuevo}
+              onClick={() => {
+                setEstiloNuevo(!estiloNuevo);
+                setDetalle("");
+              }}
+            >
+              + Otro
+            </Chip>
+          </div>
+          {estiloNuevo && (
+            <input
+              value={detalle}
+              onChange={(e) => setDetalle(e.target.value)}
+              placeholder="cómo le dicen ustedes"
+              autoCapitalize="none"
+              className="mt-2 w-full rounded-lg border border-borde bg-crema px-4 py-3 text-base outline-none focus:border-dorado"
+            />
+          )}
         </div>
 
         <div>

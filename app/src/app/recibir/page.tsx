@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { crearClienteServidor } from "@/lib/supabase/server";
-import Formulario, { type Tipo, type Color } from "./formulario";
+import Formulario, { type Tipo, type Color, type Estilo } from "./formulario";
 
 export const dynamic = "force-dynamic";
 
@@ -13,18 +13,24 @@ export default async function Recibir() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/entrar");
 
-  const [{ data: tipos }, { data: colores }] = await Promise.all([
-    supabase
-      .from("tipos_prenda")
-      .select("id,coleccion,nombre")
-      .eq("activo", true)
-      .order("orden"),
-    supabase
-      .from("colores_catalogo")
-      .select("id,nombre,hex")
-      .eq("activo", true)
-      .order("orden"),
-  ]);
+  const [{ data: tipos }, { data: colores }, { data: estilos }] =
+    await Promise.all([
+      supabase
+        .from("tipos_prenda")
+        .select("id,coleccion,nombre")
+        .eq("activo", true)
+        .order("orden"),
+      supabase
+        .from("colores_catalogo")
+        .select("id,nombre,hex")
+        .eq("activo", true)
+        .order("orden"),
+      supabase
+        .from("estilos")
+        .select("id,nombre")
+        .eq("activo", true)
+        .order("orden"),
+    ]);
 
   return (
     <main className="mx-auto w-full max-w-lg px-4 pb-32 pt-6">
@@ -43,6 +49,7 @@ export default async function Recibir() {
       <Formulario
         tipos={(tipos ?? []) as Tipo[]}
         colores={(colores ?? []) as Color[]}
+        estilos={(estilos ?? []) as Estilo[]}
       />
     </main>
   );
