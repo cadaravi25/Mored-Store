@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+/*
+ * Paleta Mored: crema y dorado, tomada de su feed.
+ * El dorado va como acento, nunca como fondo de bloques grandes: saturado y
+ * en superficie amplia cansa la vista y baja la legibilidad.
+ */
+@theme {
+  --color-crema: #f7f4ed;
+  --color-crema-alto: #fdfbf7;
+  --color-borde: #e5ddce;
+  --color-dorado: #a8823f;
+  --color-dorado-claro: #d6bc85;
+  --color-dorado-tenue: #f3ead8;
+  --color-tinta: #2b2620;
+  --color-tinta-suave: #7a6f60;
+  --color-alerta: #a2542f;
+  --color-alerta-tenue: #f8e9e1;
+}
+
+html,
+body {
+  background: var(--color-crema);
+  color: var(--color-tinta);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* La tablet del local se usa de pie y con prisa: sin zoom accidental al
+   tocar dos veces, y sin resaltado azul al pulsar. */
+button,
+[role="button"],
+a {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
