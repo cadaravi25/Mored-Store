@@ -1,5 +1,4 @@
-import { redirect } from "next/navigation";
-import Link from "next/link";
+﻿import { redirect } from "next/navigation";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import Formulario, { type Tipo, type Color, type Estilo } from "./formulario";
 
@@ -41,9 +40,7 @@ export default async function Recibir() {
             Carga lo que llegó en esta caja
           </p>
         </div>
-        <Link href="/" className="shrink-0 text-sm text-dorado underline-offset-4 hover:underline">
-          Inicio
-        </Link>
+        
       </header>
 
       <Formulario

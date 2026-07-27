@@ -1,5 +1,4 @@
-import { redirect } from "next/navigation";
-import Link from "next/link";
+﻿import { redirect } from "next/navigation";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import Buscador from "./buscador";
 
@@ -21,14 +20,7 @@ export default async function Inventario() {
             Busca por prenda, color o talla
           </p>
         </div>
-        <nav className="flex shrink-0 gap-4 text-sm text-dorado">
-          <Link href="/recibir" className="underline-offset-4 hover:underline">
-            Recibir
-          </Link>
-          <Link href="/" className="underline-offset-4 hover:underline">
-            Inicio
-          </Link>
-        </nav>
+        
       </header>
 
       <Buscador />
