@@ -1,12 +1,15 @@
 """
-Recorta el monograma de Mored de su foto de perfil de Instagram y genera los
-archivos que usa la aplicación.
+Genera los archivos de marca a partir de la foto de perfil de Instagram.
 
     python scripts/extraer_logo.py <ruta de la imagen>
 
-El monograma es blanco puro sobre un degradado marrón. La separación se hace
-por DISTANCIA AL BLANCO y no por brillo: el degradado aclara bastante hacia la
-derecha, y un umbral de brillo dejaría fantasmas del fondo pegados al borde.
+La aplicación usa la foto tal cual, con su degradado (mored-avatar.png). Además
+se recorta el monograma solo, con fondo transparente, para lo que va sobre
+fondo claro más adelante: notas de entrega, catálogo, papelería.
+
+La separación se hace por DISTANCIA AL BLANCO y no por brillo: el degradado
+aclara bastante hacia la derecha, y un umbral de brillo dejaría fantasmas del
+fondo pegados al borde.
 """
 
 import os
@@ -63,6 +66,21 @@ def main() -> None:
     destino = os.path.abspath(DESTINO)
     os.makedirs(destino, exist_ok=True)
 
+    # La foto tal cual, con su degradado. Es lo que se ve en la aplicación.
+    avatar = Image.open(origen).convert("RGB")
+    lado = min(avatar.size)
+    izq = (avatar.size[0] - lado) // 2
+    arr = (avatar.size[1] - lado) // 2
+    avatar = avatar.crop((izq, arr, izq + lado, arr + lado)).resize(
+        (512, 512), Image.LANCZOS
+    )
+    avatar.save(os.path.join(destino, "mored-avatar.png"))
+    avatar.save(os.path.join(destino, "icono.png"))
+    # El .ico va en RGBA: Next rechaza el PNG que lleva dentro si no lo está.
+    avatar.resize((32, 32), Image.LANCZOS).convert("RGBA").save(
+        os.path.join(destino, "favicon.ico"), sizes=[(32, 32)]
+    )
+
     logo = recortar(origen)
     print("Recortado a:", logo.size)
 
@@ -73,17 +91,13 @@ def main() -> None:
     tenido.putalpha(logo.split()[3])
     escalar(tenido, 512).save(os.path.join(destino, "mored-marron.png"))
 
-    # Icono cuadrado con el fondo de marca, como el de su Instagram.
-    lado = 512
-    icono = Image.new("RGBA", (lado, lado), MARRON + (255,))
-    chico = escalar(logo, round(lado * 0.58))
-    icono.paste(chico, ((lado - chico.size[0]) // 2, (lado - chico.size[1]) // 2), chico)
-    icono.save(os.path.join(destino, "icono.png"))
-    icono.resize((32, 32), Image.LANCZOS).save(
-        os.path.join(destino, "favicon.ico"), sizes=[(32, 32)]
-    )
-
-    for nombre in ("mored-blanco.png", "mored-marron.png", "icono.png", "favicon.ico"):
+    for nombre in (
+        "mored-avatar.png",
+        "mored-blanco.png",
+        "mored-marron.png",
+        "icono.png",
+        "favicon.ico",
+    ):
         ruta = os.path.join(destino, nombre)
         print(" ", nombre, os.path.getsize(ruta), "bytes")
 
