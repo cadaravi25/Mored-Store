@@ -103,7 +103,7 @@ export default function Entrar() {
           <img
             src="/mored-avatar.png"
             alt="Mored"
-            className="mx-auto mb-5 h-16 w-16 rounded-2xl object-cover"
+            className="mx-auto mb-5 h-16 w-16 rounded-full object-cover"
           />
           <h1>
             {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -143,7 +143,7 @@ export function Lateral({ usuario }: { usuario: string }) {
         <img
           src="/mored-avatar.png"
           alt=""
-          className="h-9 w-9 rounded-xl object-cover"
+          className="h-9 w-9 rounded-full object-cover"
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/mored-texto.png" alt="Mored" className="h-4 w-auto" />
