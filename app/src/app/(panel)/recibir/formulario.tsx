@@ -39,7 +39,6 @@ const dinero = new Intl.NumberFormat("es-VE", {
   currency: "USD",
 });
 
-/** Botón de opción. Grande a propósito: se usa con el pulgar y con prisa. */
 function Chip({
   activo,
   onClick,
@@ -80,11 +79,12 @@ export default function Formulario({
   const [detalle, setDetalle] = useState("");
   const [estiloNuevo, setEstiloNuevo] = useState(false);
   const [listaEstilos, setListaEstilos] = useState(estilos);
-  const [color, setColor] = useState("");
   const [talla, setTalla] = useState("");
-  const [cantidad, setCantidad] = useState(1);
+  const [piezas, setPiezas] = useState(1);
+  // Cuántas piezas de cada color trae esta línea. Un pack de 3 puede venir con
+  // tres colores distintos, o con dos negros y un blanco: cualquier reparto.
+  const [asignado, setAsignado] = useState<Record<string, number>>({});
   const [precioPagado, setPrecioPagado] = useState("");
-  const [piezasPack, setPiezasPack] = useState(1);
   const [precioVenta, setPrecioVenta] = useState("");
 
   const [lineas, setLineas] = useState<Linea[]>([]);
@@ -96,50 +96,72 @@ export default function Formulario({
     [tipos, coleccion],
   );
 
-  // SHEIN cobra el pack completo. Que dividan de cabeza es justo donde se
-  // cuelan los errores de costo, así que lo hace la app.
-  const costoUnitario =
-    piezasPack > 0 ? Number(precioPagado || 0) / piezasPack : 0;
+  const asignadas = Object.values(asignado).reduce((s, n) => s + n, 0);
+  const faltan = piezas - asignadas;
 
-  const completa = tipoId && color && talla && Number(precioPagado) > 0;
+  // SHEIN cobra el pack completo. Que dividan de cabeza es donde se cuelan los
+  // errores de costo, así que lo hace la app.
+  const costoUnitario = piezas > 0 ? Number(precioPagado || 0) / piezas : 0;
+
+  const completa =
+    Boolean(tipoId) && Boolean(talla) && Number(precioPagado) > 0 && faltan === 0;
+
+  function sumarColor(nombre: string) {
+    if (asignadas >= piezas) return;
+    setAsignado((prev) => ({ ...prev, [nombre]: (prev[nombre] ?? 0) + 1 }));
+  }
+
+  function restarColor(nombre: string) {
+    setAsignado((prev) => {
+      const n = (prev[nombre] ?? 0) - 1;
+      const copia = { ...prev };
+      if (n <= 0) delete copia[nombre];
+      else copia[nombre] = n;
+      return copia;
+    });
+  }
+
+  function cambiarPiezas(n: number) {
+    setPiezas(n);
+    // Si bajan la cantidad por debajo de lo ya repartido, se limpia: es más
+    // claro volver a repartir que adivinar cuál color sobra.
+    if (asignadas > n) setAsignado({});
+  }
 
   async function agregar() {
     if (!completa) return;
     const tipo = tipos.find((t) => t.id === tipoId)!;
     const estilo = detalle.trim();
 
-    // Un estilo escrito a mano se suma a la lista para que la próxima vez sea
-    // un toque. La función de la base descarta duplicados por su cuenta, así
-    // que "Musera" y "musera" no crean dos entradas.
     if (estiloNuevo && estilo && !listaEstilos.some((e) => e.nombre === estilo)) {
       const supabase = crearClienteNavegador();
       const { data: id } = await supabase.rpc("obtener_o_crear_estilo", {
         p_nombre: estilo,
       });
-      if (id) setListaEstilos((prev) => [...prev, { id: id as string, nombre: estilo }]);
+      if (id)
+        setListaEstilos((prev) => [...prev, { id: id as string, nombre: estilo }]);
       setEstiloNuevo(false);
     }
 
-    setLineas((prev) => [
-      ...prev,
-      {
-        clave: crypto.randomUUID(),
-        coleccion,
-        tipo_id: tipoId,
-        tipo_nombre: tipo.nombre,
-        detalle: detalle.trim(),
-        color,
-        talla,
-        cantidad,
-        costo_unitario_usd: Number(costoUnitario.toFixed(2)),
-        precio_venta_usd: precioVenta ? Number(precioVenta) : null,
-      },
-    ]);
-    // Se conserva el tipo y el detalle: lo normal es cargar la misma prenda en
-    // varias tallas o colores seguidos.
-    setColor("");
+    // Un color por línea: el pack se reparte en tantas líneas como colores.
+    const nuevas: Linea[] = Object.entries(asignado).map(([color, cantidad]) => ({
+      clave: crypto.randomUUID(),
+      coleccion,
+      tipo_id: tipoId,
+      tipo_nombre: tipo.nombre,
+      detalle: estilo,
+      color,
+      talla,
+      cantidad,
+      costo_unitario_usd: Number(costoUnitario.toFixed(2)),
+      precio_venta_usd: precioVenta ? Number(precioVenta) : null,
+    }));
+
+    setLineas((prev) => [...prev, ...nuevas]);
+    // Se conservan tipo y estilo: lo normal es cargar la misma prenda en
+    // varias tallas seguidas.
+    setAsignado({});
     setTalla("");
-    setCantidad(1);
   }
 
   async function guardar() {
@@ -148,7 +170,7 @@ export default function Formulario({
 
     const supabase = crearClienteNavegador();
     const { error: fallo } = await supabase.rpc("registrar_entrada", {
-      p_lineas: lineas.map(({ clave, tipo_nombre, ...resto }) => resto),
+      p_lineas: lineas.map(({ clave: _c, tipo_nombre: _t, ...resto }) => resto),
       p_flete_usd: 0,
     });
 
@@ -181,7 +203,7 @@ export default function Formulario({
               <div className="min-w-0 flex-1">
                 <p className="truncate text-tinta">
                   {l.tipo_nombre}
-                  {l.detalle && ` ${l.detalle}`}
+                  {l.detalle ? ` ${l.detalle}` : ""}
                 </p>
                 <p className="text-sm text-tinta-suave">
                   {l.color} · {l.talla} · {l.cantidad}{" "}
@@ -224,7 +246,11 @@ export default function Formulario({
           <p className="mb-2 text-sm text-tinta-suave">Tipo</p>
           <div className="flex flex-wrap gap-2">
             {tiposVisibles.map((t) => (
-              <Chip key={t.id} activo={tipoId === t.id} onClick={() => setTipoId(t.id)}>
+              <Chip
+                key={t.id}
+                activo={tipoId === t.id}
+                onClick={() => setTipoId(t.id)}
+              >
                 {t.nombre}
               </Chip>
             ))}
@@ -270,33 +296,6 @@ export default function Formulario({
         </div>
 
         <div>
-          <p className="mb-2 text-sm text-tinta-suave">Color</p>
-          <div className="flex flex-wrap gap-2">
-            {colores.map((c) => (
-              <button
-                key={c.id}
-                type="button"
-                onClick={() => setColor(c.nombre)}
-                className={`flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm ${
-                  color === c.nombre
-                    ? "border-dorado bg-dorado text-crema-alto"
-                    : "border-borde bg-crema text-tinta"
-                }`}
-              >
-                {c.hex && (
-                  <span
-                    aria-hidden
-                    className="h-3.5 w-3.5 rounded-full border border-black/15"
-                    style={{ backgroundColor: c.hex }}
-                  />
-                )}
-                {c.nombre}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div>
           <p className="mb-2 text-sm text-tinta-suave">Talla</p>
           <div className="flex flex-wrap gap-2">
             {TALLAS.map((t) => (
@@ -307,10 +306,92 @@ export default function Formulario({
           </div>
         </div>
 
+        <div>
+          <p className="mb-2 text-sm text-tinta-suave">¿Cuántas piezas trae?</p>
+          <div className="flex flex-wrap gap-2">
+            {[1, 2, 3, 4, 5, 6].map((n) => (
+              <Chip key={n} activo={piezas === n} onClick={() => cambiarPiezas(n)}>
+                {n === 1 ? "Suelta" : n}
+              </Chip>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <div className="mb-2 flex items-baseline justify-between gap-3">
+            <p className="text-sm text-tinta-suave">
+              {piezas === 1 ? "Color" : "Colores"}
+            </p>
+            <p
+              className={`text-sm tabular-nums ${
+                faltan === 0 ? "text-tinta-suave" : "text-alerta"
+              }`}
+            >
+              {faltan > 0
+                ? `Faltan ${faltan} por repartir`
+                : `${asignadas} de ${piezas}`}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {colores.map((c) => {
+              const n = asignado[c.nombre] ?? 0;
+              const lleno = asignadas >= piezas && n === 0;
+              return (
+                <span
+                  key={c.id}
+                  className={`flex items-center rounded-full border text-sm ${
+                    n > 0
+                      ? "border-dorado bg-dorado text-crema-alto"
+                      : `border-borde bg-crema text-tinta ${lleno ? "opacity-35" : ""}`
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => sumarColor(c.nombre)}
+                    disabled={lleno}
+                    className={`flex items-center gap-2 py-2.5 pl-4 ${n > 0 ? "pr-1.5" : "pr-4"}`}
+                  >
+                    {c.hex && (
+                      <span
+                        aria-hidden
+                        className="h-3.5 w-3.5 rounded-full border border-black/15"
+                        style={{ backgroundColor: c.hex }}
+                      />
+                    )}
+                    {c.nombre}
+                    {n > 0 && <span className="tabular-nums">×{n}</span>}
+                  </button>
+                  {n > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => restarColor(c.nombre)}
+                      aria-label={`Quitar un ${c.nombre}`}
+                      className="py-2.5 pl-1.5 pr-3.5 text-crema-alto/80"
+                    >
+                      −
+                    </button>
+                  )}
+                </span>
+              );
+            })}
+          </div>
+
+          {piezas > 1 && (
+            <p className="mt-2 text-xs text-tinta-suave">
+              Toca un color una vez por cada pieza de ese color. Si vienen dos
+              negros y un blanco, toca Negro dos veces y Blanco una.
+            </p>
+          )}
+        </div>
+
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label htmlFor="pagado" className="mb-2 block text-sm text-tinta-suave">
               Precio pagado
+              {piezas > 1 && (
+                <span className="text-tinta-suave/60"> por el pack</span>
+              )}
             </label>
             <input
               id="pagado"
@@ -322,6 +403,11 @@ export default function Formulario({
               onChange={(e) => setPrecioPagado(e.target.value)}
               className="w-full rounded-lg border border-borde bg-crema px-4 py-3 text-base tabular-nums outline-none focus:border-dorado"
             />
+            {piezas > 1 && Number(precioPagado) > 0 && (
+              <p className="mt-1.5 text-sm text-tinta-suave">
+                {dinero.format(costoUnitario)} por prenda
+              </p>
+            )}
           </div>
           <div>
             <label htmlFor="venta" className="mb-2 block text-sm text-tinta-suave">
@@ -340,43 +426,6 @@ export default function Formulario({
           </div>
         </div>
 
-        <div>
-          <p className="mb-2 text-sm text-tinta-suave">
-            ¿Ese precio era por un pack?
-          </p>
-          <div className="flex flex-wrap items-center gap-2">
-            {[1, 2, 3, 4, 5].map((n) => (
-              <Chip key={n} activo={piezasPack === n} onClick={() => setPiezasPack(n)}>
-                {n === 1 ? "Suelta" : `Pack de ${n}`}
-              </Chip>
-            ))}
-          </div>
-          {piezasPack > 1 && Number(precioPagado) > 0 && (
-            <p className="mt-2 text-sm text-tinta-suave">
-              Costo por prenda: <strong>{dinero.format(costoUnitario)}</strong>
-            </p>
-          )}
-        </div>
-
-        <div className="flex items-center gap-3">
-          <p className="text-sm text-tinta-suave">Cantidad</p>
-          <button
-            type="button"
-            onClick={() => setCantidad((n) => Math.max(1, n - 1))}
-            className="h-11 w-11 rounded-lg border border-borde bg-crema text-lg"
-          >
-            −
-          </button>
-          <span className="w-8 text-center text-lg tabular-nums">{cantidad}</span>
-          <button
-            type="button"
-            onClick={() => setCantidad((n) => n + 1)}
-            className="h-11 w-11 rounded-lg border border-borde bg-crema text-lg"
-          >
-            +
-          </button>
-        </div>
-
         <button
           type="button"
           onClick={agregar}
@@ -388,13 +437,16 @@ export default function Formulario({
       </section>
 
       {error && (
-        <p role="alert" className="rounded-lg bg-alerta-tenue px-4 py-3 text-sm text-alerta">
+        <p
+          role="alert"
+          className="rounded-lg bg-alerta-tenue px-4 py-3 text-sm text-alerta"
+        >
           {error}
         </p>
       )}
 
       {lineas.length > 0 && (
-        <div className="fixed inset-x-0 bottom-0 border-t border-borde bg-crema/95 px-4 py-3 backdrop-blur">
+        <div className="fixed inset-x-0 bottom-14 border-t border-borde bg-crema/95 px-4 py-3 backdrop-blur md:bottom-0">
           <div className="mx-auto flex max-w-lg items-center gap-3">
             <div className="flex-1 text-sm text-tinta-suave">
               {totalPrendas} {totalPrendas === 1 ? "prenda" : "prendas"} ·{" "}
