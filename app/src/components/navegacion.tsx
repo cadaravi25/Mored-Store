@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -57,7 +57,6 @@ const ITEMS: Item[] = [
   {
     href: "/vender",
     etiqueta: "Vender",
-    pronto: true,
     icono: (
       <svg viewBox="0 0 24 24" {...trazo}>
         <path d="M6 2l1.5 4h13L18 15H8L6 2zM6 2H3" />
