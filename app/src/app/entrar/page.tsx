@@ -105,7 +105,14 @@ export default function Entrar() {
             alt="Mored"
             className="mx-auto mb-5 h-16 w-16 rounded-2xl object-cover"
           />
-          <h1 className="text-2xl tracking-[0.25em] text-tinta">MORED</h1>
+          <h1>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/mored-texto.png"
+              alt="Mored"
+              className="mx-auto h-7 w-auto"
+            />
+          </h1>
           <p className="mt-2 text-sm text-tinta-suave">Sistema interno</p>
         </div>
 

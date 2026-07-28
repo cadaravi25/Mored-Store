@@ -2,19 +2,23 @@
 
 /*
  * Paleta Mored, medida de su propio material de marca y no inventada:
- * el marrón terracota ocupa el 70% de las páginas de Mored Active, con el
- * azul claro de la bolsa como secundario y el crema de fondo.
+ * el marrón ocupa el 70% de las páginas de Mored Active, con el azul claro
+ * de la bolsa como secundario y el crema de fondo.
  *
- * El marrón de marca (#ad825f) no tiene contraste suficiente para texto
- * pequeño sobre crema, así que hay una variante oscura para leer y la de
- * marca para rellenos y acentos. Es el mismo color, no dos.
+ * El marrón sale del archivo del logo, no de la medición del PDF: si la
+ * interfaz usa un tono casi igual al del logo pero no el mismo, se lee como
+ * un error de impresión.
+ *
+ * Ese marrón no tiene contraste suficiente para texto pequeño sobre crema,
+ * así que hay una variante oscura para leer y la de marca para rellenos y
+ * acentos. Es el mismo color, no dos.
  */
 @theme {
   --color-crema: #f7f4ed;
   --color-crema-alto: #fdfbf7;
   --color-borde: #e6ddd1;
 
-  --color-marron: #ad825f;
+  --color-marron: #a78a6a;
   --color-marron-hondo: #7d5a3d;
   --color-marron-suave: #d3b799;
   --color-marron-tenue: #f2e8dd;
