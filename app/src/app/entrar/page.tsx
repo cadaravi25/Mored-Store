@@ -99,8 +99,9 @@ export default function Entrar() {
     <main className="flex min-h-dvh items-center justify-center bg-crema px-6">
       <div className="w-full max-w-sm">
         <div className="mb-10 text-center">
-          <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-marron-suave bg-crema-alto">
-            <span className="text-3xl text-marron-hondo">M</span>
+          <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-marron">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/mored-blanco.png" alt="Mored" className="h-6 w-auto" />
           </div>
           <h1 className="text-2xl tracking-[0.25em] text-tinta">MORED</h1>
           <p className="mt-2 text-sm text-tinta-suave">Sistema interno</p>

@@ -139,8 +139,9 @@ export function Lateral({ usuario }: { usuario: string }) {
   return (
     <aside className="hidden w-60 shrink-0 flex-col border-r border-borde bg-crema-alto p-4 md:flex">
       <div className="mb-8 flex items-center gap-3 px-2 pt-2">
-        <span className="flex h-9 w-9 items-center justify-center rounded-full border border-marron-suave text-marron-hondo">
-          M
+        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-marron">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/mored-blanco.png" alt="" className="h-3.5 w-auto" />
         </span>
         <span className="text-sm tracking-[0.2em] text-tinta">MORED</span>
       </div>
