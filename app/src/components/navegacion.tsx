@@ -68,7 +68,6 @@ const ITEMS: Item[] = [
   {
     href: "/finanzas",
     etiqueta: "Finanzas",
-    pronto: true,
     icono: (
       <svg viewBox="0 0 24 24" {...trazo}>
         <path d="M3 17l5-6 4 3 5-7 4 4" />
