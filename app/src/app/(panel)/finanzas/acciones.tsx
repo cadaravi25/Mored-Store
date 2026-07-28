@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -47,7 +47,7 @@ export function ActualizarTasas() {
         type="button"
         onClick={actualizar}
         disabled={cargando}
-        className="text-sm text-dorado underline-offset-4 hover:underline disabled:opacity-50"
+        className="text-sm text-marron-hondo underline-offset-4 hover:underline disabled:opacity-50"
       >
         {cargando ? "Consultando…" : "Actualizar del BCV"}
       </button>
@@ -111,7 +111,7 @@ export function NuevoMovimiento({ tasa }: { tasa: number | null }) {
       <button
         type="button"
         onClick={() => setAbierto(true)}
-        className="rounded-xl border border-borde bg-crema-alto px-4 py-2.5 text-sm text-tinta hover:border-dorado-claro"
+        className="rounded-xl border border-borde bg-crema-alto px-4 py-2.5 text-sm text-tinta hover:border-marron-suave"
       >
         Registrar movimiento
       </button>
@@ -128,7 +128,7 @@ export function NuevoMovimiento({ tasa }: { tasa: number | null }) {
             onClick={() => setTipo(t)}
             className={`rounded-full border px-4 py-2 text-sm capitalize ${
               tipo === t
-                ? "border-dorado bg-dorado text-crema-alto"
+                ? "border-marron bg-marron text-crema-alto"
                 : "border-borde bg-crema text-tinta"
             }`}
           >
@@ -141,14 +141,14 @@ export function NuevoMovimiento({ tasa }: { tasa: number | null }) {
         value={concepto}
         onChange={(e) => setConcepto(e.target.value)}
         placeholder="Concepto"
-        className="w-full rounded-lg border border-borde bg-crema px-4 py-2.5 text-sm outline-none focus:border-dorado"
+        className="w-full rounded-lg border border-borde bg-crema px-4 py-2.5 text-sm outline-none focus:border-marron"
       />
 
       {tipo === "egreso" && (
         <select
           value={categoria}
           onChange={(e) => setCategoria(e.target.value)}
-          className="w-full rounded-lg border border-borde bg-crema px-4 py-2.5 text-sm capitalize outline-none focus:border-dorado"
+          className="w-full rounded-lg border border-borde bg-crema px-4 py-2.5 text-sm capitalize outline-none focus:border-marron"
         >
           {CATEGORIAS.map((c) => (
             <option key={c} value={c}>
@@ -164,7 +164,7 @@ export function NuevoMovimiento({ tasa }: { tasa: number | null }) {
           onChange={(e) =>
             setMetodo(METODOS.find((m) => m.id === e.target.value)!)
           }
-          className="min-w-0 flex-1 rounded-lg border border-borde bg-crema px-3 py-2.5 text-sm outline-none focus:border-dorado"
+          className="min-w-0 flex-1 rounded-lg border border-borde bg-crema px-3 py-2.5 text-sm outline-none focus:border-marron"
         >
           {METODOS.map((m) => (
             <option key={m.id} value={m.id}>
@@ -178,7 +178,7 @@ export function NuevoMovimiento({ tasa }: { tasa: number | null }) {
           value={monto}
           onChange={(e) => setMonto(e.target.value)}
           placeholder={metodo.moneda === "BS" ? "Bs" : "$"}
-          className="w-28 shrink-0 rounded-lg border border-borde bg-crema px-3 py-2.5 text-sm tabular-nums outline-none focus:border-dorado"
+          className="w-28 shrink-0 rounded-lg border border-borde bg-crema px-3 py-2.5 text-sm tabular-nums outline-none focus:border-marron"
         />
       </div>
 

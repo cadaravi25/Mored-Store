@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import { ActualizarTasas, NuevoMovimiento } from "./acciones";
 
@@ -39,7 +39,7 @@ function Dato({
       <p className="text-xs uppercase tracking-wide text-tinta-suave">{etiqueta}</p>
       <p
         className={`mt-1.5 text-2xl tabular-nums ${
-          tono === "bueno" ? "text-dorado" : tono === "alerta" ? "text-alerta" : "text-tinta"
+          tono === "bueno" ? "text-marron-hondo" : tono === "alerta" ? "text-alerta" : "text-tinta"
         }`}
       >
         {valor}
@@ -104,7 +104,7 @@ export default async function Finanzas({
               href={`/finanzas?p=${x.id}`}
               className={`rounded-full border px-3 py-1.5 text-sm ${
                 x.id === periodo.id
-                  ? "border-dorado bg-dorado text-crema-alto"
+                  ? "border-marron bg-marron text-crema-alto"
                   : "border-borde bg-crema-alto text-tinta-suave"
               }`}
             >
@@ -189,7 +189,7 @@ export default async function Finanzas({
                 <p className="text-xs text-tinta-suave">Dólar BCV</p>
               </div>
               <div>
-                <p className="text-xl tabular-nums text-dorado">
+                <p className="text-xl tabular-nums text-marron-hondo">
                   {tasaVenta ? num.format(Number(tasaVenta.bs_por_usd)) : "—"}
                 </p>
                 <p className="text-xs text-tinta-suave">La que está aplicando el sistema</p>
@@ -202,7 +202,7 @@ export default async function Finanzas({
           )}
 
           {proxima && (
-            <p className="mt-3 rounded-lg bg-dorado-tenue px-3 py-2 text-xs text-tinta">
+            <p className="mt-3 rounded-lg bg-marron-tenue px-3 py-2 text-xs text-tinta">
               El BCV ya publicó la tasa del {proxima.fecha}:{" "}
               {num.format(Number(proxima.bs_por_eur ?? 0))} Bs por euro. Todavía
               no rige, así que el sistema sigue cobrando con la de hoy.
@@ -232,7 +232,7 @@ export default async function Finanzas({
                 <span
                   aria-hidden
                   className={`h-1.5 w-1.5 shrink-0 rounded-full ${
-                    m.tipo === "ingreso" ? "bg-dorado" : "bg-alerta"
+                    m.tipo === "ingreso" ? "bg-marron" : "bg-alerta"
                   }`}
                 />
                 <div className="min-w-0 flex-1">

@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { crearClienteServidor } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -32,7 +32,7 @@ function Tarjeta({
     <div
       className={`rounded-2xl border p-4 ${
         acento
-          ? "border-dorado-claro bg-dorado-tenue"
+          ? "border-marron-suave bg-marron-tenue"
           : "border-borde bg-crema-alto"
       }`}
     >
@@ -137,7 +137,7 @@ export default async function Panel() {
               <p className="text-xs text-tinta-suave">a costo</p>
             </div>
             <div>
-              <p className="text-2xl tabular-nums text-dorado">
+              <p className="text-2xl tabular-nums text-marron-hondo">
                 {dinero.format(venta)}
               </p>
               <p className="text-xs text-tinta-suave">a precio de venta</p>
@@ -165,7 +165,7 @@ export default async function Panel() {
           </dl>
           <Link
             href="/inventario"
-            className="mt-4 inline-block text-sm text-dorado underline-offset-4 hover:underline"
+            className="mt-4 inline-block text-sm text-marron-hondo underline-offset-4 hover:underline"
           >
             Ver inventario
           </Link>

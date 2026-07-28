@@ -104,7 +104,7 @@ function Enlace({ item, activo }: { item: Item; activo: boolean }) {
 
   const clases = `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
     activo
-      ? "bg-dorado-tenue text-tinta"
+      ? "bg-marron-tenue text-tinta"
       : item.pronto
         ? "text-tinta-suave/50"
         : "text-tinta-suave hover:bg-crema hover:text-tinta"
@@ -139,7 +139,7 @@ export function Lateral({ usuario }: { usuario: string }) {
   return (
     <aside className="hidden w-60 shrink-0 flex-col border-r border-borde bg-crema-alto p-4 md:flex">
       <div className="mb-8 flex items-center gap-3 px-2 pt-2">
-        <span className="flex h-9 w-9 items-center justify-center rounded-full border border-dorado-claro text-dorado">
+        <span className="flex h-9 w-9 items-center justify-center rounded-full border border-marron-suave text-marron-hondo">
           M
         </span>
         <span className="text-sm tracking-[0.2em] text-tinta">MORED</span>
@@ -179,7 +179,7 @@ export function Inferior() {
             key={i.href}
             href={i.href}
             className={`flex flex-1 flex-col items-center gap-1 py-2.5 text-[11px] ${
-              activo ? "text-dorado" : "text-tinta-suave"
+              activo ? "text-marron-hondo" : "text-tinta-suave"
             }`}
           >
             <span className="h-5 w-5">{i.icono}</span>

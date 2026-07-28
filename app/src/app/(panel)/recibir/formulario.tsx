@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -54,7 +54,7 @@ function Chip({
       onClick={onClick}
       className={`rounded-full border px-4 py-2.5 text-sm transition-colors ${
         activo
-          ? "border-dorado bg-dorado text-crema-alto"
+          ? "border-marron bg-marron text-crema-alto"
           : "border-borde bg-crema-alto text-tinta"
       }`}
     >
@@ -290,7 +290,7 @@ export default function Formulario({
               onChange={(e) => setDetalle(e.target.value)}
               placeholder="cómo le dicen ustedes"
               autoCapitalize="none"
-              className="mt-2 w-full rounded-lg border border-borde bg-crema px-4 py-3 text-base outline-none focus:border-dorado"
+              className="mt-2 w-full rounded-lg border border-borde bg-crema px-4 py-3 text-base outline-none focus:border-marron"
             />
           )}
         </div>
@@ -342,7 +342,7 @@ export default function Formulario({
                   key={c.id}
                   className={`flex items-center rounded-full border text-sm ${
                     n > 0
-                      ? "border-dorado bg-dorado text-crema-alto"
+                      ? "border-marron bg-marron text-crema-alto"
                       : `border-borde bg-crema text-tinta ${lleno ? "opacity-35" : ""}`
                   }`}
                 >
@@ -401,7 +401,7 @@ export default function Formulario({
               min="0"
               value={precioPagado}
               onChange={(e) => setPrecioPagado(e.target.value)}
-              className="w-full rounded-lg border border-borde bg-crema px-4 py-3 text-base tabular-nums outline-none focus:border-dorado"
+              className="w-full rounded-lg border border-borde bg-crema px-4 py-3 text-base tabular-nums outline-none focus:border-marron"
             />
             {piezas > 1 && Number(precioPagado) > 0 && (
               <p className="mt-1.5 text-sm text-tinta-suave">
@@ -421,7 +421,7 @@ export default function Formulario({
               min="0"
               value={precioVenta}
               onChange={(e) => setPrecioVenta(e.target.value)}
-              className="w-full rounded-lg border border-borde bg-crema px-4 py-3 text-base tabular-nums outline-none focus:border-dorado"
+              className="w-full rounded-lg border border-borde bg-crema px-4 py-3 text-base tabular-nums outline-none focus:border-marron"
             />
           </div>
         </div>
@@ -430,7 +430,7 @@ export default function Formulario({
           type="button"
           onClick={agregar}
           disabled={!completa}
-          className="w-full rounded-lg border border-dorado bg-dorado-tenue px-4 py-3.5 text-base text-dorado disabled:opacity-40"
+          className="w-full rounded-lg border border-marron bg-marron-tenue px-4 py-3.5 text-base text-marron-hondo disabled:opacity-40"
         >
           Agregar a la lista
         </button>

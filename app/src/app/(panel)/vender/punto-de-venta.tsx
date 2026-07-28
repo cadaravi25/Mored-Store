@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -154,7 +154,7 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
   if (listo !== null) {
     return (
       <div className="mx-auto max-w-sm py-16 text-center">
-        <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-dorado-claro bg-dorado-tenue text-2xl text-dorado">
+        <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-marron-suave bg-marron-tenue text-2xl text-marron-hondo">
           ✓
         </div>
         <p className="text-xl text-tinta">Venta registrada</p>
@@ -180,7 +180,7 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
           autoCapitalize="none"
           autoCorrect="off"
           spellCheck={false}
-          className="w-full rounded-xl border border-borde bg-crema-alto px-4 py-3.5 text-base outline-none placeholder:text-tinta-suave/50 focus:border-dorado"
+          className="w-full rounded-xl border border-borde bg-crema-alto px-4 py-3.5 text-base outline-none placeholder:text-tinta-suave/50 focus:border-marron"
         />
 
         <ul className="grid gap-2 sm:grid-cols-2">
@@ -189,7 +189,7 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
               <button
                 type="button"
                 onClick={() => agregar(v)}
-                className="flex w-full items-center gap-3 rounded-xl border border-borde bg-crema-alto p-3 text-left transition-colors hover:border-dorado-claro"
+                className="flex w-full items-center gap-3 rounded-xl border border-borde bg-crema-alto p-3 text-left transition-colors hover:border-marron-suave"
               >
                 <span
                   aria-hidden
@@ -292,7 +292,7 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
         {cobrando && (
           <div className="space-y-3 rounded-2xl border border-borde bg-crema-alto p-4">
             {!tasa && (
-              <div className="rounded-xl bg-dorado-tenue p-3">
+              <div className="rounded-xl bg-marron-tenue p-3">
                 <p className="mb-2 text-sm text-tinta">
                   Falta la tasa de hoy para poder cobrar en bolívares.
                 </p>
@@ -303,7 +303,7 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
                     value={tasaTexto}
                     onChange={(e) => setTasaTexto(e.target.value)}
                     placeholder="Bs por dólar"
-                    className="min-w-0 flex-1 rounded-lg border border-borde bg-crema px-3 py-2 text-sm tabular-nums outline-none focus:border-dorado"
+                    className="min-w-0 flex-1 rounded-lg border border-borde bg-crema px-3 py-2 text-sm tabular-nums outline-none focus:border-marron"
                   />
                   <button
                     type="button"
@@ -362,7 +362,7 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
                         ),
                       )
                     }
-                    className="min-w-0 flex-1 rounded-lg border border-borde bg-crema px-3 py-2 text-sm tabular-nums outline-none focus:border-dorado"
+                    className="min-w-0 flex-1 rounded-lg border border-borde bg-crema px-3 py-2 text-sm tabular-nums outline-none focus:border-marron"
                   />
                   <span className="w-7 shrink-0 text-xs text-tinta-suave">
                     {p.moneda === "BS" ? "Bs" : "$"}

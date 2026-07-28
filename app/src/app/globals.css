@@ -1,17 +1,27 @@
 @import "tailwindcss";
 
 /*
- * Paleta Mored: crema y dorado, tomada de su feed.
- * El dorado va como acento, nunca como fondo de bloques grandes: saturado y
- * en superficie amplia cansa la vista y baja la legibilidad.
+ * Paleta Mored, medida de su propio material de marca y no inventada:
+ * el marrón terracota ocupa el 70% de las páginas de Mored Active, con el
+ * azul claro de la bolsa como secundario y el crema de fondo.
+ *
+ * El marrón de marca (#ad825f) no tiene contraste suficiente para texto
+ * pequeño sobre crema, así que hay una variante oscura para leer y la de
+ * marca para rellenos y acentos. Es el mismo color, no dos.
  */
 @theme {
   --color-crema: #f7f4ed;
   --color-crema-alto: #fdfbf7;
-  --color-borde: #e5ddce;
-  --color-dorado: #a8823f;
-  --color-dorado-claro: #d6bc85;
-  --color-dorado-tenue: #f3ead8;
+  --color-borde: #e6ddd1;
+
+  --color-marron: #ad825f;
+  --color-marron-hondo: #7d5a3d;
+  --color-marron-suave: #d3b799;
+  --color-marron-tenue: #f2e8dd;
+
+  --color-azul: #a4c1df;
+  --color-azul-tenue: #e6eef6;
+
   --color-tinta: #2b2620;
   --color-tinta-suave: #7a6f60;
   --color-alerta: #a2542f;
@@ -25,8 +35,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* La tablet del local se usa de pie y con prisa: sin zoom accidental al
-   tocar dos veces, y sin resaltado azul al pulsar. */
+/* La tablet del local y los teléfonos se usan de pie y con prisa: sin zoom
+   accidental al tocar dos veces, y sin resaltado azul al pulsar. */
 button,
 [role="button"],
 a {

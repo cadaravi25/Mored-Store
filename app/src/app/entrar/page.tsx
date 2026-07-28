@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -55,7 +55,7 @@ function Formulario() {
           spellCheck={false}
           required
           placeholder="yolima"
-          className="w-full rounded-lg border border-borde bg-crema-alto px-4 py-3 text-base text-tinta outline-none placeholder:text-tinta-suave/50 focus:border-dorado"
+          className="w-full rounded-lg border border-borde bg-crema-alto px-4 py-3 text-base text-tinta outline-none placeholder:text-tinta-suave/50 focus:border-marron"
         />
       </div>
 
@@ -70,7 +70,7 @@ function Formulario() {
           onChange={(e) => setClave(e.target.value)}
           autoComplete="current-password"
           required
-          className="w-full rounded-lg border border-borde bg-crema-alto px-4 py-3 text-base text-tinta outline-none focus:border-dorado"
+          className="w-full rounded-lg border border-borde bg-crema-alto px-4 py-3 text-base text-tinta outline-none focus:border-marron"
         />
       </div>
 
@@ -99,8 +99,8 @@ export default function Entrar() {
     <main className="flex min-h-dvh items-center justify-center bg-crema px-6">
       <div className="w-full max-w-sm">
         <div className="mb-10 text-center">
-          <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-dorado-claro bg-crema-alto">
-            <span className="text-3xl text-dorado">M</span>
+          <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-marron-suave bg-crema-alto">
+            <span className="text-3xl text-marron-hondo">M</span>
           </div>
           <h1 className="text-2xl tracking-[0.25em] text-tinta">MORED</h1>
           <p className="mt-2 text-sm text-tinta-suave">Sistema interno</p>

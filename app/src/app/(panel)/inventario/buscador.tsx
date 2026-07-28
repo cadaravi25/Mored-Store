@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { crearClienteNavegador } from "@/lib/supabase/client";
@@ -47,7 +47,7 @@ function Selector({
       onChange={(e) => onChange(e.target.value)}
       disabled={opciones.length === 0}
       className={`min-w-0 flex-1 rounded-lg border bg-crema-alto px-3 py-2.5 text-sm outline-none disabled:opacity-40 ${
-        valor ? "border-dorado text-tinta" : "border-borde text-tinta-suave"
+        valor ? "border-marron text-tinta" : "border-borde text-tinta-suave"
       }`}
     >
       <option value="">{etiqueta}</option>
@@ -130,7 +130,7 @@ export default function Buscador() {
         autoCapitalize="none"
         autoCorrect="off"
         spellCheck={false}
-        className="w-full rounded-xl border border-borde bg-crema-alto px-4 py-3.5 text-base outline-none placeholder:text-tinta-suave/50 focus:border-dorado"
+        className="w-full rounded-xl border border-borde bg-crema-alto px-4 py-3.5 text-base outline-none placeholder:text-tinta-suave/50 focus:border-marron"
       />
 
       <div className="flex gap-2">
@@ -153,7 +153,7 @@ export default function Buscador() {
               setTalla("");
               setEstilo("");
             }}
-            className="shrink-0 text-sm text-dorado underline-offset-4 hover:underline"
+            className="shrink-0 text-sm text-marron-hondo underline-offset-4 hover:underline"
           >
             Quitar filtros
           </button>
@@ -217,7 +217,7 @@ export default function Buscador() {
                         className={`rounded-lg border px-2.5 py-1 text-sm tabular-nums ${
                           agotado
                             ? "border-borde bg-crema text-tinta-suave/50 line-through"
-                            : "border-dorado-claro bg-dorado-tenue text-tinta"
+                            : "border-marron-suave bg-marron-tenue text-tinta"
                         }`}
                       >
                         {t.talla}
