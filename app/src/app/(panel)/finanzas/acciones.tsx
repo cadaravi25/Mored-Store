@@ -23,39 +23,6 @@ const METODOS = [
   { id: "transferencia", nombre: "Transferencia", moneda: "BS" as const },
 ];
 
-export function ActualizarTasas() {
-  const router = useRouter();
-  const [cargando, setCargando] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  async function actualizar() {
-    setCargando(true);
-    setError(null);
-    const r = await fetch("/api/bcv", { method: "POST" });
-    if (!r.ok) {
-      const cuerpo = await r.json().catch(() => ({}));
-      setError(cuerpo.error ?? "No se pudo consultar el BCV.");
-    } else {
-      router.refresh();
-    }
-    setCargando(false);
-  }
-
-  return (
-    <div>
-      <button
-        type="button"
-        onClick={actualizar}
-        disabled={cargando}
-        className="text-sm text-marron-hondo underline-offset-4 hover:underline disabled:opacity-50"
-      >
-        {cargando ? "Consultando…" : "Actualizar del BCV"}
-      </button>
-      {error && <p className="mt-1 text-xs text-alerta">{error}</p>}
-    </div>
-  );
-}
-
 export function NuevoMovimiento({ tasa }: { tasa: number | null }) {
   const router = useRouter();
   const [abierto, setAbierto] = useState(false);

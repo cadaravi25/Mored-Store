@@ -1,7 +1,8 @@
 ﻿import Link from "next/link";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import { diaEnCaracas, inicioDelDia } from "@/lib/fechas";
-import { ActualizarTasas, NuevoMovimiento } from "./acciones";
+import { NuevoMovimiento } from "./acciones";
+import { BarraTasas, TasaDeVenta } from "./tasas";
 
 export const dynamic = "force-dynamic";
 
@@ -63,14 +64,9 @@ export default async function Finanzas({
 
   const supabase = await crearClienteServidor();
 
-  const [{ data: reporte }, { data: bcv }, { data: tasaVenta }, { data: movimientos }] =
+  const [{ data: reporte }, { data: tasaVenta }, { data: movimientos }] =
     await Promise.all([
       supabase.rpc("reporte_finanzas", { p_desde: desde, p_hasta: hasta }),
-      supabase
-        .from("tasas_bcv")
-        .select("fecha,bs_por_usd,bs_por_eur")
-        .order("fecha", { ascending: false })
-        .limit(2),
       supabase
         .from("tasas_venta")
         .select("fecha,bs_por_usd,base")
@@ -86,20 +82,26 @@ export default async function Finanzas({
     ]);
 
   const r = (reporte?.[0] ?? {}) as Record<string, number>;
-  const hoy = fecha(0);
-  const vigente = (bcv ?? []).find((x) => x.fecha <= hoy);
-  const proxima = (bcv ?? []).find((x) => x.fecha > hoy);
 
   return (
     <main className="mx-auto w-full max-w-6xl px-5 py-7">
-      <header className="mb-6 flex flex-wrap items-baseline justify-between gap-4">
-        <div>
+      <header className="mb-6 flex flex-wrap items-center gap-4">
+        <div className="shrink-0">
           <h1 className="text-2xl text-tinta">Finanzas</h1>
           <p className="mt-1 text-sm text-tinta-suave">
             {periodo.dias === 0 ? "Hoy" : `Últimos ${periodo.dias + 1} días`}
           </p>
         </div>
-        <nav className="flex gap-1.5">
+
+        {/* En pantalla ancha la barra de tasas va entre el título y los
+            períodos; en la tablet en vertical se baja a su propia línea. */}
+        <div className="order-last w-full lg:order-none lg:w-auto lg:flex-1">
+          <BarraTasas
+            tasaVenta={tasaVenta ? Number(tasaVenta.bs_por_usd) : null}
+          />
+        </div>
+
+        <nav className="ml-auto flex shrink-0 gap-1.5">
           {PERIODOS.map((x) => (
             <Link
               key={x.id}
@@ -141,7 +143,7 @@ export default async function Finanzas({
         />
       </section>
 
-      <section className="mb-3 grid gap-3 lg:grid-cols-3">
+      <section className="mb-3 grid gap-3 sm:grid-cols-2">
         <div className="rounded-2xl border border-borde bg-crema-alto p-5">
           <p className="text-xs uppercase tracking-wide text-tinta-suave">
             Cómo cobraron
@@ -168,49 +170,11 @@ export default async function Finanzas({
           </div>
         </div>
 
-        <div className="rounded-2xl border border-borde bg-crema-alto p-5 lg:col-span-2">
-          <div className="flex items-baseline justify-between gap-3">
-            <p className="text-xs uppercase tracking-wide text-tinta-suave">
-              Tasas
-            </p>
-            <ActualizarTasas />
-          </div>
-
-          {vigente ? (
-            <div className="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-3">
-              <div>
-                <p className="text-xl tabular-nums text-tinta">
-                  {num.format(Number(vigente.bs_por_eur ?? 0))}
-                </p>
-                <p className="text-xs text-tinta-suave">Euro BCV, con la que cobran</p>
-              </div>
-              <div>
-                <p className="text-xl tabular-nums text-tinta-suave">
-                  {num.format(Number(vigente.bs_por_usd ?? 0))}
-                </p>
-                <p className="text-xs text-tinta-suave">Dólar BCV</p>
-              </div>
-              <div>
-                <p className="text-xl tabular-nums text-marron-hondo">
-                  {tasaVenta ? num.format(Number(tasaVenta.bs_por_usd)) : "—"}
-                </p>
-                <p className="text-xs text-tinta-suave">La que está aplicando el sistema</p>
-              </div>
-            </div>
-          ) : (
-            <p className="mt-3 text-sm text-tinta-suave">
-              Sin tasas guardadas todavía. Toca &laquo;Actualizar del BCV&raquo;.
-            </p>
-          )}
-
-          {proxima && (
-            <p className="mt-3 rounded-lg bg-marron-tenue px-3 py-2 text-xs text-tinta">
-              El BCV ya publicó la tasa del {proxima.fecha}:{" "}
-              {num.format(Number(proxima.bs_por_eur ?? 0))} Bs por euro. Todavía
-              no rige, así que el sistema sigue cobrando con la de hoy.
-            </p>
-          )}
-        </div>
+        <TasaDeVenta
+          tasa={tasaVenta ? Number(tasaVenta.bs_por_usd) : null}
+          base={tasaVenta?.base ?? null}
+          fecha={tasaVenta?.fecha ?? null}
+        />
       </section>
 
       <section className="rounded-2xl border border-borde bg-crema-alto p-5">

@@ -1,4 +1,5 @@
 import { crearClienteServidor } from "@/lib/supabase/server";
+import { diaEnCaracas } from "@/lib/fechas";
 import PuntoDeVenta from "./punto-de-venta";
 
 export const dynamic = "force-dynamic";
@@ -11,7 +12,7 @@ export default async function Vender() {
   const { data: tasa } = await supabase
     .from("tasas_venta")
     .select("bs_por_usd")
-    .lte("fecha", new Date().toISOString().slice(0, 10))
+    .lte("fecha", diaEnCaracas())
     .order("fecha", { ascending: false })
     .limit(1)
     .maybeSingle();

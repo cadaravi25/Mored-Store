@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { crearClienteNavegador } from "@/lib/supabase/client";
+import { diaEnCaracas } from "@/lib/fechas";
 
 interface Variante {
   variante_id: string;
@@ -110,9 +111,9 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
     if (!valor || valor <= 0) return;
     const supabase = crearClienteNavegador();
     await supabase.from("tasas_venta").upsert({
-      fecha: new Date().toISOString().slice(0, 10),
+      fecha: diaEnCaracas(),
       bs_por_usd: valor,
-      base: "bcv_eur",
+      base: "manual",
     });
     setTasa(valor);
   }
