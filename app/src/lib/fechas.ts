@@ -72,11 +72,7 @@ const CON_DIA_SEMANA = new Intl.DateTimeFormat("es-VE", {
   timeZone: ZONA,
 });
 
-/** "vie 31 julio". Se arma por partes porque el formato de es-VE mete comas y
- *  un "de" que aquí sobran. */
+/** "vie, 31 de julio". */
 export function conDiaSemana(fecha: string): string {
-  return CON_DIA_SEMANA.formatToParts(new Date(`${fecha}T12:00:00Z`))
-    .filter((p) => p.type === "weekday" || p.type === "day" || p.type === "month")
-    .map((p) => p.value.replace(/\.$/, ""))
-    .join(" ");
+  return CON_DIA_SEMANA.format(new Date(`${fecha}T12:00:00Z`));
 }
