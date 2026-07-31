@@ -20,34 +20,13 @@ interface Fila {
 async function guardar(
   supabase: Awaited<ReturnType<typeof crearClienteServidor>>,
 ): Promise<boolean> {
-  const { usd, eur } = await consultarBcv();
-  if (!usd && !eur) return false;
+  const leidas = await consultarBcv();
+  if (leidas.length === 0) return false;
 
-  // Las dos monedas pueden traer fechas efectivas distintas si una se
-  // actualizó antes que la otra, así que se agrupan por fecha.
-  const porFecha = new Map<string, { usd?: number; eur?: number }>();
-  if (usd)
-    porFecha.set(usd.fechaEfectiva, {
-      ...porFecha.get(usd.fechaEfectiva),
-      usd: usd.tasa,
-    });
-  if (eur)
-    porFecha.set(eur.fechaEfectiva, {
-      ...porFecha.get(eur.fechaEfectiva),
-      eur: eur.tasa,
-    });
-
-  const filas = [...porFecha.entries()].map(([fecha, v]) => ({
-    fecha,
-    bs_por_usd: v.usd ?? null,
-    bs_por_eur: v.eur ?? null,
-    fuente: "Banco Central de Venezuela · dolarapi.com",
-    obtenido_at: new Date().toISOString(),
-  }));
-
-  const { error } = await supabase
-    .from("tasas_bcv")
-    .upsert(filas, { onConflict: "fecha" });
+  const { error } = await supabase.from("tasas_bcv").upsert(
+    leidas.map((f) => ({ ...f, obtenido_at: new Date().toISOString() })),
+    { onConflict: "fecha" },
+  );
 
   return !error;
 }
@@ -85,18 +64,36 @@ export async function GET() {
     !ultima ||
     Date.now() - new Date(ultima.obtenido_at).getTime() >
       REFRESCO_HORAS * 3600_000;
-  const faltaHoy = !filas.some((f) => f.fecha === hoy);
+  // El fin de semana nunca va a haber una fila con la fecha de hoy, así que se
+  // considera cubierto también si ya está la del próximo día hábil. Si no,
+  // cada carga de la pantalla saldría a buscar al sitio del BCV.
+  const cubierto = filas.some((f) => f.fecha >= hoy);
 
   let sinConexion = false;
-  if (faltaHoy || rato) {
+  if (!cubierto || rato) {
     const bien = await guardar(supabase);
     if (bien) filas = await leer();
     // Sin conexión no es un error: se sigue trabajando con la última guardada.
     else sinConexion = true;
   }
 
-  const vigente = filas.find((f) => f.fecha <= hoy) ?? null;
-  const proxima = filas.find((f) => f.fecha > hoy) ?? null;
+  // Qué tasa rige hoy.
+  //
+  // Si hay una publicada con fecha valor de hoy, esa. Si no la hay (sábado,
+  // domingo o feriado), rige la del próximo día hábil, que es lo que hacen
+  // ellas: el sábado ya cobran con la del lunes. Y si tampoco hay futura,
+  // queda la última que hubo.
+  const deHoy = filas.find((f) => f.fecha === hoy) ?? null;
+  const futuras = filas
+    .filter((f) => f.fecha > hoy)
+    .sort((a, b) => a.fecha.localeCompare(b.fecha));
+  const pasadas = filas
+    .filter((f) => f.fecha < hoy)
+    .sort((a, b) => b.fecha.localeCompare(a.fecha));
+
+  const vigente = deHoy ?? futuras[0] ?? pasadas[0] ?? null;
+  // La próxima solo es "próxima" mientras no sea ya la vigente.
+  const proxima = deHoy ? (futuras[0] ?? null) : null;
 
   // La tasa con la que se cobra. Si no hay ninguna para hoy, se deja puesta la
   // del euro del BCV, que es como cobran: así el punto de venta nunca tiene
