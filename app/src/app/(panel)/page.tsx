@@ -1,5 +1,6 @@
 ﻿import Link from "next/link";
 import { crearClienteServidor } from "@/lib/supabase/server";
+import { diaEnCaracas, inicioDelDia, finDelDia, enPalabras } from "@/lib/fechas";
 
 export const dynamic = "force-dynamic";
 
@@ -47,7 +48,7 @@ function Tarjeta({
 
 export default async function Panel() {
   const supabase = await crearClienteServidor();
-  const hoy = new Date().toISOString().slice(0, 10);
+  const hoy = diaEnCaracas();
 
   const [{ data: variantes }, { data: ventasHoy }, { data: ultimas }] =
     await Promise.all([
@@ -58,7 +59,8 @@ export default async function Panel() {
       supabase
         .from("ventas")
         .select("id,total_usd")
-        .gte("creado_at", hoy)
+        .gte("creado_at", inicioDelDia(hoy))
+        .lt("creado_at", finDelDia(hoy))
         .neq("estado", "anulada"),
       supabase
         .from("ventas")
@@ -92,11 +94,7 @@ export default async function Panel() {
       <header className="mb-7">
         <h1 className="text-2xl text-tinta">Panel</h1>
         <p className="mt-1 text-sm capitalize text-tinta-suave">
-          {new Intl.DateTimeFormat("es-VE", {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-          }).format(new Date())}
+          {enPalabras(hoy)}
         </p>
       </header>
 

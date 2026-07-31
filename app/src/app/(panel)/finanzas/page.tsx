@@ -1,5 +1,6 @@
 ﻿import Link from "next/link";
 import { crearClienteServidor } from "@/lib/supabase/server";
+import { diaEnCaracas, inicioDelDia } from "@/lib/fechas";
 import { ActualizarTasas, NuevoMovimiento } from "./acciones";
 
 export const dynamic = "force-dynamic";
@@ -17,10 +18,11 @@ const PERIODOS = [
   { id: "90", nombre: "90 días", dias: 89 },
 ];
 
+/** Hace `dias` días, contado sobre el calendario de Caracas. */
 function fecha(dias: number): string {
   const d = new Date();
-  d.setDate(d.getDate() - dias);
-  return d.toISOString().slice(0, 10);
+  d.setUTCDate(d.getUTCDate() - dias);
+  return diaEnCaracas(d);
 }
 
 function Dato({
@@ -78,7 +80,7 @@ export default async function Finanzas({
       supabase
         .from("movimientos_financieros")
         .select("id,tipo,concepto,categoria,monto_original,moneda,monto_usd,ocurrido_at")
-        .gte("ocurrido_at", desde)
+        .gte("ocurrido_at", inicioDelDia(desde))
         .order("ocurrido_at", { ascending: false })
         .limit(25),
     ]);

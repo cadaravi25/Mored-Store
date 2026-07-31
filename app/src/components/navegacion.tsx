@@ -66,6 +66,17 @@ const ITEMS: Item[] = [
     ),
   },
   {
+    href: "/caja",
+    etiqueta: "Caja",
+    icono: (
+      <svg viewBox="0 0 24 24" {...trazo}>
+        <rect x="2" y="6" width="20" height="12" rx="2" />
+        <circle cx="12" cy="12" r="2.6" />
+        <path d="M6 10v4M18 10v4" />
+      </svg>
+    ),
+  },
+  {
     href: "/finanzas",
     etiqueta: "Finanzas",
     icono: (
@@ -182,12 +193,12 @@ export function Inferior() {
           <Link
             key={i.href}
             href={i.href}
-            className={`flex flex-1 flex-col items-center gap-1 py-2.5 text-[11px] ${
+            className={`flex min-w-0 flex-1 flex-col items-center gap-1 py-2.5 text-[11px] ${
               activo ? "text-marron-hondo" : "text-tinta-suave"
             }`}
           >
             <span className="h-5 w-5">{i.icono}</span>
-            {i.etiqueta}
+            <span className="max-w-full truncate px-0.5">{i.etiqueta}</span>
           </Link>
         );
       })}
