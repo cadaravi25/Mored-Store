@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { crearClienteNavegador } from "@/lib/supabase/client";
-import { diaEnCaracas, enCorto } from "@/lib/fechas";
+import { conDiaSemana, diaEnCaracas, enCorto } from "@/lib/fechas";
 
 interface Tasa {
   fecha: string;
@@ -155,8 +155,8 @@ export function BarraTasas({ tasaVenta }: { tasaVenta: number | null }) {
         </span>
       )}
 
-      <div className="ml-auto flex items-center gap-2.5 text-[11px] text-tinta-suave">
-        {v && <span>vigente {enCorto(v.fecha)}</span>}
+      <div className="flex items-center gap-2.5 text-[11px] text-tinta-suave">
+        {v && <span>Vigente {conDiaSemana(v.fecha)}</span>}
         {estado?.sinConexion && (
           <span className="text-alerta">sin conexión</span>
         )}
