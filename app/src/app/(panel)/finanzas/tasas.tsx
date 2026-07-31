@@ -43,7 +43,7 @@ function Moneda({
   simbolo: string;
   valor: number | null;
   destacada?: boolean;
-  pie: string;
+  pie?: string;
 }) {
   return (
     <div className="flex items-center gap-2">
@@ -64,7 +64,9 @@ function Moneda({
         >
           {valor === null ? "—" : `Bs ${bs.format(valor)}`}
         </span>
-        <span className="block text-[11px] text-tinta-suave">{pie}</span>
+        {pie && (
+          <span className="block text-[11px] text-tinta-suave">{pie}</span>
+        )}
       </span>
     </div>
   );
@@ -133,7 +135,6 @@ export function BarraTasas({ tasaVenta }: { tasaVenta: number | null }) {
         simbolo="€"
         valor={v?.bs_por_eur ? Number(v.bs_por_eur) * factor : null}
         destacada
-        pie="con la que cobran"
       />
       <Moneda
         simbolo="$"
