@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { crearClienteNavegador } from "@/lib/supabase/client";
 import { diaEnCaracas } from "@/lib/fechas";
-import SelectorCliente, { type Elegida } from "./selector-cliente";
+import SelectorCliente, { type Elegido } from "./selector-cliente";
 
 interface Variante {
   variante_id: string;
@@ -50,7 +50,7 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
   const [carrito, setCarrito] = useState<Linea[]>([]);
   const [pagos, setPagos] = useState<Pago[]>([]);
   const [cobrando, setCobrando] = useState(false);
-  const [cliente, setCliente] = useState<Elegida | null>(null);
+  const [cliente, setCliente] = useState<Elegido | null>(null);
   const [tasa, setTasa] = useState<number | null>(tasaInicial);
   const [tasaTexto, setTasaTexto] = useState("");
   const [guardando, setGuardando] = useState(false);
@@ -296,7 +296,7 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
 
         {cobrando && (
           <div className="space-y-3 rounded-2xl border border-borde bg-crema-alto p-4">
-            <SelectorCliente elegida={cliente} onElegir={setCliente} />
+            <SelectorCliente elegido={cliente} onElegir={setCliente} />
 
             {!tasa && (
               <div className="rounded-xl bg-marron-tenue p-3">

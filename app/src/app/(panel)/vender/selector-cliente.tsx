@@ -10,7 +10,7 @@ interface Sugerencia {
   instagram: string | null;
 }
 
-export interface Elegida {
+export interface Elegido {
   id: string;
   nombre: string;
 }
@@ -21,11 +21,11 @@ export interface Elegida {
  * para cobrar haría que dejen de usar el sistema en hora pico.
  */
 export default function SelectorCliente({
-  elegida,
+  elegido,
   onElegir,
 }: {
-  elegida: Elegida | null;
-  onElegir: (c: Elegida | null) => void;
+  elegido: Elegido | null;
+  onElegir: (c: Elegido | null) => void;
 }) {
   const [abierto, setAbierto] = useState(false);
   const [termino, setTermino] = useState("");
@@ -68,7 +68,7 @@ export default function SelectorCliente({
     elegir({ id: data as string, nombre });
   }
 
-  function elegir(c: Elegida) {
+  function elegir(c: Elegido) {
     onElegir(c);
     setAbierto(false);
     setTermino("");
@@ -76,16 +76,16 @@ export default function SelectorCliente({
     setSugerencias([]);
   }
 
-  if (elegida) {
+  if (elegido) {
     return (
       <div className="flex items-center gap-2 rounded-xl bg-marron-tenue px-3 py-2">
         <span className="min-w-0 flex-1 truncate text-sm text-tinta">
-          {elegida.nombre}
+          {elegido.nombre}
         </span>
         <button
           type="button"
           onClick={() => onElegir(null)}
-          aria-label="Quitar la clienta"
+          aria-label="Quitar el cliente"
           className="shrink-0 text-sm text-tinta-suave hover:text-tinta"
         >
           ×
@@ -101,7 +101,7 @@ export default function SelectorCliente({
         onClick={() => setAbierto(true)}
         className="w-full rounded-xl border border-dashed border-borde px-3 py-2 text-left text-sm text-tinta-suave hover:border-marron-suave"
       >
-        + A nombre de una clienta
+        + A nombre de un cliente
       </button>
     );
   }
@@ -142,7 +142,7 @@ export default function SelectorCliente({
       )}
 
       {/* Solo se ofrece crear cuando no hay una con ese mismo nombre: es la
-          forma barata de no llenar la base de Marías repetidas. */}
+          forma barata de no llenar la base de nombres repetidos. */}
       {termino.trim().length >= 2 && !buscando && !exacta && (
         <div className="space-y-2 border-t border-borde pt-2">
           <input

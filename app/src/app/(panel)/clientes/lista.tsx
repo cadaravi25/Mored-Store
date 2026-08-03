@@ -32,7 +32,7 @@ function iniciales(nombre: string): string {
     .join("");
 }
 
-function Nueva({ onListo }: { onListo: () => void }) {
+function Nuevo({ onListo }: { onListo: () => void }) {
   const [abierto, setAbierto] = useState(false);
   const [nombre, setNombre] = useState("");
   const [telefono, setTelefono] = useState("");
@@ -59,7 +59,7 @@ function Nueva({ onListo }: { onListo: () => void }) {
       // El índice del teléfono es lo único que puede chocar aquí.
       setError(
         fallo.code === "23505"
-          ? "Ya hay una clienta con ese teléfono. Búscala arriba."
+          ? "Ya hay un cliente con ese teléfono. Búscalo arriba."
           : fallo.message,
       );
       setGuardando(false);
@@ -82,7 +82,7 @@ function Nueva({ onListo }: { onListo: () => void }) {
         onClick={() => setAbierto(true)}
         className="shrink-0 rounded-xl border border-borde bg-crema-alto px-4 py-2.5 text-sm text-tinta hover:border-marron-suave"
       >
-        Nueva clienta
+        Nuevo cliente
       </button>
     );
   }
@@ -178,7 +178,7 @@ export default function Lista({ iniciales: primeras }: { iniciales: Cliente[] })
           placeholder="Buscar por nombre, teléfono o Instagram"
           className="min-w-0 flex-1 rounded-xl border border-borde bg-crema-alto px-4 py-2.5 text-base outline-none placeholder:text-tinta-suave/60 focus:border-marron"
         />
-        <Nueva onListo={recargar} />
+        <Nuevo onListo={recargar} />
       </div>
 
       {resultados.length === 0 ? (
@@ -186,8 +186,8 @@ export default function Lista({ iniciales: primeras }: { iniciales: Cliente[] })
           {cargando
             ? "Buscando…"
             : termino
-              ? "Ninguna clienta con ese dato."
-              : "Todavía no hay clientas registradas."}
+              ? "Ningún cliente con ese dato."
+              : "Todavía no hay clientes registrados."}
         </p>
       ) : (
         <ul className="grid gap-2 sm:grid-cols-2">

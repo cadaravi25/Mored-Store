@@ -88,7 +88,7 @@ const ITEMS: Item[] = [
   },
   {
     href: "/clientes",
-    etiqueta: "Clientas",
+    etiqueta: "Clientes",
     icono: (
       <svg viewBox="0 0 24 24" {...trazo}>
         <circle cx="9" cy="8" r="3.2" />

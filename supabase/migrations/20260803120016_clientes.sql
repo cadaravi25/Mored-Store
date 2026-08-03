@@ -1,9 +1,9 @@
--- Mored Store: clientas
+-- Mored Store: clientes
 --
 -- La tabla existía desde el principio pero nadie la llenaba: el punto de venta
--- nunca preguntaba por la clienta. Aquí se le da uso.
+-- nunca preguntaba por el cliente. Aquí se le da uso.
 --
--- Lo que de verdad necesitan saber cuando una clienta escribe por Instagram no
+-- Lo que de verdad necesitan saber cuando un cliente escribe por Instagram no
 -- es cuánto gastó: es QUÉ TALLA USA y qué se llevó la última vez. Eso hoy vive
 -- en la memoria de las dos socias y en conversaciones de WhatsApp de hace tres
 -- meses. Por eso la ficha arranca por ahí y no por el total.
@@ -11,12 +11,17 @@
 begin;
 
 -- ============================================================================
--- 1. IDENTIDAD DE LA CLIENTA
+-- 1. IDENTIDAD DEL CLIENTE
 -- ============================================================================
 -- El teléfono es lo único que de verdad identifica a una persona acá: los
 -- nombres se repiten y se escriben de diez maneras. Se guarda como lo
 -- escriban, pero se compara por sus dígitos, para que 0414-1234567,
--- 04141234567 y +58 414 123 4567 sean la misma clienta.
+-- 04141234567 y +58 414 123 4567 sean el mismo cliente.
+--
+-- Todo lo que se llame desde acá va con el esquema por delante
+-- (public.f_...): al construir un índice, Postgres resuelve la función con el
+-- search_path de la sesión, que en el editor de Supabase no es el que uno
+-- supone. Sin calificar, falla con "la función no existe" aunque exista.
 
 create or replace function f_digitos(texto text)
 returns text
@@ -33,24 +38,28 @@ comment on function f_digitos is
 -- Los últimos 10 dígitos: así un número guardado con +58 y otro sin él siguen
 -- siendo el mismo. Se compara por la cola porque el prefijo del país es lo que
 -- aparece y desaparece.
+--
+-- La cuenta va escrita completa aquí dentro, sin llamar a f_digitos, porque
+-- esta función se usa en un índice y una dependencia menos es un problema
+-- menos al construirlo.
 create or replace function f_telefono_clave(texto text)
 returns text
 language sql
 immutable
 parallel safe
 as $$
-  select right(f_digitos(texto), 10);
+  select right(nullif(regexp_replace(coalesce(texto, ''), '\D', '', 'g'), ''), 10);
 $$;
 
-create unique index idx_clientes_telefono
-  on clientes (f_telefono_clave(telefono))
-  where f_telefono_clave(telefono) is not null;
+create unique index if not exists idx_clientes_telefono
+  on clientes (public.f_telefono_clave(telefono))
+  where public.f_telefono_clave(telefono) is not null;
 
-create index idx_clientes_nombre_trgm
-  on clientes using gin (f_normalizar(nombre) gin_trgm_ops);
+create index if not exists idx_clientes_nombre_trgm
+  on clientes using gin (public.f_normalizar(nombre) gin_trgm_ops);
 
-create index idx_clientes_instagram
-  on clientes (f_normalizar(instagram));
+create index if not exists idx_clientes_instagram
+  on clientes (public.f_normalizar(instagram));
 
 -- El arroba del Instagram lo escriben a veces sí y a veces no.
 create or replace function fn_limpiar_cliente()
@@ -66,6 +75,7 @@ begin
 end;
 $$;
 
+drop trigger if exists tg_limpiar_cliente on clientes;
 create trigger tg_limpiar_cliente
   before insert or update on clientes
   for each row execute function fn_limpiar_cliente();
@@ -107,10 +117,10 @@ as $$
   select *
     from v_clientes vc
    where coalesce(trim(p_termino), '') = ''
-      or f_normalizar(vc.nombre) like '%' || f_normalizar(trim(p_termino)) || '%'
-      or f_normalizar(coalesce(vc.instagram, '')) like '%' || f_normalizar(ltrim(trim(p_termino), '@')) || '%'
-      or (f_digitos(p_termino) is not null
-          and f_digitos(vc.telefono) like '%' || f_digitos(p_termino) || '%')
+      or public.f_normalizar(vc.nombre) like '%' || public.f_normalizar(trim(p_termino)) || '%'
+      or public.f_normalizar(coalesce(vc.instagram, '')) like '%' || public.f_normalizar(ltrim(trim(p_termino), '@')) || '%'
+      or (public.f_digitos(p_termino) is not null
+          and public.f_digitos(vc.telefono) like '%' || public.f_digitos(p_termino) || '%')
    order by vc.ultima_compra desc nulls last, vc.nombre
    limit greatest(p_limite, 1);
 $$;
@@ -121,7 +131,7 @@ grant execute on function buscar_clientes to authenticated;
 -- ============================================================================
 -- 3. LA FICHA
 -- ============================================================================
--- Todo lo de una clienta en una sola consulta: sus datos, qué tallas usa, qué
+-- Todo lo de un cliente en una sola consulta: sus datos, qué tallas usa, qué
 -- colores le gustan y sus últimas compras con las prendas.
 
 create or replace function ficha_cliente(p_cliente_id uuid)
@@ -149,7 +159,7 @@ as $$
       left join tipos_prenda tp on tp.id = pr.tipo_id
       -- El color guardado es texto libre; el catálogo es el que tiene el hex.
       left join colores_catalogo cc
-             on f_normalizar(cc.nombre) = f_normalizar(co.nombre)
+             on public.f_normalizar(cc.nombre) = public.f_normalizar(co.nombre)
   )
   select jsonb_build_object(
     'cliente', (select to_jsonb(c) from clientes c where c.id = p_cliente_id),
@@ -193,8 +203,8 @@ grant execute on function ficha_cliente to authenticated;
 -- 4. REGISTRAR UNA VENTA A NOMBRE DE ALGUIEN
 -- ============================================================================
 -- En el mostrador no se va a llenar una ficha completa: se escribe un nombre y
--- un teléfono mientras la clienta paga. Si ese teléfono ya existe, se usa la
--- clienta que ya está en vez de crear una repetida.
+-- un teléfono mientras el cliente paga. Si ese teléfono ya existe, se usa la
+-- cliente que ya está en vez de crear una repetida.
 
 create or replace function obtener_o_crear_cliente(
   p_nombre    text,
@@ -208,15 +218,15 @@ set search_path = public
 as $$
 declare
   v_id    uuid;
-  v_clave text := f_telefono_clave(p_telefono);
+  v_clave text := public.f_telefono_clave(p_telefono);
 begin
   if coalesce(trim(p_nombre), '') = '' then
-    raise exception 'La clienta necesita al menos un nombre.';
+    raise exception 'El cliente necesita al menos un nombre.';
   end if;
 
   if v_clave is not null then
     select id into v_id from clientes
-     where f_telefono_clave(telefono) = v_clave
+     where public.f_telefono_clave(telefono) = v_clave
      limit 1;
     if v_id is not null then
       -- Se completa lo que faltara, sin pisar lo que ya estaba escrito.

@@ -74,7 +74,7 @@ export default async function FichaCliente({
         href="/clientes"
         className="text-sm text-tinta-suave underline-offset-4 hover:underline"
       >
-        ← Clientas
+        ← Clientes
       </Link>
 
       <header className="mb-6 mt-3">
@@ -149,7 +149,7 @@ export default async function FichaCliente({
           {f.colores.length > 0 && (
             <div className="rounded-2xl border border-borde bg-crema-alto p-5">
               <p className="text-xs uppercase tracking-wide text-tinta-suave">
-                Colores que le gustan
+                Colores que prefiere
               </p>
               <ul className="mt-3 flex flex-wrap gap-2">
                 {f.colores.map((x) => (
@@ -181,7 +181,7 @@ export default async function FichaCliente({
 
         {f.historial.length === 0 ? (
           <p className="py-10 text-center text-sm text-tinta-suave">
-            Todavía no le han registrado ninguna compra.
+            Todavía no tiene compras registradas.
           </p>
         ) : (
           <ul className="mt-2 divide-y divide-borde">

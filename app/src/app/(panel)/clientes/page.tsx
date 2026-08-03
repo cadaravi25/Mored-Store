@@ -14,11 +14,11 @@ export default async function Clientes() {
   return (
     <main className="mx-auto w-full max-w-4xl px-5 py-7">
       <header className="mb-6">
-        <h1 className="text-2xl text-tinta">Clientas</h1>
+        <h1 className="text-2xl text-tinta">Clientes</h1>
         <p className="mt-1 text-sm text-tinta-suave">
           {clientes.length === 0
-            ? "Se van registrando solas al vender"
-            : `${clientes.length} registradas · ${conCompras.length} han comprado`}
+            ? "Se van registrando solos al vender"
+            : `${clientes.length} registrados · ${conCompras.length} han comprado`}
           {gastado > 0 &&
             ` · ${new Intl.NumberFormat("es-VE", {
               style: "currency",
