@@ -34,6 +34,14 @@ interface Linea {
 
 const TALLAS = ["XS", "S", "M", "L", "XL", "XXL"];
 
+/** Lenguaje de empaque. Los mismos casos que rechaza la base, para poder
+ *  avisar mientras escriben y no después de guardar. */
+const ES_EMPAQUE = [
+  /(^|\s)(sets?|packs?|combo|kit|juego|trio|d[úu]o)($|\s)/i,
+  /\d\s*(piezas?|pzas?|und|uds)/i,
+  /(^|\s)x\s*[2-9]($|\s)/i,
+];
+
 const dinero = new Intl.NumberFormat("es-VE", {
   style: "currency",
   currency: "USD",
@@ -103,8 +111,16 @@ export default function Formulario({
   // errores de costo, así que lo hace la app.
   const costoUnitario = piezas > 0 ? Number(precioPagado || 0) / piezas : 0;
 
+  // Cuántas piezas trae el paquete se indica arriba; no es un estilo. Si se
+  // cuela en el nombre queda pegado a cada prenda suelta para siempre.
+  const estiloEsEmpaque = ES_EMPAQUE.some((r) => r.test(detalle.trim()));
+
   const completa =
-    Boolean(tipoId) && Boolean(talla) && Number(precioPagado) > 0 && faltan === 0;
+    Boolean(tipoId) &&
+    Boolean(talla) &&
+    Number(precioPagado) > 0 &&
+    faltan === 0 &&
+    !estiloEsEmpaque;
 
   function sumarColor(nombre: string) {
     if (asignadas >= piezas) return;
@@ -135,13 +151,20 @@ export default function Formulario({
 
     if (estiloNuevo && estilo && !listaEstilos.some((e) => e.nombre === estilo)) {
       const supabase = crearClienteNavegador();
-      const { data: id } = await supabase.rpc("obtener_o_crear_estilo", {
-        p_nombre: estilo,
-      });
-      if (id)
-        setListaEstilos((prev) => [...prev, { id: id as string, nombre: estilo }]);
+      const { data: id, error: fallo } = await supabase.rpc(
+        "obtener_o_crear_estilo",
+        { p_nombre: estilo },
+      );
+      // Si el estilo no se pudo crear, la línea no se agrega: si no, el texto
+      // rechazado igual terminaría pegado al nombre de la prenda.
+      if (fallo || !id) {
+        setError(fallo?.message ?? "No se pudo guardar ese estilo.");
+        return;
+      }
+      setListaEstilos((prev) => [...prev, { id: id as string, nombre: estilo }]);
       setEstiloNuevo(false);
     }
+    setError(null);
 
     // Un color por línea: el pack se reparte en tantas líneas como colores.
     const nuevas: Linea[] = Object.entries(asignado).map(([color, cantidad]) => ({
@@ -285,13 +308,25 @@ export default function Formulario({
             </Chip>
           </div>
           {estiloNuevo && (
-            <input
-              value={detalle}
-              onChange={(e) => setDetalle(e.target.value)}
-              placeholder="cómo le dicen ustedes"
-              autoCapitalize="none"
-              className="mt-2 w-full rounded-lg border border-borde bg-crema px-4 py-3 text-base outline-none focus:border-marron"
-            />
+            <>
+              <input
+                value={detalle}
+                onChange={(e) => setDetalle(e.target.value)}
+                placeholder="cómo le dicen ustedes"
+                autoCapitalize="none"
+                className={`mt-2 w-full rounded-lg border bg-crema px-4 py-3 text-base outline-none ${
+                  estiloEsEmpaque
+                    ? "border-alerta"
+                    : "border-borde focus:border-marron"
+                }`}
+              />
+              {estiloEsEmpaque && (
+                <p className="mt-1.5 text-sm text-alerta">
+                  Cuántas piezas trae el paquete se indica más abajo. Acá va
+                  cómo es la prenda: musera, básico, árabe.
+                </p>
+              )}
+            </>
           )}
         </div>
 
@@ -315,6 +350,12 @@ export default function Formulario({
               </Chip>
             ))}
           </div>
+          {piezas > 1 && (
+            <p className="mt-2 text-xs text-tinta-suave">
+              El pack es solo la forma en que lo compraron. Entran{" "}
+              {piezas} prendas sueltas al inventario y se venden por separado.
+            </p>
+          )}
         </div>
 
         <div>
@@ -412,6 +453,9 @@ export default function Formulario({
           <div>
             <label htmlFor="venta" className="mb-2 block text-sm text-tinta-suave">
               Precio de venta
+              {piezas > 1 && (
+                <span className="text-tinta-suave/60"> de una prenda</span>
+              )}
             </label>
             <input
               id="venta"
