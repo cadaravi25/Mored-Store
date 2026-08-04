@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { crearClienteNavegador } from "@/lib/supabase/client";
 import { diaEnCaracas, enCorto } from "@/lib/fechas";
-import SelectorCliente, { type Elegido } from "./selector-cliente";
+import PasoCliente, { type Elegido } from "./selector-cliente";
 
 interface Variante {
   variante_id: string;
@@ -51,6 +51,8 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
   const [pagos, setPagos] = useState<Pago[]>([]);
   const [cobrando, setCobrando] = useState(false);
   const [cliente, setCliente] = useState<Elegido | null>(null);
+  // Se puede cobrar sin registrar a nadie, pero tiene que ser una decisión.
+  const [sinCliente, setSinCliente] = useState(false);
   const [tasa, setTasa] = useState<number | null>(tasaInicial);
   const [tasaTexto, setTasaTexto] = useState("");
   const [vigencia, setVigencia] = useState<string | null>(null);
@@ -173,6 +175,7 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
     setCarrito([]);
     setPagos([]);
     setCliente(null);
+    setSinCliente(false);
     setCobrando(false);
     setGuardando(false);
     setTermino("");
@@ -339,106 +342,146 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
 
         {cobrando && (
           <div className="space-y-3 rounded-2xl border border-borde bg-crema-alto p-4">
-            <SelectorCliente elegido={cliente} onElegir={setCliente} />
+            <PasoCliente
+              elegido={cliente}
+              onElegir={setCliente}
+              onOmitir={() => setSinCliente(true)}
+            />
 
-            {!tasa && (
-              <div className="rounded-xl bg-marron-tenue p-3">
-                <p className="mb-2 text-sm text-tinta">
-                  Falta la tasa de hoy para poder cobrar en bolívares.
-                </p>
-                <div className="flex gap-2">
-                  <input
-                    type="number"
-                    inputMode="decimal"
-                    value={tasaTexto}
-                    onChange={(e) => setTasaTexto(e.target.value)}
-                    placeholder="Bs por dólar"
-                    className="min-w-0 flex-1 rounded-lg border border-borde bg-crema px-3 py-2 text-sm tabular-nums outline-none focus:border-marron"
-                  />
-                  <button
-                    type="button"
-                    onClick={guardarTasa}
-                    className="shrink-0 rounded-lg bg-tinta px-4 py-2 text-sm text-crema-alto"
-                  >
-                    Guardar
-                  </button>
-                </div>
+            {cliente && (
+              <div className="flex items-center gap-2 rounded-xl bg-marron-tenue px-3 py-2">
+                <span className="min-w-0 flex-1 truncate text-sm text-tinta">
+                  {cliente.nombre}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setCliente(null)}
+                  aria-label="Cambiar de cliente"
+                  className="shrink-0 text-sm text-tinta-suave hover:text-tinta"
+                >
+                  ×
+                </button>
               </div>
             )}
 
-            <div className="flex flex-wrap gap-1.5">
-              {METODOS.filter((m) => m.moneda === "USD" || tasa).map((m) => (
+            {sinCliente && !cliente && (
+              <div className="flex items-center gap-2 rounded-xl border border-borde px-3 py-2">
+                <span className="min-w-0 flex-1 text-sm text-tinta-suave">
+                  Venta sin cliente
+                </span>
                 <button
-                  key={m.id}
                   type="button"
-                  onClick={() =>
-                    setPagos((p) => [
-                      ...p,
-                      {
-                        clave: crypto.randomUUID(),
-                        metodo: m.id,
-                        moneda: m.moneda,
-                        // Sugiere lo que falta: en la mayoría de las ventas se
-                        // paga todo con un solo método y no hay que teclear.
-                        monto:
-                          m.moneda === "BS" && tasa
-                            ? (falta * tasa).toFixed(2)
-                            : falta.toFixed(2),
-                      },
-                    ])
-                  }
-                  className="rounded-full border border-borde bg-crema px-3 py-2 text-sm text-tinta"
+                  onClick={() => setSinCliente(false)}
+                  className="shrink-0 text-xs text-marron-hondo underline-offset-4 hover:underline"
                 >
-                  {m.nombre}
+                  registrar
                 </button>
-              ))}
-            </div>
+              </div>
+            )}
 
-            {pagos.map((p) => {
-              const m = METODOS.find((x) => x.id === p.metodo)!;
-              return (
-                <div key={p.clave} className="flex items-center gap-2">
-                  <span className="w-28 shrink-0 text-sm text-tinta-suave">
-                    {m.nombre}
-                  </span>
-                  <input
-                    type="number"
-                    inputMode="decimal"
-                    value={p.monto}
-                    onChange={(e) =>
-                      setPagos((prev) =>
-                        prev.map((x) =>
-                          x.clave === p.clave ? { ...x, monto: e.target.value } : x,
-                        ),
-                      )
-                    }
-                    className="min-w-0 flex-1 rounded-lg border border-borde bg-crema px-3 py-2 text-sm tabular-nums outline-none focus:border-marron"
-                  />
-                  <span className="w-7 shrink-0 text-xs text-tinta-suave">
-                    {p.moneda === "BS" ? "Bs" : "$"}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setPagos((prev) => prev.filter((x) => x.clave !== p.clave))
-                    }
-                    aria-label="Quitar"
-                    className="shrink-0 px-1 text-tinta-suave"
-                  >
-                    ✕
-                  </button>
+            {(cliente || sinCliente) && (
+              <>
+
+                {!tasa && (
+                  <div className="rounded-xl bg-marron-tenue p-3">
+                    <p className="mb-2 text-sm text-tinta">
+                      Falta la tasa de hoy para poder cobrar en bolívares.
+                    </p>
+                    <div className="flex gap-2">
+                      <input
+                        type="number"
+                        inputMode="decimal"
+                        value={tasaTexto}
+                        onChange={(e) => setTasaTexto(e.target.value)}
+                        placeholder="Bs por dólar"
+                        className="min-w-0 flex-1 rounded-lg border border-borde bg-crema px-3 py-2 text-sm tabular-nums outline-none focus:border-marron"
+                      />
+                      <button
+                        type="button"
+                        onClick={guardarTasa}
+                        className="shrink-0 rounded-lg bg-tinta px-4 py-2 text-sm text-crema-alto"
+                      >
+                        Guardar
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex flex-wrap gap-1.5">
+                  {METODOS.filter((m) => m.moneda === "USD" || tasa).map((m) => (
+                    <button
+                      key={m.id}
+                      type="button"
+                      onClick={() =>
+                        setPagos((p) => [
+                          ...p,
+                          {
+                            clave: crypto.randomUUID(),
+                            metodo: m.id,
+                            moneda: m.moneda,
+                            // Sugiere lo que falta: en la mayoría de las ventas se
+                            // paga todo con un solo método y no hay que teclear.
+                            monto:
+                              m.moneda === "BS" && tasa
+                                ? (falta * tasa).toFixed(2)
+                                : falta.toFixed(2),
+                          },
+                        ])
+                      }
+                      className="rounded-full border border-borde bg-crema px-3 py-2 text-sm text-tinta"
+                    >
+                      {m.nombre}
+                    </button>
+                  ))}
                 </div>
-              );
-            })}
 
-            {pagos.length > 0 && (
-              <p className="text-right text-sm tabular-nums text-tinta-suave">
-                {falta > 0.01
-                  ? `Falta ${usd.format(falta)}`
-                  : pagadoUsd - total > 0.01
-                    ? `Vuelto ${usd.format(pagadoUsd - total)}`
-                    : "Cuadra exacto"}
-              </p>
+                {pagos.map((p) => {
+                  const m = METODOS.find((x) => x.id === p.metodo)!;
+                  return (
+                    <div key={p.clave} className="flex items-center gap-2">
+                      <span className="w-28 shrink-0 text-sm text-tinta-suave">
+                        {m.nombre}
+                      </span>
+                      <input
+                        type="number"
+                        inputMode="decimal"
+                        value={p.monto}
+                        onChange={(e) =>
+                          setPagos((prev) =>
+                            prev.map((x) =>
+                              x.clave === p.clave ? { ...x, monto: e.target.value } : x,
+                            ),
+                          )
+                        }
+                        className="min-w-0 flex-1 rounded-lg border border-borde bg-crema px-3 py-2 text-sm tabular-nums outline-none focus:border-marron"
+                      />
+                      <span className="w-7 shrink-0 text-xs text-tinta-suave">
+                        {p.moneda === "BS" ? "Bs" : "$"}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setPagos((prev) => prev.filter((x) => x.clave !== p.clave))
+                        }
+                        aria-label="Quitar"
+                        className="shrink-0 px-1 text-tinta-suave"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  );
+                })}
+
+                    {pagos.length > 0 && (
+                      <p className="text-right text-sm tabular-nums text-tinta-suave">
+                        {falta > 0.01
+                          ? `Falta ${usd.format(falta)}`
+                          : pagadoUsd - total > 0.01
+                            ? `Vuelto ${usd.format(pagadoUsd - total)}`
+                            : "Cuadra exacto"}
+                      </p>
+                    )}
+              </>
             )}
 
             {error && (
@@ -458,7 +501,12 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
               <button
                 type="button"
                 onClick={cobrar}
-                disabled={guardando || pagos.length === 0 || falta > 0.01}
+                disabled={
+                  guardando ||
+                  pagos.length === 0 ||
+                  falta > 0.01 ||
+                  !(cliente || sinCliente)
+                }
                 className="flex-1 rounded-xl bg-tinta px-4 py-3 text-crema-alto disabled:opacity-40"
               >
                 {guardando ? "Registrando…" : "Confirmar venta"}

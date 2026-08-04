@@ -3,176 +3,210 @@
 import { useEffect, useState } from "react";
 import { crearClienteNavegador } from "@/lib/supabase/client";
 
-interface Sugerencia {
-  id: string;
-  nombre: string;
-  telefono: string | null;
-  instagram: string | null;
-}
-
 export interface Elegido {
   id: string;
   nombre: string;
 }
 
+interface Encontrado {
+  id: string;
+  nombre: string;
+  cedula: string | null;
+  telefono: string | null;
+  compras: number;
+  total_usd: number;
+}
+
+const usd = new Intl.NumberFormat("es-VE", {
+  style: "currency",
+  currency: "USD",
+});
+
 /**
- * A nombre de quién va la venta. Es opcional a propósito: en el mostrador la
- * mayoría de las ventas son a alguien que pasó, y obligar a llenar una ficha
- * para cobrar haría que dejen de usar el sistema en hora pico.
+ * Primer paso del cobro: quién está comprando.
+ *
+ * Va por cédula porque es lo único que no cambia. El teléfono se cambia, se
+ * presta, y a veces la mamá paga con el suyo por la hija; la cédula no. Si ya
+ * compró antes aparece sola y no hay que escribir nada más.
  */
-export default function SelectorCliente({
+export default function PasoCliente({
   elegido,
   onElegir,
+  onOmitir,
 }: {
   elegido: Elegido | null;
-  onElegir: (c: Elegido | null) => void;
+  onElegir: (c: Elegido) => void;
+  onOmitir: () => void;
 }) {
-  const [abierto, setAbierto] = useState(false);
-  const [termino, setTermino] = useState("");
-  const [telefono, setTelefono] = useState("");
-  const [sugerencias, setSugerencias] = useState<Sugerencia[]>([]);
+  const [cedula, setCedula] = useState("");
+  const [encontrado, setEncontrado] = useState<Encontrado | null>(null);
+  const [buscado, setBuscado] = useState(false);
   const [buscando, setBuscando] = useState(false);
+  const [nombre, setNombre] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [guardando, setGuardando] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const digitos = cedula.replace(/\D/g, "");
+
+  // Se busca sola mientras escriben. Una cédula venezolana tiene entre 6 y 8
+  // dígitos, así que antes de 6 no vale la pena preguntar.
   useEffect(() => {
-    if (!abierto || termino.trim().length < 2) {
-      setSugerencias([]);
+    if (digitos.length < 6) {
+      setEncontrado(null);
+      setBuscado(false);
       return;
     }
+    let vivo = true;
     const t = setTimeout(async () => {
       setBuscando(true);
-      const { data } = await crearClienteNavegador().rpc("buscar_clientes", {
-        p_termino: termino,
-        p_limite: 5,
+      const { data } = await crearClienteNavegador().rpc("cliente_por_cedula", {
+        p_cedula: cedula,
       });
-      setSugerencias((data ?? []) as Sugerencia[]);
+      if (!vivo) return;
+      setEncontrado(((data ?? [])[0] as Encontrado | undefined) ?? null);
+      setBuscado(true);
       setBuscando(false);
-    }, 250);
-    return () => clearTimeout(t);
-  }, [termino, abierto]);
+    }, 350);
+    return () => {
+      vivo = false;
+      clearTimeout(t);
+    };
+  }, [cedula, digitos.length]);
 
-  async function crear() {
-    const nombre = termino.trim();
-    if (!nombre) return;
+  async function guardar() {
+    if (!nombre.trim()) return;
+    setGuardando(true);
     setError(null);
 
     const { data, error: fallo } = await crearClienteNavegador().rpc(
       "obtener_o_crear_cliente",
-      { p_nombre: nombre, p_telefono: telefono.trim() || null },
+      {
+        p_nombre: nombre.trim(),
+        p_cedula: cedula.trim() || null,
+        p_telefono: telefono.trim() || null,
+      },
     );
 
     if (fallo || !data) {
       setError(fallo?.message ?? "No se pudo guardar.");
+      setGuardando(false);
       return;
     }
-    elegir({ id: data as string, nombre });
+    setGuardando(false);
+    onElegir({ id: data as string, nombre: nombre.trim() });
   }
 
-  function elegir(c: Elegido) {
-    onElegir(c);
-    setAbierto(false);
-    setTermino("");
-    setTelefono("");
-    setSugerencias([]);
-  }
-
-  if (elegido) {
-    return (
-      <div className="flex items-center gap-2 rounded-xl bg-marron-tenue px-3 py-2">
-        <span className="min-w-0 flex-1 truncate text-sm text-tinta">
-          {elegido.nombre}
-        </span>
-        <button
-          type="button"
-          onClick={() => onElegir(null)}
-          aria-label="Quitar el cliente"
-          className="shrink-0 text-sm text-tinta-suave hover:text-tinta"
-        >
-          ×
-        </button>
-      </div>
-    );
-  }
-
-  if (!abierto) {
-    return (
-      <button
-        type="button"
-        onClick={() => setAbierto(true)}
-        className="w-full rounded-xl border border-dashed border-borde px-3 py-2 text-left text-sm text-tinta-suave hover:border-marron-suave"
-      >
-        + A nombre de un cliente
-      </button>
-    );
-  }
-
-  const exacta = sugerencias.some(
-    (s) => s.nombre.toLowerCase() === termino.trim().toLowerCase(),
-  );
+  if (elegido) return null;
 
   return (
-    <div className="space-y-2 rounded-xl border border-borde p-3">
-      <input
-        value={termino}
-        onChange={(e) => setTermino(e.target.value)}
-        placeholder="Nombre, teléfono o Instagram"
-        autoFocus
-        className="w-full rounded-lg border border-borde bg-crema px-3 py-2 text-sm outline-none focus:border-marron"
-      />
+    <div className="space-y-3 rounded-xl border border-borde p-3">
+      <div>
+        <label htmlFor="cedula" className="mb-1.5 block text-sm text-tinta-suave">
+          Cédula
+        </label>
+        <input
+          id="cedula"
+          value={cedula}
+          onChange={(e) => setCedula(e.target.value)}
+          inputMode="numeric"
+          autoFocus
+          placeholder="12345678"
+          className="w-full rounded-lg border border-borde bg-crema px-3 py-2.5 text-base tabular-nums outline-none focus:border-marron"
+        />
+      </div>
 
-      {sugerencias.length > 0 && (
-        <ul className="space-y-1">
-          {sugerencias.map((s) => (
-            <li key={s.id}>
-              <button
-                type="button"
-                onClick={() => elegir({ id: s.id, nombre: s.nombre })}
-                className="w-full rounded-lg px-2 py-1.5 text-left text-sm text-tinta hover:bg-crema"
-              >
-                {s.nombre}
-                {(s.telefono || s.instagram) && (
-                  <span className="ml-2 text-xs text-tinta-suave">
-                    {s.telefono ?? `@${s.instagram}`}
-                  </span>
-                )}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {/* Solo se ofrece crear cuando no hay una con ese mismo nombre: es la
-          forma barata de no llenar la base de nombres repetidos. */}
-      {termino.trim().length >= 2 && !buscando && !exacta && (
-        <div className="space-y-2 border-t border-borde pt-2">
-          <input
-            value={telefono}
-            onChange={(e) => setTelefono(e.target.value)}
-            inputMode="tel"
-            placeholder="Teléfono (opcional)"
-            className="w-full rounded-lg border border-borde bg-crema px-3 py-2 text-sm outline-none focus:border-marron"
-          />
+      {/* Ya compró antes: no hay nada más que escribir. */}
+      {encontrado && (
+        <div className="rounded-lg bg-marron-tenue p-3">
+          <p className="text-sm text-tinta">{encontrado.nombre}</p>
+          <p className="mt-0.5 text-xs text-tinta-suave">
+            {encontrado.compras > 0
+              ? `${encontrado.compras} ${
+                  encontrado.compras === 1 ? "compra" : "compras"
+                } · ${usd.format(Number(encontrado.total_usd))}`
+              : "Sin compras todavía"}
+            {encontrado.telefono && ` · ${encontrado.telefono}`}
+          </p>
           <button
             type="button"
-            onClick={crear}
-            className="w-full rounded-lg bg-tinta px-3 py-2 text-sm text-crema-alto"
+            onClick={() =>
+              onElegir({ id: encontrado.id, nombre: encontrado.nombre })
+            }
+            className="mt-2.5 w-full rounded-lg bg-tinta px-3 py-2 text-sm text-crema-alto"
           >
-            Guardar &laquo;{termino.trim()}&raquo; como nueva
+            Continuar
           </button>
         </div>
       )}
 
-      {error && <p className="text-xs text-alerta">{error}</p>}
+      {/* No está: se piden los dos datos que hacen falta y se guarda. */}
+      {buscado && !encontrado && !buscando && (
+        <>
+          <div>
+            <label
+              htmlFor="nombre"
+              className="mb-1.5 block text-sm text-tinta-suave"
+            >
+              Nombre
+            </label>
+            <input
+              id="nombre"
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
+              placeholder="Nombre y apellido"
+              className="w-full rounded-lg border border-borde bg-crema px-3 py-2.5 text-base outline-none focus:border-marron"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="celular"
+              className="mb-1.5 block text-sm text-tinta-suave"
+            >
+              Celular
+            </label>
+            <input
+              id="celular"
+              value={telefono}
+              onChange={(e) => setTelefono(e.target.value)}
+              inputMode="tel"
+              placeholder="04141234567"
+              className="w-full rounded-lg border border-borde bg-crema px-3 py-2.5 text-base tabular-nums outline-none focus:border-marron"
+            />
+          </div>
 
+          {error && (
+            <p
+              role="alert"
+              className="rounded-lg bg-alerta-tenue px-3 py-2 text-sm text-alerta"
+            >
+              {error}
+            </p>
+          )}
+
+          <button
+            type="button"
+            onClick={guardar}
+            disabled={guardando || !nombre.trim()}
+            className="w-full rounded-lg bg-tinta px-3 py-2.5 text-sm text-crema-alto disabled:opacity-50"
+          >
+            {guardando ? "Guardando…" : "Guardar y continuar"}
+          </button>
+        </>
+      )}
+
+      {buscando && <p className="text-xs text-tinta-suave">Buscando…</p>}
+
+      {/* La salida existe a propósito: si alguien no quiere dar la cédula, la
+          venta tiene que poder hacerse igual. Una caja trancada es una caja
+          que dejan de usar, y datos inventados para poder cobrar son peores
+          que no tener ninguno. */}
       <button
         type="button"
-        onClick={() => {
-          setAbierto(false);
-          setTermino("");
-        }}
+        onClick={onOmitir}
         className="text-xs text-tinta-suave underline-offset-4 hover:underline"
       >
-        Cancelar
+        Cobrar sin registrar al cliente
       </button>
     </div>
   );
