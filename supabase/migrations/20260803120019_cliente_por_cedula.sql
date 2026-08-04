@@ -54,8 +54,14 @@ create index if not exists idx_clientes_telefono
 -- ============================================================================
 -- 2. LA LISTA Y LA BÚSQUEDA INCLUYEN LA CÉDULA
 -- ============================================================================
+-- `create or replace view` no puede agregar una columna en el medio: cambiar
+-- el orden le suena a renombrar. Hay que rehacerla, y para eso primero se
+-- suelta la función que devuelve setof v_clientes, que depende de su tipo.
 
-create or replace view v_clientes as
+drop function if exists buscar_clientes(text, integer);
+drop view if exists v_clientes;
+
+create view v_clientes as
 select
   c.id,
   c.nombre,
@@ -76,7 +82,7 @@ group by c.id;
 alter view v_clientes set (security_invoker = true);
 grant select on v_clientes to authenticated;
 
-create or replace function buscar_clientes(
+create function buscar_clientes(
   p_termino text default null,
   p_limite  integer default 40
 )
