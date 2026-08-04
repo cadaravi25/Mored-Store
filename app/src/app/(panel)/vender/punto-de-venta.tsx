@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { crearClienteNavegador } from "@/lib/supabase/client";
-import { diaEnCaracas } from "@/lib/fechas";
+import { diaEnCaracas, enCorto } from "@/lib/fechas";
 import SelectorCliente, { type Elegido } from "./selector-cliente";
 
 interface Variante {
@@ -53,6 +53,8 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
   const [cliente, setCliente] = useState<Elegido | null>(null);
   const [tasa, setTasa] = useState<number | null>(tasaInicial);
   const [tasaTexto, setTasaTexto] = useState("");
+  const [vigencia, setVigencia] = useState<string | null>(null);
+  const [tasaManual, setTasaManual] = useState(false);
   const [guardando, setGuardando] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [listo, setListo] = useState<number | null>(null);
@@ -67,6 +69,27 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
     }, 200);
     return () => clearTimeout(t);
   }, [termino]);
+
+  // La tasa se pone al día al abrir la pantalla, no solo al entrar a Finanzas.
+  // Cobrar con la de ayer es un error silencioso: la venta se registra, nadie
+  // ve nada raro, y el monto en bolívares queda mal.
+  useEffect(() => {
+    let vivo = true;
+    fetch("/api/bcv", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error())))
+      .then((d) => {
+        if (!vivo || !d?.venta) return;
+        setTasa(Number(d.venta.bs_por_usd));
+        setVigencia(d.vigente?.fecha ?? null);
+        setTasaManual(d.venta.base === "manual");
+      })
+      .catch(() => {
+        // Sin conexión se sigue con la última guardada: no cobrar no es opción.
+      });
+    return () => {
+      vivo = false;
+    };
+  }, []);
 
   const total = useMemo(
     () => carrito.reduce((s, l) => s + l.cantidad * Number(l.precio_usd), 0),
@@ -282,6 +305,26 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
               {bs.format(total * tasa)} Bs
             </p>
           )}
+
+          {/* Con qué tasa se está cobrando, a la vista. Si está mal, se nota
+              antes de cobrar y no tres días después cuadrando la caja. */}
+          <p className="mt-3 flex flex-wrap items-baseline justify-between gap-x-2 border-t border-borde pt-2 text-xs text-tinta-suave">
+            <span>Tasa de hoy</span>
+            {tasa ? (
+              <span className="tabular-nums text-tinta">
+                {bs.format(tasa)} Bs
+                <span className="ml-1.5 text-tinta-suave">
+                  {tasaManual
+                    ? "puesta a mano"
+                    : vigencia
+                      ? `euro BCV del ${enCorto(vigencia)}`
+                      : "euro BCV"}
+                </span>
+              </span>
+            ) : (
+              <span className="text-alerta">sin cargar</span>
+            )}
+          </p>
 
           {carrito.length > 0 && !cobrando && (
             <button
