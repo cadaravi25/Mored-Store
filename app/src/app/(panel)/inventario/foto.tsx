@@ -87,6 +87,33 @@ export default function Foto({
     setOcupado(false);
   }
 
+  /**
+   * Pegar la foto desde el portapapeles.
+   *
+   * Es la salida al muro de SHEIN. Su servidor nos bloquea y sus fotos no
+   * vienen en la página, pero el TELÉFONO de ellas sí las tiene: las está
+   * viendo. Mantener presionada la imagen, "Copiar imagen", y pegar aquí.
+   * Quien baja la foto es su navegador, que sí tiene permiso de verla.
+   */
+  async function pegarFoto() {
+    setError(null);
+    try {
+      const partes = await navigator.clipboard.read();
+      for (const parte of partes) {
+        const tipo = parte.types.find((t) => t.startsWith("image/"));
+        if (!tipo) continue;
+        const blob = await parte.getType(tipo);
+        await subir(
+          new File([blob], `pegada.${tipo.split("/")[1]}`, { type: tipo }),
+        );
+        return;
+      }
+      setError("No hay ninguna foto copiada. Copia la imagen primero.");
+    } catch {
+      setError("El navegador no dejó leer lo copiado. Prueba con Subir foto.");
+    }
+  }
+
   async function subir(archivo: File | undefined) {
     if (!archivo) return;
     if (archivo.size > MAXIMO) {
@@ -117,7 +144,18 @@ export default function Foto({
   }
 
   return (
-    <div className="shrink-0">
+    <div
+      className="shrink-0"
+      onPaste={(e) => {
+        const archivo = Array.from(e.clipboardData.files).find((f) =>
+          f.type.startsWith("image/"),
+        );
+        if (archivo) {
+          e.preventDefault();
+          subir(archivo);
+        }
+      }}
+    >
       <label className="relative block h-20 w-20 cursor-pointer">
         <input
           type="file"
@@ -166,7 +204,14 @@ export default function Foto({
         </span>
       </label>
 
-      <div className="mt-1 flex w-20 justify-between text-[11px] text-tinta-suave">
+      <div className="mt-1 flex w-24 flex-wrap gap-x-2 text-[11px] text-tinta-suave">
+        <button
+          type="button"
+          onClick={pegarFoto}
+          className="underline-offset-2 hover:underline"
+        >
+          pegar
+        </button>
         <button
           type="button"
           onClick={() => setPegando(!pegando)}
