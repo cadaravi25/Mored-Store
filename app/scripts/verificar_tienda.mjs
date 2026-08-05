@@ -25,18 +25,15 @@ const publico = createClient(
   { auth: { persistSession: false } },
 );
 
-const { data: catalogo, error } = await publico
-  .from("v_catalogo")
-  .select("*")
-  .limit(200);
+const { data: catalogo, error } = await publico.rpc("catalogo_publico");
 
 if (error) {
-  console.error("v_catalogo NO se puede leer:", error.message);
-  console.error("¿Corriste la migración 20260804120020_catalogo_publico.sql?");
+  console.error("catalogo_publico NO se puede llamar:", error.message);
+  console.error("¿Corriste la migración 20260804120021_catalogo_por_funcion.sql?");
   process.exit(1);
 }
 
-console.log("v_catalogo:", catalogo.length, "filas visibles al público");
+console.log("catalogo_publico:", catalogo.length, "filas visibles al público");
 
 if (catalogo.length > 0) {
   const columnas = Object.keys(catalogo[0]);
@@ -53,6 +50,7 @@ if (catalogo.length > 0) {
 
 // Lo que un visitante NO debe poder tocar.
 const cerradas = [
+  "v_catalogo",
   "variantes",
   "productos",
   "clientes",

@@ -6,11 +6,9 @@ export const dynamic = "force-dynamic";
 export default async function Tienda() {
   const supabase = await crearClienteServidor();
 
-  // v_catalogo es lo único que el rol anónimo puede leer en toda la base.
-  const { data } = await supabase
-    .from("v_catalogo")
-    .select("*")
-    .order("producto");
+  // catalogo_publico es lo único que el rol anónimo puede llamar en toda la
+  // base. Ya viene ordenado por producto, color y talla.
+  const { data } = await supabase.rpc("catalogo_publico");
 
   return (
     <Vitrina

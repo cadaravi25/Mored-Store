@@ -8,10 +8,7 @@ export const dynamic = "force-dynamic";
 
 async function traer(id: string): Promise<FilaCatalogo[]> {
   const supabase = await crearClienteServidor();
-  const { data } = await supabase
-    .from("v_catalogo")
-    .select("*")
-    .eq("producto_id", id);
+  const { data } = await supabase.rpc("catalogo_publico", { p_producto: id });
   return (data ?? []) as FilaCatalogo[];
 }
 
