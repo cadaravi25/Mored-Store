@@ -6,6 +6,45 @@ export const dynamic = "force-dynamic";
 const MAXIMO = 6 * 1024 * 1024;
 const TIPOS = ["image/jpeg", "image/png", "image/webp", "image/avif"];
 
+// Un navegador de verdad. Varias tiendas devuelven 403 a cualquier otra cosa.
+const NAVEGADOR =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
+
+/**
+ * Saca la foto principal de la página de un producto.
+ *
+ * Se busca la que la propia tienda declara para cuando comparten el enlace por
+ * WhatsApp o Instagram: es la foto grande del producto, elegida por ellos. No
+ * hay que adivinar cuál del montón de imágenes de la página es la buena.
+ *
+ * Sirve para SHEIN, Temu, AliExpress y casi cualquier tienda, porque todas
+ * necesitan que su enlace se vea bien al compartirse.
+ */
+function fotoDeLaPagina(html: string, base: string): string | null {
+  const patrones = [
+    /<meta[^>]+(?:property|name)=["']og:image(?::secure_url|:url)?["'][^>]+content=["']([^"']+)["']/i,
+    /<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']og:image(?::secure_url|:url)?["']/i,
+    /<meta[^>]+(?:name|property)=["']twitter:image(?::src)?["'][^>]+content=["']([^"']+)["']/i,
+    /<link[^>]+rel=["']image_src["'][^>]+href=["']([^"']+)["']/i,
+    // Los datos estructurados que usa Google, cuando no hay etiquetas sociales.
+    /"image"\s*:\s*"([^"]+\.(?:jpe?g|png|webp)[^"]*)"/i,
+    /"image"\s*:\s*\[\s*"([^"]+)"/i,
+  ];
+
+  for (const patron of patrones) {
+    const encontrado = html.match(patron)?.[1];
+    if (!encontrado) continue;
+    const limpio = encontrado.replace(/&amp;/g, "&").trim();
+    try {
+      // Muchas vienen sin protocolo (//img.shein.com/...) o relativas.
+      return new URL(limpio, base).toString();
+    } catch {
+      continue;
+    }
+  }
+  return null;
+}
+
 /**
  * Guarda una foto a partir de un enlace.
  *
@@ -48,14 +87,20 @@ export async function POST(peticion: Request) {
     return NextResponse.json({ error: "Ese enlace no es válido." }, { status: 400 });
   }
 
+  async function abrir(destino: string | URL) {
+    return fetch(destino, {
+      cache: "no-store",
+      signal: AbortSignal.timeout(25_000),
+      headers: {
+        "User-Agent": NAVEGADOR,
+        Accept: "text/html,image/avif,image/webp,image/*,*/*;q=0.8",
+      },
+    });
+  }
+
   let respuesta: Response;
   try {
-    respuesta = await fetch(origen, {
-      cache: "no-store",
-      signal: AbortSignal.timeout(20_000),
-      // Algunos sitios devuelven 403 si no reconocen quién pide.
-      headers: { "User-Agent": "Mozilla/5.0 (compatible; MoredStore/1.0)" },
-    });
+    respuesta = await abrir(origen);
   } catch {
     return NextResponse.json(
       { error: "No se pudo abrir ese enlace." },
@@ -70,15 +115,47 @@ export async function POST(peticion: Request) {
     );
   }
 
-  const tipo = (respuesta.headers.get("content-type") ?? "").split(";")[0].trim();
+  let tipo = (respuesta.headers.get("content-type") ?? "").split(";")[0].trim();
+
+  // Si pegaron la página del producto y no la foto, se busca cuál es la foto
+  // principal y se sigue con esa. Es lo normal desde un teléfono: sacar el
+  // enlace de la imagen ahí es un fastidio, el del producto está a un toque.
   if (!TIPOS.includes(tipo)) {
-    return NextResponse.json(
-      {
-        error:
-          "Ese enlace no es una imagen. Tiene que terminar en la foto, no en la página del producto.",
-      },
-      { status: 400 },
-    );
+    if (!tipo.startsWith("text/html")) {
+      return NextResponse.json(
+        { error: "Ese enlace no lleva a una foto ni a una página de producto." },
+        { status: 400 },
+      );
+    }
+
+    const html = await respuesta.text();
+    const foto = fotoDeLaPagina(html, respuesta.url || origen.toString());
+    if (!foto) {
+      return NextResponse.json(
+        {
+          error:
+            "Esa página no dice cuál es su foto principal. Prueba con otro enlace o sube la foto.",
+        },
+        { status: 422 },
+      );
+    }
+
+    try {
+      respuesta = await abrir(foto);
+    } catch {
+      return NextResponse.json(
+        { error: "Se encontró la foto pero no se pudo bajar." },
+        { status: 502 },
+      );
+    }
+
+    tipo = (respuesta.headers.get("content-type") ?? "").split(";")[0].trim();
+    if (!respuesta.ok || !TIPOS.includes(tipo)) {
+      return NextResponse.json(
+        { error: "La foto de esa página no se pudo bajar." },
+        { status: 502 },
+      );
+    }
   }
 
   const datos = await respuesta.arrayBuffer();

@@ -52,9 +52,12 @@ export default function Foto({
     return true;
   }
 
-  /** El enlace no se guarda tal cual: se baja y se queda en el depósito
-   *  propio. Apuntar a la foto de otro sitio se rompe el día que la borran o
-   *  bloquean verla desde fuera, y la tienda queda con un cuadro roto. */
+  /** Acepta el enlace del producto, no solo el de la foto: desde un teléfono
+   *  sacar el de la imagen es un fastidio y el del producto está a un toque.
+   *
+   *  Sea cual sea, la foto se baja y se queda en el depósito propio. Apuntar a
+   *  la de otro sitio se rompe el día que la borran o bloquean verla desde
+   *  fuera, y la tienda queda con un cuadro roto. */
   async function desdeEnlace() {
     const valor = enlace.trim();
     if (!valor.startsWith("http")) {
@@ -187,7 +190,7 @@ export default function Foto({
           <input
             value={enlace}
             onChange={(e) => setEnlace(e.target.value)}
-            placeholder="https://…"
+            placeholder="enlace del producto o de la foto"
             autoCapitalize="none"
             spellCheck={false}
             className="min-w-0 flex-1 rounded-lg border border-borde bg-crema px-2 py-1 text-xs outline-none focus:border-marron"
