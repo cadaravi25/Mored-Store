@@ -30,6 +30,7 @@ export default function Foto({
   const [enlace, setEnlace] = useState("");
   const [pegando, setPegando] = useState(false);
   const [ocupado, setOcupado] = useState(false);
+  const [roto, setRoto] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // El color es único dentro del producto, así que con esos dos datos se llega
@@ -46,8 +47,41 @@ export default function Foto({
       return false;
     }
     setUrl(valor);
+    setRoto(false);
     setError(null);
     return true;
+  }
+
+  /** El enlace no se guarda tal cual: se baja y se queda en el depósito
+   *  propio. Apuntar a la foto de otro sitio se rompe el día que la borran o
+   *  bloquean verla desde fuera, y la tienda queda con un cuadro roto. */
+  async function desdeEnlace() {
+    const valor = enlace.trim();
+    if (!valor.startsWith("http")) {
+      setError("Eso no parece un enlace.");
+      return;
+    }
+    setOcupado(true);
+    setError(null);
+
+    const r = await fetch("/api/foto", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ producto_id: productoId, color, url: valor }),
+    });
+    const datos = await r.json().catch(() => ({}));
+
+    if (!r.ok) {
+      setError(datos.error ?? "No se pudo guardar esa foto.");
+      setOcupado(false);
+      return;
+    }
+
+    setUrl(datos.url);
+    setEnlace("");
+    setPegando(false);
+    setRoto(false);
+    setOcupado(false);
   }
 
   async function subir(archivo: File | undefined) {
@@ -91,11 +125,12 @@ export default function Foto({
             e.target.value = "";
           }}
         />
-        {url ? (
+        {url && !roto ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
             src={url}
             alt=""
+            onError={() => setRoto(true)}
             className="h-20 w-20 rounded-lg border border-borde object-cover"
           />
         ) : (
@@ -159,23 +194,18 @@ export default function Foto({
           />
           <button
             type="button"
-            onClick={async () => {
-              if (!enlace.trim().startsWith("http")) {
-                setError("Eso no parece un enlace.");
-                return;
-              }
-              setOcupado(true);
-              if (await guardar(enlace.trim())) {
-                setEnlace("");
-                setPegando(false);
-              }
-              setOcupado(false);
-            }}
+            onClick={desdeEnlace}
             className="shrink-0 rounded-lg bg-tinta px-2 py-1 text-xs text-crema-alto"
           >
             Usar
           </button>
         </div>
+      )}
+
+      {roto && !error && (
+        <p className="mt-1 w-52 text-[11px] text-alerta">
+          Esa foto no carga. Súbela o prueba con otro enlace.
+        </p>
       )}
 
       {error && <p className="mt-1 w-52 text-[11px] text-alerta">{error}</p>}
