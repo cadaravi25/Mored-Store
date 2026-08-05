@@ -131,10 +131,15 @@ export async function POST(peticion: Request) {
     const html = await respuesta.text();
     const foto = fotoDeLaPagina(html, respuesta.url || origen.toString());
     if (!foto) {
+      // SHEIN y Temu arman su página con JavaScript y no declaran su foto en
+      // ninguna parte, ni siquiera para WhatsApp. Comprobado. No es que el
+      // enlace esté mal, es que de ahí no se puede sacar.
+      const conocida = /shein|temu|aliexpress/i.test(origen.hostname);
       return NextResponse.json(
         {
-          error:
-            "Esa página no dice cuál es su foto principal. Prueba con otro enlace o sube la foto.",
+          error: conocida
+            ? "SHEIN no publica su foto para que otros la lean. Mantén presionada la imagen en el teléfono, guárdala, y súbela con el botón de arriba."
+            : "Esa página no dice cuál es su foto principal. Prueba con el enlace de la imagen o sube la foto.",
         },
         { status: 422 },
       );
