@@ -11,6 +11,7 @@ export interface Cliente {
   nombre: string;
   telefono: string | null;
   instagram: string | null;
+  cedula: string | null;
   nota: string | null;
   compras: number;
   total_usd: number;
@@ -34,6 +35,7 @@ function iniciales(nombre: string): string {
 
 function Nuevo({ onListo }: { onListo: () => void }) {
   const [abierto, setAbierto] = useState(false);
+  const [cedula, setCedula] = useState("");
   const [nombre, setNombre] = useState("");
   const [telefono, setTelefono] = useState("");
   const [instagram, setInstagram] = useState("");
@@ -50,22 +52,24 @@ function Nuevo({ onListo }: { onListo: () => void }) {
       .from("clientes")
       .insert({
         nombre: nombre.trim(),
+        cedula: cedula.trim() || null,
         telefono: telefono.trim() || null,
         instagram: instagram.trim() || null,
         nota: nota.trim() || null,
       });
 
     if (fallo) {
-      // El índice del teléfono es lo único que puede chocar aquí.
+      // La cédula es lo único único: el teléfono se puede repetir.
       setError(
         fallo.code === "23505"
-          ? "Ya hay un cliente con ese teléfono. Búscalo arriba."
+          ? "Ya hay un cliente con esa cédula. Búscalo arriba."
           : fallo.message,
       );
       setGuardando(false);
       return;
     }
 
+    setCedula("");
     setNombre("");
     setTelefono("");
     setInstagram("");
@@ -90,10 +94,17 @@ function Nuevo({ onListo }: { onListo: () => void }) {
   return (
     <div className="w-full space-y-3 rounded-2xl border border-borde bg-crema-alto p-4">
       <input
+        value={cedula}
+        onChange={(e) => setCedula(e.target.value)}
+        inputMode="numeric"
+        placeholder="Cédula"
+        autoFocus
+        className="w-full rounded-lg border border-borde bg-crema px-4 py-2.5 text-sm tabular-nums outline-none focus:border-marron"
+      />
+      <input
         value={nombre}
         onChange={(e) => setNombre(e.target.value)}
         placeholder="Nombre"
-        autoFocus
         className="w-full rounded-lg border border-borde bg-crema px-4 py-2.5 text-sm outline-none focus:border-marron"
       />
       <div className="flex flex-wrap gap-2">
@@ -175,7 +186,7 @@ export default function Lista({ iniciales: primeras }: { iniciales: Cliente[] })
         <input
           value={termino}
           onChange={(e) => setTermino(e.target.value)}
-          placeholder="Buscar por nombre, teléfono o Instagram"
+          placeholder="Buscar por cédula, nombre, teléfono o Instagram"
           className="min-w-0 flex-1 rounded-xl border border-borde bg-crema-alto px-4 py-2.5 text-base outline-none placeholder:text-tinta-suave/60 focus:border-marron"
         />
         <Nuevo onListo={recargar} />
@@ -205,8 +216,9 @@ export default function Lista({ iniciales: primeras }: { iniciales: Cliente[] })
                     {c.nombre}
                   </span>
                   <span className="block truncate text-xs text-tinta-suave">
-                    {c.telefono ??
-                      (c.instagram ? `@${c.instagram}` : "Sin contacto")}
+                    {[c.cedula, c.telefono ?? (c.instagram ? `@${c.instagram}` : null)]
+                      .filter(Boolean)
+                      .join(" · ") || "Sin datos"}
                   </span>
                 </span>
                 <span className="shrink-0 text-right">

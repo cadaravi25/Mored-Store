@@ -50,7 +50,7 @@ export default function Datos({ cliente }: { cliente: Cliente }) {
     if (fallo) {
       setError(
         fallo.code === "23505"
-          ? "Ese teléfono ya es de otro cliente."
+          ? "Esa cédula ya es de otro cliente."
           : fallo.message,
       );
       setGuardando(false);
