@@ -34,6 +34,18 @@ interface Linea {
 
 const TALLAS = ["XS", "S", "M", "L", "XL", "XXL"];
 
+/** Lo que el lector propone a partir de la captura. Trae qué prenda es, pero
+ *  nunca precios: esos se escriben a mano al pasarla al formulario. */
+interface Propuesta {
+  clave: string;
+  titulo: string;
+  tipo: string | null;
+  estilo: string | null;
+  talla: string | null;
+  piezas: number;
+  colores: string[];
+}
+
 /** Lenguaje de empaque. Los mismos casos que rechaza la base, para poder
  *  avisar mientras escriben y no después de guardar. */
 const ES_EMPAQUE = [
@@ -96,6 +108,8 @@ export default function Formulario({
   const [precioVenta, setPrecioVenta] = useState("");
 
   const [lineas, setLineas] = useState<Linea[]>([]);
+  const [propuestas, setPropuestas] = useState<Propuesta[]>([]);
+  const [leyendo, setLeyendo] = useState(false);
   const [guardando, setGuardando] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -142,6 +156,57 @@ export default function Formulario({
     // Si bajan la cantidad por debajo de lo ya repartido, se limpia: es más
     // claro volver a repartir que adivinar cuál color sobra.
     if (asignadas > n) setAsignado({});
+  }
+
+  async function leerCaptura(archivos: FileList | null) {
+    if (!archivos || archivos.length === 0) return;
+    setLeyendo(true);
+    setError(null);
+
+    const cuerpo = new FormData();
+    for (const a of Array.from(archivos).slice(0, 4)) cuerpo.append("imagenes", a);
+
+    const r = await fetch("/api/leer-pedido", { method: "POST", body: cuerpo });
+    const datos = await r.json().catch(() => ({}));
+
+    if (!r.ok) {
+      setError(datos.error ?? "No se pudo leer la captura.");
+      setLeyendo(false);
+      return;
+    }
+
+    setPropuestas(
+      (datos.lineas ?? []).map((l: Omit<Propuesta, "clave">) => ({
+        ...l,
+        clave: crypto.randomUUID(),
+      })),
+    );
+    setLeyendo(false);
+  }
+
+  /** La propuesta no se guarda: llena el formulario. Así los precios se
+   *  escriben a mano y todo pasa por la misma revisión de siempre. */
+  function usar(p: Propuesta) {
+    const tipo = tipos.find(
+      (t) => t.coleccion === coleccion && t.nombre === p.tipo,
+    );
+    if (tipo) setTipoId(tipo.id);
+    setDetalle(p.estilo ?? "");
+    setEstiloNuevo(false);
+    setTalla(p.talla ?? "");
+    setPiezas(p.piezas);
+
+    // Un color por pieza si la cuenta cuadra; si no, se reparte lo que hay y
+    // el contador de "faltan por repartir" se encarga de avisar.
+    const reparto: Record<string, number> = {};
+    if (p.colores.length === 1) {
+      reparto[p.colores[0]] = p.piezas;
+    } else {
+      for (const c of p.colores.slice(0, p.piezas)) reparto[c] = (reparto[c] ?? 0) + 1;
+    }
+    setAsignado(reparto);
+
+    setPropuestas((prev) => prev.filter((x) => x.clave !== p.clave));
   }
 
   async function agregar() {
@@ -216,6 +281,81 @@ export default function Formulario({
 
   return (
     <div className="space-y-6">
+      {/* Atajo, nunca obligación: si el modelo falla o no está disponible, se
+          carga a mano como siempre. */}
+      <div className="rounded-2xl border border-dashed border-borde p-4">
+        <label className="flex cursor-pointer items-center gap-3">
+          <input
+            type="file"
+            accept="image/png,image/jpeg,image/webp"
+            multiple
+            className="hidden"
+            onChange={(e) => {
+              leerCaptura(e.target.files);
+              e.target.value = "";
+            }}
+          />
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-marron-tenue text-marron-hondo">
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="4" width="18" height="16" rx="2" />
+              <path d="M3 15l5-4 4 3 3-2 6 5" />
+              <circle cx="9" cy="9" r="1.4" />
+            </svg>
+          </span>
+          <span className="min-w-0">
+            <span className="block text-sm text-tinta">
+              {leyendo ? "Leyendo la captura…" : "Leer la captura del pedido"}
+            </span>
+            <span className="block text-xs text-tinta-suave">
+              Saca las prendas, colores y tallas. Los precios se escriben a mano.
+            </span>
+          </span>
+        </label>
+      </div>
+
+      {propuestas.length > 0 && (
+        <div className="space-y-2">
+          <p className="text-sm text-tinta-suave">
+            {propuestas.length}{" "}
+            {propuestas.length === 1 ? "artículo leído" : "artículos leídos"}.
+            Toca uno para llenar el formulario y ponerle los precios.
+          </p>
+          {propuestas.map((p) => (
+            <div
+              key={p.clave}
+              className="flex items-center gap-3 rounded-xl border border-marron-suave bg-marron-tenue px-4 py-3"
+            >
+              <button
+                type="button"
+                onClick={() => usar(p)}
+                className="min-w-0 flex-1 text-left"
+              >
+                <span className="block truncate text-tinta">
+                  {[p.tipo, p.estilo].filter(Boolean).join(" ") || p.titulo}
+                </span>
+                <span className="block text-sm text-tinta-suave">
+                  {[
+                    p.talla ?? "sin talla",
+                    p.piezas === 1 ? "1 prenda" : `${p.piezas} prendas`,
+                    p.colores.join(", ") || "sin color",
+                  ].join(" · ")}
+                </span>
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  setPropuestas((prev) => prev.filter((x) => x.clave !== p.clave))
+                }
+                aria-label="Descartar"
+                className="shrink-0 px-1 text-tinta-suave"
+              >
+                ✕
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
       {lineas.length > 0 && (
         <ul className="space-y-2">
           {lineas.map((l) => (
