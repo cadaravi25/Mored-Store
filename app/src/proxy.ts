@@ -1,7 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const RUTAS_PUBLICAS = ["/entrar"];
+// La tienda es de cara a la calle: sin sesión y sin redirección. Todo lo que
+// muestra sale de v_catalogo, que es la única cosa que el rol anónimo puede
+// leer en toda la base.
+const RUTAS_PUBLICAS = ["/entrar", "/tienda"];
 
 /**
  * En Next 16 esto se llama `proxy`; hasta la 15 era `middleware`.

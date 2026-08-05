@@ -26,6 +26,14 @@
   --color-azul: #a4c1df;
   --color-azul-tenue: #e6eef6;
 
+  /* Mored Swim tiene su propia identidad: azul y coral. Solo se usa en la
+     tienda, donde el visitante está mirando una colección a la vez. */
+  --color-swim: #6ca0c6;
+  --color-swim-hondo: #3f6c8e;
+  --color-swim-suave: #b7d0e3;
+  --color-swim-tenue: #e8f0f6;
+  --color-coral: #e0827a;
+
   --color-tinta: #2b2620;
   --color-tinta-suave: #7a6f60;
   --color-alerta: #a2542f;
