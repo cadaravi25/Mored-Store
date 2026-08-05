@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { crearClienteNavegador } from "@/lib/supabase/client";
+import Foto from "./foto";
 
 interface Variante {
   variante_id: string;
@@ -119,6 +120,8 @@ export default function Buscador() {
   }, [visibles]);
 
   const totalPrendas = visibles.reduce((s, v) => s + v.disponible, 0);
+  // Sin foto, la prenda no sale en la tienda pública.
+  const sinFoto = grupos.filter((g) => !g.v.foto_url).length;
   const hayFiltro = Boolean(color || talla || estilo);
 
   return (
@@ -144,6 +147,12 @@ export default function Buscador() {
           {cargando
             ? "Buscando…"
             : `${grupos.length} ${grupos.length === 1 ? "resultado" : "resultados"} · ${totalPrendas} ${totalPrendas === 1 ? "prenda" : "prendas"}`}
+          {!cargando && sinFoto > 0 && (
+            <span className="text-alerta">
+              {" · "}
+              {sinFoto} sin foto
+            </span>
+          )}
         </p>
         {hayFiltro && (
           <button
@@ -166,28 +175,15 @@ export default function Buscador() {
             key={v.producto_id + v.color_nombre}
             className="flex gap-3.5 rounded-xl border border-borde bg-crema-alto p-3"
           >
-            {/* Mientras no haya foto, el cuadro muestra el color de la prenda:
-                se reconoce de un vistazo mejor que un recuadro gris vacío. */}
-            {v.foto_url ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={v.foto_url}
-                alt=""
-                className="h-20 w-20 shrink-0 rounded-lg object-cover"
-              />
-            ) : (
-              <div
-                aria-hidden
-                className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg border border-borde"
-                style={{ backgroundColor: v.color_hex ?? "#efe9dd" }}
-              >
-                {!v.color_hex && (
-                  <span className="text-lg text-tinta-suave">
-                    {v.producto_nombre.charAt(0)}
-                  </span>
-                )}
-              </div>
-            )}
+            {/* El cuadro es el botón de la foto. Mientras no haya, muestra el
+                color de la prenda: se reconoce mejor que un recuadro gris. */}
+            <Foto
+              productoId={v.producto_id}
+              color={v.color_nombre}
+              hex={v.color_hex}
+              inicial={v.foto_url}
+              letra={v.producto_nombre.charAt(0)}
+            />
 
             <div className="min-w-0 flex-1">
               <div className="flex items-start justify-between gap-3">

@@ -1,0 +1,184 @@
+"use client";
+
+import { useState } from "react";
+import { crearClienteNavegador } from "@/lib/supabase/client";
+
+const MAXIMO = 5 * 1024 * 1024;
+
+/**
+ * La foto del color, desde la misma tarjeta del inventario.
+ *
+ * Va a nivel de color y no de variante: cuatro tallas del mismo top en el
+ * mismo color son la misma foto. Y es lo que decide si la prenda sale o no en
+ * la tienda pública, así que el aviso de que falta vive aquí, donde ellas ya
+ * están mirando el inventario, y no en una pantalla aparte que nadie abre.
+ */
+export default function Foto({
+  productoId,
+  color,
+  hex,
+  inicial,
+  letra,
+}: {
+  productoId: string;
+  color: string;
+  hex: string | null;
+  inicial: string | null;
+  letra: string;
+}) {
+  const [url, setUrl] = useState<string | null>(inicial);
+  const [enlace, setEnlace] = useState("");
+  const [pegando, setPegando] = useState(false);
+  const [ocupado, setOcupado] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // El color es único dentro del producto, así que con esos dos datos se llega
+  // a la fila sin arrastrar el id por toda la búsqueda.
+  async function guardar(valor: string | null) {
+    const { error: fallo } = await crearClienteNavegador()
+      .from("colores")
+      .update({ foto_url: valor })
+      .eq("producto_id", productoId)
+      .eq("nombre", color);
+
+    if (fallo) {
+      setError(fallo.message);
+      return false;
+    }
+    setUrl(valor);
+    setError(null);
+    return true;
+  }
+
+  async function subir(archivo: File | undefined) {
+    if (!archivo) return;
+    if (archivo.size > MAXIMO) {
+      setError("Máximo 5 MB.");
+      return;
+    }
+    setOcupado(true);
+    setError(null);
+
+    const supabase = crearClienteNavegador();
+    const extension = archivo.name.split(".").pop()?.toLowerCase() ?? "jpg";
+    // La marca de tiempo evita que la foto vieja quede pegada en la caché.
+    const ruta = `${productoId}/${encodeURIComponent(color)}-${Date.now()}.${extension}`;
+
+    const { error: fallo } = await supabase.storage
+      .from("fotos")
+      .upload(ruta, archivo, { cacheControl: "31536000", upsert: true });
+
+    if (fallo) {
+      setError(fallo.message);
+      setOcupado(false);
+      return;
+    }
+
+    const { data } = supabase.storage.from("fotos").getPublicUrl(ruta);
+    await guardar(data.publicUrl);
+    setOcupado(false);
+  }
+
+  return (
+    <div className="shrink-0">
+      <label className="relative block h-20 w-20 cursor-pointer">
+        <input
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          className="hidden"
+          onChange={(e) => {
+            subir(e.target.files?.[0]);
+            e.target.value = "";
+          }}
+        />
+        {url ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={url}
+            alt=""
+            className="h-20 w-20 rounded-lg border border-borde object-cover"
+          />
+        ) : (
+          <span
+            aria-hidden
+            className="flex h-20 w-20 items-center justify-center rounded-lg border border-dashed border-marron-suave"
+            style={{ backgroundColor: hex ?? "#efe9dd" }}
+          >
+            {!hex && <span className="text-lg text-tinta-suave">{letra}</span>}
+          </span>
+        )}
+
+        <span className="absolute -bottom-1 -right-1 grid h-6 w-6 place-items-center rounded-full border border-borde bg-crema-alto text-tinta-suave">
+          {ocupado ? (
+            <span className="block h-3 w-3 animate-spin rounded-full border-2 border-marron border-t-transparent" />
+          ) : (
+            <svg
+              viewBox="0 0 24 24"
+              className="h-3.5 w-3.5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.8}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M4 8h3l1.5-2h7L17 8h3v11H4z" />
+              <circle cx="12" cy="13" r="3.2" />
+            </svg>
+          )}
+        </span>
+      </label>
+
+      <div className="mt-1 flex w-20 justify-between text-[11px] text-tinta-suave">
+        <button
+          type="button"
+          onClick={() => setPegando(!pegando)}
+          className="underline-offset-2 hover:underline"
+        >
+          enlace
+        </button>
+        {url && (
+          <button
+            type="button"
+            onClick={() => guardar(null)}
+            className="underline-offset-2 hover:underline"
+          >
+            quitar
+          </button>
+        )}
+      </div>
+
+      {pegando && (
+        <div className="mt-1 flex w-52 gap-1">
+          <input
+            value={enlace}
+            onChange={(e) => setEnlace(e.target.value)}
+            placeholder="https://…"
+            autoCapitalize="none"
+            spellCheck={false}
+            className="min-w-0 flex-1 rounded-lg border border-borde bg-crema px-2 py-1 text-xs outline-none focus:border-marron"
+          />
+          <button
+            type="button"
+            onClick={async () => {
+              if (!enlace.trim().startsWith("http")) {
+                setError("Eso no parece un enlace.");
+                return;
+              }
+              setOcupado(true);
+              if (await guardar(enlace.trim())) {
+                setEnlace("");
+                setPegando(false);
+              }
+              setOcupado(false);
+            }}
+            className="shrink-0 rounded-lg bg-tinta px-2 py-1 text-xs text-crema-alto"
+          >
+            Usar
+          </button>
+        </div>
+      )}
+
+      {error && <p className="mt-1 w-52 text-[11px] text-alerta">{error}</p>}
+    </div>
+  );
+}

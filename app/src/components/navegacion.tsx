@@ -66,17 +66,6 @@ const ITEMS: Item[] = [
     ),
   },
   {
-    href: "/fotos",
-    etiqueta: "Fotos",
-    icono: (
-      <svg viewBox="0 0 24 24" {...trazo}>
-        <rect x="3" y="5" width="18" height="14" rx="2" />
-        <path d="M3 16l5-4 4 3 3-2 6 5" />
-        <circle cx="9" cy="10" r="1.4" />
-      </svg>
-    ),
-  },
-  {
     href: "/caja",
     etiqueta: "Caja",
     icono: (
