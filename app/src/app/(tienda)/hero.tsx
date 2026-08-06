@@ -184,6 +184,20 @@ export default function Hero({
               ))}
             </div>
           </div>
+
+          {/* El botón cuelga del logotipo en vez de estar clavado al fondo del
+              hero: así el espacio entre ambos es siempre el mismo y en una
+              pantalla baja no se le monta encima a la palabra. El margen va en
+              porcentaje del ancho de la columna, o sea que crece con el
+              logotipo. */}
+          <button
+            type="button"
+            onClick={() => onCambiar(otra)}
+            className="surge pointer-events-auto mt-[13%] self-center rounded-full border border-nieve/80 px-11 py-3.5 text-[12px] uppercase tracking-[0.28em] text-nieve backdrop-blur-[2px] transition-colors hover:bg-nieve hover:text-carbon"
+            style={{ animationDelay: "0.55s" }}
+          >
+            Ver {ESCENAS[otra].nombre}
+          </button>
         </div>
       </div>
 
@@ -210,23 +224,6 @@ export default function Hero({
             />
           </div>
         ))}
-      </div>
-
-      {/* El botón repite EXACTAMENTE el contenedor del logotipo: mismo padre a
-          toda altura, mismo relleno lateral y mismo ancho de columna. Con
-          contenedores distintos, cualquier diferencia de relleno lo corría
-          unos píxeles y el centro dejaba de coincidir con MORED. */}
-      <div className="pointer-events-none absolute inset-0 z-30 flex justify-center px-6 lg:justify-end lg:pr-[9%]">
-        <div className="flex h-full w-[74vw] max-w-[520px] items-end justify-center pb-[16%] lg:w-[36vw] lg:pb-[13%]">
-          <button
-            type="button"
-            onClick={() => onCambiar(otra)}
-            className="surge pointer-events-auto rounded-full border border-nieve/80 px-11 py-3.5 text-[12px] uppercase tracking-[0.28em] text-nieve backdrop-blur-[2px] transition-colors hover:bg-nieve hover:text-carbon"
-            style={{ animationDelay: "0.55s" }}
-          >
-            Ver {ESCENAS[otra].nombre}
-          </button>
-        </div>
       </div>
 
       {/* Una sola etiqueta, a la derecha: dice qué es esta colección. La otra
