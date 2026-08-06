@@ -120,6 +120,34 @@ body {
   transform: none;
 }
 
+/* ==========================================================================
+   Paradas de lectura
+   ==========================================================================
+   Cada sección es una parada: al soltar el desplazamiento cerca de un borde,
+   la página se acomoda para que la sección empiece arriba. Es "proximity" y no
+   "mandatory" a propósito: se acomoda si estás cerca, pero nunca te secuestra
+   el gesto ni te impide quedarte a la mitad si eso quieres.
+
+   El :has() la enciende solo en la tienda, que es donde se lee de corrido; el
+   panel se sigue desplazando libre. */
+html:has(.paradas) {
+  scroll-snap-type: y proximity;
+}
+
+.parada {
+  scroll-snap-align: start;
+  /* Debajo del encabezado fijo, para que no le tape el título. */
+  scroll-margin-top: 4.5rem;
+}
+
+/* En una pantalla baja una sección puede no caber entera; ahí el acomodo
+   estorba más de lo que ayuda. */
+@media (max-height: 700px), (prefers-reduced-motion: reduce) {
+  html:has(.paradas) {
+    scroll-snap-type: none;
+  }
+}
+
 /* Quien pidió no ver movimiento, no lo ve. No es un detalle de cortesía: a
    cierta gente el movimiento le produce mareo de verdad. */
 @media (prefers-reduced-motion: reduce) {

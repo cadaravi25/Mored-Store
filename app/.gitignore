@@ -41,6 +41,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# Fotos de relleno, se reemplazan antes de publicar.
-public/tienda/*.webp

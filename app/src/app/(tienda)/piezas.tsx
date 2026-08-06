@@ -89,27 +89,6 @@ export function useRevelar<T extends HTMLElement>() {
   return ref;
 }
 
-/**
- * El hueco de una foto que todavía no existe.
- *
- * No es un recuadro gris: lleva el monograma tenue sobre el color de la
- * colección. Una tienda a medio armar tiene que verse a medio armar a
- * propósito, no rota.
- */
-export function Hueco({ nota }: { nota?: string }) {
-  return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-[var(--acento-tenue)]">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/mored-marron.png" alt="" className="w-12 opacity-20" />
-      {nota && (
-        <p className="px-4 text-center text-[10px] uppercase tracking-[0.2em] text-[var(--acento-hondo)] opacity-60">
-          {nota}
-        </p>
-      )}
-    </div>
-  );
-}
-
 /** Título de sección: antetítulo pequeño arriba y titular grande debajo. */
 export function Titulo({
   antetitulo,

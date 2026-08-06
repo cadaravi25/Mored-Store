@@ -1,10 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import type { Coleccion } from "./hero";
 import {
-  Hueco,
   TarjetaProducto,
   Titulo,
   useRevelar,
@@ -14,9 +12,9 @@ import {
 /**
  * Las secciones de la portada, en el orden en que se recorren.
  *
- * Las fotos de campaña todavía no existen: donde van, queda un hueco de marca
- * en vez de un recuadro roto. Cada uno dice qué archivo espera, así se pueden
- * ir llenando de a poco sin tocar código.
+ * Ninguna usa fotos de campaña: todas salen del inventario o del hero. Es lo
+ * único honesto mientras no haya sesión de fotos, y de paso no hay imágenes
+ * sueltas que mantener al día aparte del catálogo.
  */
 
 function Boton({
@@ -49,70 +47,71 @@ function Boton({
   );
 }
 
-/** Foto que cae a un hueco de marca si el archivo aún no existe. */
-function FotoODeja({ src, nota }: { src: string; nota: string }) {
-  const [falta, setFalta] = useState(false);
-  if (falta) return <Hueco nota={nota} />;
-  return (
-    /* eslint-disable-next-line @next/next/no-img-element */
-    <img
-      src={src}
-      alt=""
-      loading="lazy"
-      onError={() => setFalta(true)}
-      className="h-full w-full object-cover transition-transform duration-[900ms] group-hover:scale-105"
-      style={{ transitionTimingFunction: "var(--curva)" }}
-    />
-  );
-}
-
 // ---------------------------------------------------------------------------
 
-const BANNERS = [
-  {
-    id: "nuevo",
-    antetitulo: "Recién llegado",
-    titulo: "Lo último que entró",
-    foto: "/tienda/banner-nuevo.webp",
-  },
-  {
-    id: "favoritas",
-    antetitulo: "Las de siempre",
-    titulo: "Las que más piden",
-    foto: "/tienda/banner-favoritas.webp",
-  },
-  {
-    id: "tienda",
-    antetitulo: "Chacaíto",
-    titulo: "Ven a medírtelo",
-    foto: "/tienda/banner-tienda.webp",
-  },
+/**
+ * Los tres accesos por tipo de prenda, con foto de la sesión de Mored.
+ *
+ * La foto de catálogo está sobre fondo blanco y sirve para comparar; para un
+ * acceso grande hace falta una foto de la prenda puesta. Si el tipo no está en
+ * esta lista o no hay nada de ese tipo en el inventario, no sale.
+ */
+const ACCESOS = [
+  { tipo: "Top", foto: "/fotos/moreda_11.webp" },
+  { tipo: "Leggin", foto: "/fotos/m0406-02.webp" },
+  { tipo: "Short", foto: "/fotos/moreda_20.webp" },
+  { tipo: "Enterizo", foto: "/fotos/moreda_17.webp" },
+  { tipo: "Traje de baño", foto: "/fotos/moreda_04.webp" },
 ] as const;
 
-export function Banners() {
+/**
+ * Tres accesos directos por tipo de prenda.
+ *
+ * La foto sale del propio inventario: la primera prenda de ese tipo que tenga
+ * foto. Nada de imágenes de campaña que haya que mantener aparte, y nunca una
+ * foto que no corresponda con lo que hay adentro.
+ */
+export function Estilos({
+  tarjetas,
+  onElegir,
+}: {
+  tarjetas: Tarjeta[];
+  onElegir: (tipo: string) => void;
+}) {
   const ref = useRevelar<HTMLElement>();
+
+  const hay = new Set(tarjetas.map((t) => t.tipo).filter(Boolean));
+  const orden = ACCESOS.filter((a) => hay.has(a.tipo)).slice(0, 3);
+
+  if (orden.length === 0) return null;
+
   return (
-    <section ref={ref} className="revela grid sm:grid-cols-3">
-      {BANNERS.map((b) => (
-        <a
-          key={b.id}
-          href="#catalogo"
-          className="group relative block aspect-[4/5] overflow-hidden sm:aspect-[3/4]"
+    <section ref={ref} className="parada revela grid sm:grid-cols-3">
+      {orden.map((a) => (
+        <button
+          key={a.tipo}
+          type="button"
+          onClick={() => onElegir(a.tipo)}
+          className="group relative block aspect-[3/4] overflow-hidden text-left"
         >
-          <FotoODeja src={b.foto} nota={`Falta ${b.foto.split("/").pop()}`} />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={a.foto}
+            alt={a.tipo}
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-[900ms] group-hover:scale-105"
+            style={{ transitionTimingFunction: "var(--curva)" }}
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-carbon/70 via-carbon/10 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 p-7">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-nieve/80">
-              {b.antetitulo}
-            </p>
-            <p className="mt-2 text-2xl font-light text-nieve sm:text-3xl">
-              {b.titulo}
+            <p className="text-2xl font-light uppercase tracking-[0.12em] text-nieve sm:text-3xl">
+              {a.tipo}
             </p>
             <span className="mt-5 inline-block rounded-full bg-nieve px-7 py-2.5 text-[12px] uppercase tracking-[0.2em] text-carbon">
               Ver
             </span>
           </div>
-        </a>
+        </button>
       ))}
     </section>
   );
@@ -152,7 +151,7 @@ export function Categorias({
   return (
     <section
       ref={ref}
-      className="revela mx-auto w-full max-w-[1400px] px-5 pt-20 lg:px-10"
+      className="parada revela mx-auto w-full max-w-[1400px] px-5 pt-24 lg:px-10"
     >
       <Titulo
         antetitulo={`Mored ${coleccion === "swim" ? "Swim" : "Active"}`}
@@ -208,7 +207,7 @@ export function Destacados({
   if (conStock.length === 0) return null;
 
   return (
-    <section ref={ref} className="revela mt-20 bg-carbon py-16">
+    <section ref={ref} className="parada revela mt-24 bg-carbon py-20">
       <div className="mx-auto w-full max-w-[1400px] px-5 lg:px-10">
         <Titulo
           claro
@@ -236,42 +235,47 @@ export function Destacados({
 
 // ---------------------------------------------------------------------------
 
-export function Inspiracion({ tarjetas }: { tarjetas: Tarjeta[] }) {
+/**
+ * Un look completo a la izquierda y las prendas sueltas a la derecha.
+ *
+ * La foto del look es la misma de la portada: es la única de campaña que
+ * existe, y ahí cumple otra función. Nada de la tienda ni de la dirección: eso
+ * ya está en el pie y aquí solo distraía de la ropa.
+ */
+export function Inspiracion({
+  tarjetas,
+  coleccion,
+}: {
+  tarjetas: Tarjeta[];
+  coleccion: Coleccion;
+}) {
   const ref = useRevelar<HTMLElement>();
-  const dos = tarjetas.filter((t) => t.tallas.some((x) => x.disponible > 0)).slice(0, 2);
+  const sueltas = tarjetas
+    .filter((t) => t.tallas.some((x) => x.disponible > 0))
+    .slice(0, 4);
+
+  if (sueltas.length === 0) return null;
 
   return (
     <section
       ref={ref}
-      className="revela mx-auto w-full max-w-[1400px] px-5 pt-20 lg:px-10"
+      className="parada revela mx-auto w-full max-w-[1400px] px-5 pt-24 lg:px-10"
     >
       <Titulo antetitulo="Inspiración" titulo="Cómo se ve puesto" />
 
-      <div className="mt-8 grid gap-4 lg:grid-cols-2">
-        <div className="group relative aspect-[4/3] overflow-hidden lg:aspect-auto lg:min-h-[520px]">
-          <FotoODeja
-            src="/tienda/inspiracion.webp"
-            nota="Falta inspiracion.webp"
+      <div className="mt-8 grid gap-4 lg:grid-cols-[1.1fr_1fr]">
+        <div className="relative overflow-hidden bg-[var(--acento-tenue)]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={coleccion === "swim" ? "/fotos/moreda_04.webp" : "/fotos/m0406-04.webp"}
+            alt=""
+            loading="lazy"
+            className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-carbon/65 via-carbon/10 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 p-8">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-nieve/80">
-              El local
-            </p>
-            <p className="mt-2 text-3xl font-light text-nieve">
-              Pruébatelo en Chacaíto
-            </p>
-            <p className="mt-2 max-w-sm text-sm text-nieve/80">
-              CC Manuelita Sáenz, nivel 2, local 02-178.
-            </p>
-            <div className="mt-6">
-              <Boton href="/#visitanos">Cómo llegar</Boton>
-            </div>
-          </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          {dos.map((t, i) => (
+        <div className="grid grid-cols-2 gap-x-3 gap-y-7 self-start">
+          {sueltas.map((t, i) => (
             <TarjetaProducto key={t.clave} t={t} orden={i} />
           ))}
         </div>
@@ -292,15 +296,6 @@ export function Inspiracion({ tarjetas }: { tarjetas: Tarjeta[] }) {
  * Cada foto puede llevar el enlace a su propia publicación; mientras no lo
  * tenga, lleva al perfil.
  */
-const INSTAGRAM = [
-  { foto: "/tienda/ig-1.webp", enlace: null },
-  { foto: "/tienda/ig-2.webp", enlace: null },
-  { foto: "/tienda/ig-3.webp", enlace: null },
-  { foto: "/tienda/ig-4.webp", enlace: null },
-  { foto: "/tienda/ig-5.webp", enlace: null },
-  { foto: "/tienda/ig-6.webp", enlace: null },
-] as const;
-
 export function Instagram({ coleccion }: { coleccion: Coleccion }) {
   const ref = useRevelar<HTMLElement>();
   const perfil =
@@ -308,8 +303,19 @@ export function Instagram({ coleccion }: { coleccion: Coleccion }) {
       ? "https://instagram.com/moredswim"
       : "https://instagram.com/mored.active";
 
+  // Fotos de su propia sesión. No son las publicaciones reales todavía: el día
+  // que se conecte el feed, se cambia esta lista por lo que traiga.
+  const seis = [
+    "/fotos/moreda_06.webp",
+    "/fotos/moreda_12.webp",
+    "/fotos/moreda_16.webp",
+    "/fotos/moreda_21.webp",
+    "/fotos/m0406-03.webp",
+    "/fotos/moreda_03.webp",
+  ];
+
   return (
-    <section ref={ref} className="revela mt-20">
+    <section ref={ref} className="parada revela mt-24">
       <div className="mx-auto w-full max-w-[1400px] px-5 pb-7 lg:px-10">
         <Titulo
           antetitulo="Instagram"
@@ -318,15 +324,22 @@ export function Instagram({ coleccion }: { coleccion: Coleccion }) {
       </div>
 
       <div className="grid grid-cols-3 sm:grid-cols-6">
-        {INSTAGRAM.map((x, i) => (
+        {seis.map((foto, i) => (
           <a
             key={i}
-            href={x.enlace ?? perfil}
+            href={perfil}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative aspect-square overflow-hidden"
+            className="group relative aspect-square overflow-hidden bg-humo"
           >
-            <FotoODeja src={x.foto} nota={`ig-${i + 1}`} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={foto}
+              alt=""
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-[900ms] group-hover:scale-105"
+              style={{ transitionTimingFunction: "var(--curva)" }}
+            />
             <span className="absolute inset-0 grid place-items-center bg-carbon/0 text-nieve opacity-0 transition-all duration-500 group-hover:bg-carbon/35 group-hover:opacity-100">
               <svg
                 viewBox="0 0 24 24"

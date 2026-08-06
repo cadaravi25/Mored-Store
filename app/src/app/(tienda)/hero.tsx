@@ -146,7 +146,7 @@ export default function Hero({
   }, [coleccion]);
 
   return (
-    <section className="relative h-[76vh] min-h-[500px] w-full overflow-hidden bg-carbon lg:h-[86vh]">
+    <section className="parada relative h-[76vh] min-h-[500px] w-full overflow-hidden bg-carbon lg:h-[86vh]">
       <Fondo escena={ESCENAS.active} activa={coleccion === "active"} />
       <Fondo escena={ESCENAS.swim} activa={coleccion === "swim"} />
 

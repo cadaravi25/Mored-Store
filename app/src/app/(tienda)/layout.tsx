@@ -20,7 +20,7 @@ export default function TiendaLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-dvh bg-nieve text-carbon">
+    <div className="paradas min-h-dvh bg-nieve text-carbon">
       <Encabezado />
       {children}
       <Pie />

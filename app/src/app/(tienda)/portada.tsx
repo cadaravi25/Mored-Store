@@ -11,7 +11,7 @@ import {
   type FilaCatalogo,
 } from "./piezas";
 import {
-  Banners,
+  Estilos,
   Categorias,
   Destacados,
   Inspiracion,
@@ -123,7 +123,7 @@ export default function Portada({
     <main style={acento as React.CSSProperties}>
       <Hero coleccion={coleccion} onCambiar={cambiar} />
 
-      <Banners />
+      <Estilos tarjetas={deLaColeccion} onElegir={irAlCatalogo} />
 
       <Categorias
         tarjetas={deLaColeccion}
@@ -134,7 +134,7 @@ export default function Portada({
       <section
         id="catalogo"
         ref={catalogo}
-        className="mx-auto w-full max-w-[1400px] scroll-mt-24 px-5 pt-20 lg:px-10"
+        className="parada mx-auto w-full max-w-[1400px] px-5 pt-24 lg:px-10"
       >
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-linea pb-5">
           <Titulo
@@ -162,7 +162,7 @@ export default function Portada({
 
           <div className="-mx-5 flex gap-2 overflow-x-auto px-5 lg:mx-0 lg:px-0">
             <Pildora activo={talla === ""} onClick={() => setTalla("")}>
-              Mi talla
+              Todas
             </Pildora>
             {ORDEN_TALLAS.map((t) => (
               <Pildora key={t} activo={talla === t} onClick={() => setTalla(t)}>
@@ -192,7 +192,7 @@ export default function Portada({
 
       <Destacados tarjetas={deLaColeccion} coleccion={coleccion} />
 
-      <Inspiracion tarjetas={deLaColeccion} />
+      <Inspiracion tarjetas={deLaColeccion} coleccion={coleccion} />
 
       <Instagram coleccion={coleccion} />
 
