@@ -1,3 +1,6 @@
+/** El local en Google Maps: CC Manuelita Sáenz, Chacaíto. */
+const MAPA = "https://maps.app.goo.gl/MYEUqyP59fWFgVVx9";
+
 /**
  * El pie es el único sitio donde vive esta información.
  *
@@ -31,13 +34,37 @@ export default function Pie() {
           <p className="text-[11px] uppercase tracking-[0.18em] text-carbon">
             La tienda
           </p>
-          <p className="mt-4 text-sm leading-relaxed text-gris">
-            CC Manuelita Sáenz
-            <br />
-            Chacaíto, nivel 2
-            <br />
-            Local 02-178
-          </p>
+          {/* La dirección lleva al mapa: quien la lee en el teléfono la va a
+              buscar de todos modos, y así no tiene que copiarla a mano. */}
+          <a
+            href={MAPA}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-4 block text-sm leading-relaxed text-gris"
+          >
+            <span className="group-hover:text-carbon">
+              CC Manuelita Sáenz
+              <br />
+              Chacaíto, nivel 2
+              <br />
+              Local 02-178
+            </span>
+            <span className="mt-2 flex items-center gap-1.5 text-[var(--acento-hondo)]">
+              <svg
+                viewBox="0 0 24 24"
+                className="h-3.5 w-3.5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.6}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z" />
+                <circle cx="12" cy="10" r="2.4" />
+              </svg>
+              Cómo llegar
+            </span>
+          </a>
           <p className="mt-3 text-sm text-gris">
             Puedes venir a medirte lo que viste aquí.
           </p>
