@@ -154,8 +154,13 @@ export function Estilos({
 // ---------------------------------------------------------------------------
 
 /**
- * Franja oscura con desplazamiento lateral. El fondo negro le da un respiro a
- * la página: después de mucho blanco, el ojo agradece el corte.
+ * Lo último que entró, sobre fondo oscuro.
+ *
+ * Se ordena por cuándo entró la prenda al inventario, no a mano: así la
+ * sección se mantiene sola y nunca muestra como novedad algo de hace meses.
+ *
+ * El fondo negro le da un respiro a la página: después de mucho blanco, el ojo
+ * agradece el corte.
  */
 export function Destacados({
   tarjetas,
@@ -165,9 +170,9 @@ export function Destacados({
   coleccion: Coleccion;
 }) {
   const ref = useRevelar<HTMLElement>();
-  const conStock = tarjetas.filter((t) =>
-    t.tallas.some((x) => x.disponible > 0),
-  );
+  const conStock = tarjetas
+    .filter((t) => t.tallas.some((x) => x.disponible > 0))
+    .sort((a, b) => b.entro_at.localeCompare(a.entro_at));
   if (conStock.length === 0) return null;
 
   return (
@@ -175,9 +180,9 @@ export function Destacados({
       <div className="mx-auto w-full max-w-[1400px] px-5 lg:px-10">
         <Titulo
           claro
-          antetitulo="De esta temporada"
-          titulo={`Lo que hay en ${coleccion === "swim" ? "Swim" : "Active"}`}
-          bajada="Todo lo que ves está disponible ahora mismo en la tienda."
+          antetitulo={`Mored ${coleccion === "swim" ? "Swim" : "Active"}`}
+          titulo="Lo nuevo"
+          bajada="Lo último que llegó, y todo está disponible ahora mismo."
         />
       </div>
 

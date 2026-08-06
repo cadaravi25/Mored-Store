@@ -107,15 +107,20 @@ body {
   animation: abrir-letras 1.2s var(--curva) both;
 }
 
-/* Aparecer al entrar en pantalla. El observador le pone data-visible. */
+/* Aparecer al entrar en pantalla.
+   Nada se esconde por defecto: es el JavaScript el que marca data-revela="si"
+   sobre lo que está fuera de pantalla, y lo pasa a "visto" cuando entra. Si el
+   JavaScript no corre, no hay animación y se ve todo, que es como debe fallar. */
 .revela {
-  opacity: 0;
-  transform: translateY(32px);
   transition:
     opacity 0.9s var(--curva),
     transform 0.9s var(--curva);
 }
-.revela[data-visible="si"] {
+.revela[data-revela="si"] {
+  opacity: 0;
+  transform: translateY(32px);
+}
+.revela[data-revela="visto"] {
   opacity: 1;
   transform: none;
 }
@@ -123,7 +128,7 @@ body {
 /* Una parada que además se desplaza cambia de sitio mientras aparece, y el
    navegador vuelve a acomodar el scroll a media animación. Las secciones solo
    se funden; el desplazamiento queda para las tarjetas, que no son paradas. */
-.parada.revela {
+.parada.revela[data-revela="si"] {
   transform: none;
 }
 
@@ -163,7 +168,7 @@ html:has(.paradas) {
   .abre-letras {
     animation: none;
   }
-  .revela {
+  .revela[data-revela] {
     opacity: 1;
     transform: none;
     transition: none;

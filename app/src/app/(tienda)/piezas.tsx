@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import type { Coleccion } from "./hero";
 
 export interface FilaCatalogo {
@@ -18,6 +18,7 @@ export interface FilaCatalogo {
   talla: string;
   precio_usd: number;
   disponible: number;
+  entro_at: string | null;
 }
 
 /** Cada tarjeta es un producto en un color: es como se mira la ropa. */
@@ -31,6 +32,8 @@ export interface Tarjeta {
   hex: string | null;
   foto_url: string;
   precio: number;
+  /** La más reciente de sus variantes: con eso se ordena "lo nuevo". */
+  entro_at: string;
   tallas: { talla: string; disponible: number }[];
 }
 
@@ -55,10 +58,12 @@ export function agrupar(filas: FilaCatalogo[]): Tarjeta[] {
       hex: f.hex,
       foto_url: f.foto_url,
       precio: Number(f.precio_usd),
+      entro_at: f.entro_at ?? "",
       tallas: [],
     };
     t.tallas.push({ talla: f.talla, disponible: f.disponible });
     t.precio = Math.min(t.precio, Number(f.precio_usd));
+    if ((f.entro_at ?? "") > t.entro_at) t.entro_at = f.entro_at ?? "";
     mapa.set(clave, t);
   }
   for (const t of mapa.values()) {
@@ -70,48 +75,48 @@ export function agrupar(filas: FilaCatalogo[]): Tarjeta[] {
 }
 
 /**
- * Aparecer al entrar en pantalla, una sola vez. Repetirlo al subir y bajar
- * cansa: la primera vez es una bienvenida, la quinta es un parpadeo.
+ * Aparecer al entrar en pantalla, una sola vez.
  *
- * Falla hacia mostrar, nunca hacia esconder. Una sección invisible ocupa su
- * espacio igual, así que si el aviso no llega el resultado es un hueco blanco
- * enorme y la página parece rota. Por eso hay tres caminos al mismo sitio: el
- * observador, una comprobación al montar por si ya estaba a la vista, y un
- * plazo de gracia por si ninguno de los dos disparó.
+ * La versión anterior nacía invisible desde el servidor y esperaba a que
+ * JavaScript la mostrara. Eso tiene un problema de fondo: entre que llega el
+ * HTML y arranca el JavaScript hay una ventana, y en esa ventana media página
+ * es un hueco blanco. En desarrollo esa ventana dura segundos.
+ *
+ * Ahora es al revés: el contenido nace VISIBLE y solo se esconde si el
+ * JavaScript ya está corriendo y comprueba que la sección está fuera de
+ * pantalla. Si el JavaScript falla, tarda o está desactivado, el resultado es
+ * una página sin animación, que es un problema de nada.
+ *
+ * Se usa useLayoutEffect y no useEffect para que el escondido ocurra antes de
+ * pintar: con useEffect se vería un parpadeo.
  */
 export function useRevelar<T extends HTMLElement>() {
   const ref = useRef<T>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const nodo = ref.current;
     if (!nodo) return;
+    if (typeof IntersectionObserver === "undefined") return;
 
-    const mostrar = () => {
-      nodo.dataset.visible = "si";
-    };
+    // Ya se ve: no hay nada que animar, se queda como está.
+    if (nodo.getBoundingClientRect().top < window.innerHeight * 0.92) return;
 
-    if (typeof IntersectionObserver === "undefined") {
-      mostrar();
-      return;
-    }
-
-    // Ya visible al montar: no hay que esperar a que alguien se desplace.
-    if (nodo.getBoundingClientRect().top < window.innerHeight * 0.95) {
-      mostrar();
-    }
+    nodo.dataset.revela = "si";
 
     const ojo = new IntersectionObserver(
       ([entrada]) => {
-        if (entrada.isIntersecting) {
-          mostrar();
-          ojo.disconnect();
-        }
+        if (!entrada.isIntersecting) return;
+        nodo.dataset.revela = "visto";
+        ojo.disconnect();
       },
       { rootMargin: "0px 0px -10% 0px" },
     );
     ojo.observe(nodo);
 
-    const plazo = setTimeout(mostrar, 2500);
+    // Red de seguridad: si el aviso no llega por lo que sea, se muestra igual.
+    const plazo = setTimeout(() => {
+      nodo.dataset.revela = "visto";
+    }, 2000);
 
     return () => {
       ojo.disconnect();
