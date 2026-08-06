@@ -22,6 +22,9 @@ interface Escena {
   nombre: string;
   fondo: string;
   modela: string;
+  /** MORED ACTIVE y MORED SWIM son el logotipo, no texto: vienen del propio
+   *  archivo de marca y no se recomponen con una tipografía cualquiera. */
+  logo: string;
   /** Se ve mientras carga la foto, y si el archivo todavía no existe. */
   respaldo: string;
   esquinaIzq: string;
@@ -33,6 +36,7 @@ const ESCENAS: Record<Coleccion, Escena> = {
     nombre: "Active",
     fondo: "/hero/active-fondo.webp",
     modela: "/hero/active-modela.webp",
+    logo: "/hero/active-logo.svg",
     respaldo: "linear-gradient(150deg, #c9a583 0%, #a78a6a 50%, #6f5942 100%)",
     esquinaIzq: "Ropa deportiva",
     esquinaDer: "Tienda en Chacaíto",
@@ -41,6 +45,7 @@ const ESCENAS: Record<Coleccion, Escena> = {
     nombre: "Swim",
     fondo: "/hero/swim-fondo.webp",
     modela: "/hero/swim-modela.webp",
+    logo: "/hero/swim-logo.svg",
     respaldo: "linear-gradient(150deg, #f3d9c9 0%, #e0827a 55%, #9fc3cc 100%)",
     esquinaIzq: "Trajes de baño",
     esquinaDer: "Envíos a todo el país",
@@ -133,22 +138,23 @@ export default function Hero({
 
       {/* El logotipo va corrido a la derecha: la modela ocupa la izquierda, y
           así se cruzan sin taparse del todo, como en la referencia. */}
-      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6 lg:justify-end lg:pr-[10%]">
-        <div className="w-full max-w-[560px] text-center">
-          <div className="acerca">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6 lg:justify-end lg:pr-[9%]">
+        <div className="relative aspect-[705/227] w-[74vw] max-w-[520px] lg:w-[36vw]">
+          {(["active", "swim"] as const).map((id) => (
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img
-              src="/mored-texto-blanco.png"
-              alt="Mored"
-              className="mx-auto w-[68vw] max-w-[460px] drop-shadow-[0_2px_20px_rgba(0,0,0,0.22)] lg:w-[34vw]"
+              key={id}
+              src={ESCENAS[id].logo}
+              alt={`Mored ${ESCENAS[id].nombre}`}
+              className="absolute inset-0 h-full w-full object-contain drop-shadow-[0_2px_20px_rgba(0,0,0,0.22)] transition-all duration-[900ms]"
+              style={{
+                ...SUAVE,
+                opacity: coleccion === id ? 1 : 0,
+                transform:
+                  coleccion === id ? "none" : "translateY(14px) scale(0.97)",
+              }}
             />
-          </div>
-          <p
-            key={clave}
-            className="abre-letras mt-4 pl-[0.55em] text-[11px] uppercase tracking-[0.55em] text-nieve/90 sm:text-sm"
-          >
-            {ESCENAS[coleccion].nombre}
-          </p>
+          ))}
         </div>
       </div>
 

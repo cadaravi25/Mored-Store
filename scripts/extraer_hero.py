@@ -1,68 +1,94 @@
 """
-Saca las imágenes incrustadas del SVG del hero y las deja como archivos sueltos.
+Saca las imágenes incrustadas de los SVG del hero.
 
-    python scripts/extraer_hero.py "C:/ruta/Hero Mored.svg"
+    python scripts/extraer_hero.py active "C:/ruta/Hero mored active.svg"
+    python scripts/extraer_hero.py swim   "C:/ruta/Hero mored swim.svg"
 
-El SVG trae dos mesas de trabajo (Active y Swim), cada una con la modelo
-separada del fondo. Separadas es justo lo que hace falta: permiten moverlas a
-distinta velocidad y que el cambio entre colecciones se sienta con profundidad
-en vez de ser un corte.
+Cada SVG trae la escena de una colección con sus capas separadas: el paisaje
+por un lado y la modela recortada por otro. Separadas es justo lo que hace
+falta: permiten moverlas a distinta velocidad y que el cambio entre
+colecciones tenga profundidad en vez de ser un corte.
+
+Se ordenan por peso: el paisaje ocupa toda la escena y siempre pesa más que un
+recorte. La que tiene transparencia es la modela.
 """
 
 import base64
-import io
 import os
-import re
 import sys
+
+from PIL import Image
 
 DESTINO = os.path.join(os.path.dirname(__file__), "..", "app", "public", "hero")
 
+ANCHO_FONDO = 1800
+ANCHO_MODELA = 1200
+
+
+def incrustadas(ruta: str) -> list[bytes]:
+    """Los mapas de bits viajan en base64 dentro del propio SVG."""
+    crudo = open(ruta, "rb").read()
+    salida: list[bytes] = []
+    pos = 0
+    while True:
+        i = crudo.find(b"base64,", pos)
+        if i < 0:
+            return salida
+        ini = i + 7
+        fin = crudo.find(b'"', ini)
+        salida.append(base64.b64decode(crudo[ini:fin]))
+        pos = fin
+
 
 def main() -> None:
-    origen = sys.argv[1] if len(sys.argv) > 1 else None
-    if not origen or not os.path.exists(origen):
-        raise SystemExit("Uso: python scripts/extraer_hero.py <archivo.svg>")
+    if len(sys.argv) < 3:
+        raise SystemExit("Uso: python scripts/extraer_hero.py <active|swim> <svg>")
+
+    coleccion, origen = sys.argv[1], sys.argv[2]
+    if coleccion not in ("active", "swim"):
+        raise SystemExit("La colección es 'active' o 'swim'.")
+    if not os.path.exists(origen):
+        raise SystemExit(f"No existe: {origen}")
 
     destino = os.path.abspath(DESTINO)
     os.makedirs(destino, exist_ok=True)
 
-    svg = io.open(origen, encoding="utf-8", errors="replace").read()
-    print("svg:", round(len(svg) / 1024 / 1024, 1), "MB")
+    import io
 
-    # Cada <image> lleva su mapa de bits en base64 dentro del propio atributo.
-    patron = re.compile(
-        r'<image[^>]*?(?:id="([^"]*)")?[^>]*?'
-        r'x="([-\d.]+)"[^>]*?y="([-\d.]+)"[^>]*?'
-        r'width="([\d.]+)"[^>]*?height="([\d.]+)"[^>]*?'
-        r'xlink:href="data:image/(png|jpeg|jpg);base64,([^"]+)"',
-        re.S,
+    imagenes = [Image.open(io.BytesIO(b)) for b in incrustadas(origen)]
+    if len(imagenes) < 2:
+        raise SystemExit(
+            f"Solo encontré {len(imagenes)} imagen(es). El SVG debería traer el "
+            "paisaje y la modela recortada."
+        )
+
+    for im in imagenes:
+        print(" ", im.size, im.mode)
+
+    # La modela es la que tiene transparencia. Si ninguna la tiene, se usa la
+    # más pequeña: un recorte nunca es más grande que el paisaje completo.
+    conAlfa = [im for im in imagenes if im.mode in ("RGBA", "LA")]
+    modela = (
+        min(conAlfa, key=lambda im: im.size[0] * im.size[1])
+        if conAlfa
+        else min(imagenes, key=lambda im: im.size[0] * im.size[1])
+    )
+    fondo = max(
+        [im for im in imagenes if im is not modela],
+        key=lambda im: im.size[0] * im.size[1],
     )
 
-    encontradas = list(patron.finditer(svg))
-    if not encontradas:
-        # Cuando el orden de los atributos no calza, se cae a lo mínimo: el
-        # contenido, que es lo único imprescindible.
-        encontradas = list(
-            re.finditer(r'data:image/(png|jpeg|jpg);base64,([^"]+)', svg)
+    def guardar(im: Image.Image, nombre: str, ancho: int, alfa: bool) -> None:
+        alto = round(ancho * im.size[1] / im.size[0])
+        chica = im.convert("RGBA" if alfa else "RGB").resize(
+            (ancho, alto), Image.LANCZOS
         )
-        for i, m in enumerate(encontradas, 1):
-            datos = base64.b64decode(m.group(2))
-            ruta = os.path.join(destino, f"bruto-{i}.{m.group(1)}")
-            io.open(ruta, "wb").write(datos)
-            print(f"  bruto-{i}.{m.group(1)}", round(len(datos) / 1024), "KB")
-        return
+        ruta = os.path.join(destino, nombre)
+        chica.save(ruta, quality=88, method=6)
+        print(f"  {nombre}  {chica.size}  {round(os.path.getsize(ruta) / 1024)} KB")
 
-    for i, m in enumerate(encontradas, 1):
-        _id, x, y, w, h, ext, b64 = m.groups()
-        datos = base64.b64decode(b64)
-        ruta = os.path.join(destino, f"bruto-{i}.{ext}")
-        io.open(ruta, "wb").write(datos)
-        print(
-            f"  bruto-{i}.{ext}",
-            f"x={x} y={y} {w}x{h}",
-            round(len(datos) / 1024),
-            "KB",
-        )
+    guardar(fondo, f"{coleccion}-fondo.webp", ANCHO_FONDO, False)
+    guardar(modela, f"{coleccion}-modela.webp", ANCHO_MODELA, True)
 
 
 if __name__ == "__main__":
