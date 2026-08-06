@@ -120,6 +120,13 @@ body {
   transform: none;
 }
 
+/* Una parada que además se desplaza cambia de sitio mientras aparece, y el
+   navegador vuelve a acomodar el scroll a media animación. Las secciones solo
+   se funden; el desplazamiento queda para las tarjetas, que no son paradas. */
+.parada.revela {
+  transform: none;
+}
+
 /* ==========================================================================
    Paradas de lectura
    ==========================================================================

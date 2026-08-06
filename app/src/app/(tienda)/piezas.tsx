@@ -69,25 +69,56 @@ export function agrupar(filas: FilaCatalogo[]): Tarjeta[] {
   return [...mapa.values()];
 }
 
-/** Aparecer al entrar en pantalla, una sola vez. Repetirlo al subir y bajar
- *  cansa: la primera vez es una bienvenida, la quinta es un parpadeo. */
+/**
+ * Aparecer al entrar en pantalla, una sola vez. Repetirlo al subir y bajar
+ * cansa: la primera vez es una bienvenida, la quinta es un parpadeo.
+ *
+ * Falla hacia mostrar, nunca hacia esconder. Una sección invisible ocupa su
+ * espacio igual, así que si el aviso no llega el resultado es un hueco blanco
+ * enorme y la página parece rota. Por eso hay tres caminos al mismo sitio: el
+ * observador, una comprobación al montar por si ya estaba a la vista, y un
+ * plazo de gracia por si ninguno de los dos disparó.
+ */
 export function useRevelar<T extends HTMLElement>() {
   const ref = useRef<T>(null);
+
   useEffect(() => {
     const nodo = ref.current;
     if (!nodo) return;
+
+    const mostrar = () => {
+      nodo.dataset.visible = "si";
+    };
+
+    if (typeof IntersectionObserver === "undefined") {
+      mostrar();
+      return;
+    }
+
+    // Ya visible al montar: no hay que esperar a que alguien se desplace.
+    if (nodo.getBoundingClientRect().top < window.innerHeight * 0.95) {
+      mostrar();
+    }
+
     const ojo = new IntersectionObserver(
       ([entrada]) => {
         if (entrada.isIntersecting) {
-          nodo.dataset.visible = "si";
+          mostrar();
           ojo.disconnect();
         }
       },
-      { rootMargin: "0px 0px -12% 0px" },
+      { rootMargin: "0px 0px -10% 0px" },
     );
     ojo.observe(nodo);
-    return () => ojo.disconnect();
+
+    const plazo = setTimeout(mostrar, 2500);
+
+    return () => {
+      ojo.disconnect();
+      clearTimeout(plazo);
+    };
   }, []);
+
   return ref;
 }
 
