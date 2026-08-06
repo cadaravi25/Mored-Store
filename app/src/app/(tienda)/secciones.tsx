@@ -50,44 +50,28 @@ function Boton({
 // ---------------------------------------------------------------------------
 
 /**
- * Los tres accesos por tipo de prenda, con foto de la sesión de Mored.
+ * Los tres accesos de la portada.
  *
- * La foto de catálogo está sobre fondo blanco y sirve para comparar; para un
- * acceso grande hace falta una foto de la prenda puesta. Si el tipo no está en
- * esta lista o no hay nada de ese tipo en el inventario, no sale.
+ * Van fijos y siempre son estos tres: son las tres cosas que Mored vende. No
+ * se derivan del inventario porque entonces desaparecen cuando una prenda
+ * entra sin tipo asignado, y una portada no puede cambiar de forma por un
+ * dato que faltó al cargar.
+ *
+ * El título va en plural y en singular el filtro, que es como está el
+ * vocabulario del inventario.
  */
 const ACCESOS = [
-  { tipo: "Top", foto: "/fotos/moreda_11.webp" },
-  { tipo: "Leggin", foto: "/fotos/m0406-02.webp" },
-  { tipo: "Short", foto: "/fotos/moreda_20.webp" },
-  { tipo: "Enterizo", foto: "/fotos/moreda_17.webp" },
-  { tipo: "Traje de baño", foto: "/fotos/moreda_04.webp" },
+  { titulo: "Tops", tipo: "Top", foto: "/fotos/moreda_11.webp" },
+  { titulo: "Leggins", tipo: "Leggin", foto: "/fotos/m0406-02.webp" },
+  { titulo: "Enterizos", tipo: "Enterizo", foto: "/fotos/moreda_17.webp" },
 ] as const;
 
-/**
- * Tres accesos directos por tipo de prenda.
- *
- * La foto sale del propio inventario: la primera prenda de ese tipo que tenga
- * foto. Nada de imágenes de campaña que haya que mantener aparte, y nunca una
- * foto que no corresponda con lo que hay adentro.
- */
-export function Estilos({
-  tarjetas,
-  onElegir,
-}: {
-  tarjetas: Tarjeta[];
-  onElegir: (tipo: string) => void;
-}) {
+export function Estilos({ onElegir }: { onElegir: (tipo: string) => void }) {
   const ref = useRevelar<HTMLElement>();
-
-  const hay = new Set(tarjetas.map((t) => t.tipo).filter(Boolean));
-  const orden = ACCESOS.filter((a) => hay.has(a.tipo)).slice(0, 3);
-
-  if (orden.length === 0) return null;
 
   return (
     <section ref={ref} className="parada revela grid sm:grid-cols-3">
-      {orden.map((a) => (
+      {ACCESOS.map((a) => (
         <button
           key={a.tipo}
           type="button"
@@ -97,15 +81,15 @@ export function Estilos({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={a.foto}
-            alt={a.tipo}
+            alt={a.titulo}
             loading="lazy"
             className="h-full w-full object-cover transition-transform duration-[900ms] group-hover:scale-105"
             style={{ transitionTimingFunction: "var(--curva)" }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-carbon/70 via-carbon/10 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 p-7">
-            <p className="text-2xl font-light uppercase tracking-[0.12em] text-nieve sm:text-3xl">
-              {a.tipo}
+            <p className="text-3xl font-light uppercase tracking-[0.12em] text-nieve sm:text-4xl">
+              {a.titulo}
             </p>
             <span className="mt-5 inline-block rounded-full bg-nieve px-7 py-2.5 text-[12px] uppercase tracking-[0.2em] text-carbon">
               Ver

@@ -123,7 +123,7 @@ export default function Portada({
     <main style={acento as React.CSSProperties}>
       <Hero coleccion={coleccion} onCambiar={cambiar} />
 
-      <Estilos tarjetas={deLaColeccion} onElegir={irAlCatalogo} />
+      <Estilos onElegir={irAlCatalogo} />
 
       <Categorias
         tarjetas={deLaColeccion}
