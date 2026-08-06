@@ -51,21 +51,57 @@ function Boton({
 // ---------------------------------------------------------------------------
 
 /**
- * Los tres accesos de la portada.
+ * Todo lo que cambia entre Active y Swim.
  *
- * Van fijos y siempre son estos tres: son las tres cosas que Mored vende. No
- * se derivan del inventario porque entonces desaparecen cuando una prenda
- * entra sin tipo asignado, y una portada no puede cambiar de forma por un
- * dato que faltó al cargar.
+ * No solo el hero: los accesos, la franja, el look de inspiración y la tira de
+ * Instagram. Tocar el botón cambia de tienda, no de fondo.
  *
- * El título va en plural y en singular el filtro, que es como está el
- * vocabulario del inventario.
+ * Swim va con poco material a propósito: es lo único suyo que existe hoy. En
+ * cuanto haya sesión de fotos se cambian estas rutas y ya, sin tocar nada más.
  */
-const ACCESOS = [
-  { titulo: "Tops", tipo: "Top", foto: "/fotos/moreda_11.webp" },
-  { titulo: "Leggins", tipo: "Leggin", foto: "/fotos/m0406-02.webp" },
-  { titulo: "Enterizos", tipo: "Enterizo", foto: "/fotos/moreda_17.webp" },
-] as const;
+const CONTENIDO = {
+  active: {
+    perfil: "https://instagram.com/mored.active",
+    usuario: "@mored.active",
+    accesos: [
+      { titulo: "Tops", tipo: "Top", foto: "/fotos/moreda_11.webp" },
+      { titulo: "Leggins", tipo: "Leggin", foto: "/fotos/m0406-02.webp" },
+      { titulo: "Enterizos", tipo: "Enterizo", foto: "/fotos/moreda_17.webp" },
+    ],
+    franja: {
+      video: "/fotos/franja.mp4",
+      poster: "/fotos/franja-poster.webp",
+    },
+    look: "/fotos/m0406-04.webp",
+    instagram: [
+      "/fotos/moreda_06.webp",
+      "/fotos/moreda_12.webp",
+      "/fotos/moreda_16.webp",
+      "/fotos/moreda_21.webp",
+      "/fotos/m0406-03.webp",
+      "/fotos/moreda_03.webp",
+    ],
+  },
+  swim: {
+    perfil: "https://instagram.com/moredswim",
+    usuario: "@moredswim",
+    accesos: [
+      { titulo: "Trajes de baño", tipo: "Traje de baño", foto: "/fotos/swim-1.webp" },
+      { titulo: "Bañadores", tipo: "Bañador", foto: "/fotos/swim-2.webp" },
+      { titulo: "Salidas de playa", tipo: "Salida de baño", foto: "/fotos/swim-3.webp" },
+    ],
+    franja: { video: null, poster: "/hero/swim-fondo.webp" },
+    look: "/fotos/swim-look.webp",
+    instagram: [
+      "/fotos/swim-1.webp",
+      "/fotos/swim-2.webp",
+      "/fotos/swim-3.webp",
+      "/fotos/swim-look.webp",
+      "/hero/swim-fondo.webp",
+      "/fotos/swim-1.webp",
+    ],
+  },
+} as const;
 
 export function Estilos({
   coleccion,
@@ -87,7 +123,7 @@ export function Estilos({
       />
 
       <div className="mt-8 grid gap-3 sm:grid-cols-3">
-        {ACCESOS.map((a) => (
+        {CONTENIDO[coleccion].accesos.map((a) => (
           <button
             key={a.tipo}
             type="button"
@@ -195,7 +231,7 @@ export function Inspiracion({
         <div className="relative overflow-hidden bg-[var(--acento-tenue)]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={coleccion === "swim" ? "/fotos/moreda_04.webp" : "/fotos/m0406-04.webp"}
+            src={CONTENIDO[coleccion].look}
             alt=""
             loading="lazy"
             className="h-full w-full object-cover"
@@ -226,28 +262,17 @@ export function Inspiracion({
  */
 export function Instagram({ coleccion }: { coleccion: Coleccion }) {
   const ref = useRevelar<HTMLElement>();
-  const perfil =
-    coleccion === "swim"
-      ? "https://instagram.com/moredswim"
-      : "https://instagram.com/mored.active";
-
-  // Fotos de su propia sesión. No son las publicaciones reales todavía: el día
-  // que se conecte el feed, se cambia esta lista por lo que traiga.
-  const seis = [
-    "/fotos/moreda_06.webp",
-    "/fotos/moreda_12.webp",
-    "/fotos/moreda_16.webp",
-    "/fotos/moreda_21.webp",
-    "/fotos/m0406-03.webp",
-    "/fotos/moreda_03.webp",
-  ];
+  // Fotos de su propia sesión. No son las publicaciones reales: Instagram no
+  // deja leer el perfil sin sesión, así que el feed de verdad tendría que
+  // entrar por otra vía. Mientras tanto, esto es de ellas y es lo que venden.
+  const { perfil, instagram: seis } = CONTENIDO[coleccion];
 
   return (
     <section ref={ref} className="parada revela mt-24">
       <div className="mx-auto w-full max-w-[1400px] px-5 pb-7 lg:px-10">
         <Titulo
           antetitulo="Instagram"
-          titulo={coleccion === "swim" ? "@moredswim" : "@mored.active"}
+          titulo={CONTENIDO[coleccion].usuario}
         />
       </div>
 
@@ -300,6 +325,7 @@ export function Instagram({ coleccion }: { coleccion: Coleccion }) {
 export function FranjaCatalogo({ coleccion }: { coleccion: Coleccion }) {
   const ref = useRevelar<HTMLElement>();
   const [conVideo, setConVideo] = useState(false);
+  const franja = CONTENIDO[coleccion].franja;
 
   return (
     <section
@@ -307,25 +333,28 @@ export function FranjaCatalogo({ coleccion }: { coleccion: Coleccion }) {
       className="parada revela relative mt-24 h-[62vh] min-h-[420px] overflow-hidden bg-carbon"
     >
       {/* El primer cuadro del propio video, para que no haya un salto de
-          color mientras carga. */}
+          color mientras carga. Swim todavía no tiene video: se queda la foto. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/fotos/franja-poster.webp"
+        src={franja.poster}
         alt=""
         className="absolute inset-0 h-full w-full object-cover"
       />
 
-      <video
-        src="/fotos/franja.mp4"
-        poster="/fotos/franja-poster.webp"
-        autoPlay
-        muted
-        loop
-        playsInline
-        onCanPlay={() => setConVideo(true)}
-        className="absolute inset-0 h-full w-full object-cover transition-opacity duration-1000"
-        style={{ opacity: conVideo ? 1 : 0 }}
-      />
+      {franja.video && (
+        <video
+          key={franja.video}
+          src={franja.video}
+          poster={franja.poster}
+          autoPlay
+          muted
+          loop
+          playsInline
+          onCanPlay={() => setConVideo(true)}
+          className="absolute inset-0 h-full w-full object-cover transition-opacity duration-1000"
+          style={{ opacity: conVideo ? 1 : 0 }}
+        />
+      )}
 
       <div className="absolute inset-0 bg-carbon/45" />
 
