@@ -68,13 +68,25 @@ function Foto({
   className: string;
   style?: React.CSSProperties;
 }) {
+  const ref = useRef<HTMLImageElement>(null);
   const [estado, setEstado] = useState<"cargando" | "lista" | "falta">(
     "cargando",
   );
+
+  // Si la imagen ya estaba cargada antes de que React tomara el control, su
+  // onLoad nunca se dispara y se quedaría invisible para siempre. Pasa
+  // siempre que viene de la caché, que es casi todas las veces.
+  useEffect(() => {
+    const im = ref.current;
+    if (!im?.complete) return;
+    setEstado(im.naturalWidth > 0 ? "lista" : "falta");
+  }, []);
+
   if (estado === "falta") return null;
   return (
     /* eslint-disable-next-line @next/next/no-img-element */
     <img
+      ref={ref}
       src={src}
       alt=""
       aria-hidden
