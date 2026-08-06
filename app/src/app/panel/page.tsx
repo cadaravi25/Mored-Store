@@ -162,7 +162,7 @@ export default async function Panel() {
             </div>
           </dl>
           <Link
-            href="/inventario"
+            href="/panel/inventario"
             className="mt-4 inline-block text-sm text-marron-hondo underline-offset-4 hover:underline"
           >
             Ver inventario

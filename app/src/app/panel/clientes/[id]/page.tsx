@@ -71,7 +71,7 @@ export default async function FichaCliente({
   return (
     <main className="mx-auto w-full max-w-3xl px-5 py-7">
       <Link
-        href="/clientes"
+        href="/panel/clientes"
         className="text-sm text-tinta-suave underline-offset-4 hover:underline"
       >
         ← Clientes

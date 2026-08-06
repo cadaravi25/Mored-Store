@@ -26,13 +26,22 @@
   --color-azul: #a4c1df;
   --color-azul-tenue: #e6eef6;
 
-  /* Mored Swim tiene su propia identidad: azul y coral. Solo se usa en la
-     tienda, donde el visitante está mirando una colección a la vez. */
-  --color-swim: #6ca0c6;
-  --color-swim-hondo: #3f6c8e;
-  --color-swim-suave: #b7d0e3;
-  --color-swim-tenue: #e8f0f6;
-  --color-coral: #e0827a;
+  /* Mored Swim: el rosa sale de su propio material de marca. Es el acento de
+     Swim, como el marrón lo es de Active. */
+  --color-rosa: #e0827a;
+  --color-rosa-hondo: #b85e56;
+  --color-rosa-suave: #f0bdb8;
+  --color-rosa-tenue: #fbeeec;
+
+  /* La tienda es otra cosa que el panel: manda el blanco, y el marrón y el
+     rosa aparecen solo como acento. Un panel de trabajo puede ser cálido y
+     denso; una tienda de ropa necesita aire y que la foto sea lo único que
+     grita. */
+  --color-nieve: #ffffff;
+  --color-humo: #f7f6f4;
+  --color-linea: #e9e7e3;
+  --color-carbon: #17150f;
+  --color-gris: #8b857c;
 
   --color-tinta: #2b2620;
   --color-tinta-suave: #7a6f60;

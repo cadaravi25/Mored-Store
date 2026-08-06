@@ -35,7 +35,7 @@ function Formulario() {
     // Solo rutas internas: un "volver" con URL completa sería una vía para
     // redirigir a un sitio ajeno desde un enlace preparado.
     const volver = params.get("volver");
-    router.replace(volver?.startsWith("/") ? volver : "/");
+    router.replace(volver?.startsWith("/panel") ? volver : "/panel");
     router.refresh();
   }
 

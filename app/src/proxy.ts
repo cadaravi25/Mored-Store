@@ -1,10 +1,11 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-// La tienda es de cara a la calle: sin sesión y sin redirección. Todo lo que
-// muestra sale de v_catalogo, que es la única cosa que el rol anónimo puede
-// leer en toda la base.
-const RUTAS_PUBLICAS = ["/entrar", "/tienda"];
+// Se invierte el criterio: la tienda es la portada, así que lo que hay que
+// proteger es /panel y nada más. Todo lo demás es de cara a la calle, y sale
+// de catalogo_publico, lo único que el rol anónimo puede llamar en toda la
+// base.
+const RUTAS_PRIVADAS = ["/panel"];
 
 /**
  * En Next 16 esto se llama `proxy`; hasta la 15 era `middleware`.
@@ -44,9 +45,9 @@ export async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const ruta = request.nextUrl.pathname;
-  const esPublica = RUTAS_PUBLICAS.some((r) => ruta.startsWith(r));
+  const esPrivada = RUTAS_PRIVADAS.some((r) => ruta.startsWith(r));
 
-  if (!user && !esPublica) {
+  if (!user && esPrivada) {
     const url = request.nextUrl.clone();
     url.pathname = "/entrar";
     url.searchParams.set("volver", ruta);
@@ -55,7 +56,7 @@ export async function proxy(request: NextRequest) {
 
   if (user && ruta.startsWith("/entrar")) {
     const url = request.nextUrl.clone();
-    url.pathname = "/";
+    url.pathname = "/panel";
     url.search = "";
     return NextResponse.redirect(url);
   }

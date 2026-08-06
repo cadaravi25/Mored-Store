@@ -88,7 +88,7 @@ export default async function Caja({
             ].map((x) => (
               <Link
                 key={x.id}
-                href={`/caja?f=${x.id}`}
+                href={`/panel/caja?f=${x.id}`}
                 className={`rounded-full border px-3 py-1.5 text-sm ${
                   x.id === fecha
                     ? "border-marron bg-marron text-crema-alto"
@@ -213,7 +213,7 @@ export default async function Caja({
               return (
                 <li key={c.fecha}>
                   <Link
-                    href={`/caja?f=${c.fecha}`}
+                    href={`/panel/caja?f=${c.fecha}`}
                     className="flex items-baseline justify-between gap-3 py-2.5 hover:text-marron-hondo"
                   >
                     <span className="text-sm text-tinta">{enCorto(c.fecha)}</span>

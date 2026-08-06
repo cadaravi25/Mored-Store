@@ -1,9 +1,14 @@
 import { crearClienteServidor } from "@/lib/supabase/server";
-import Vitrina, { type FilaCatalogo } from "./vitrina";
+import Portada, { type FilaCatalogo } from "./portada";
 
 export const dynamic = "force-dynamic";
 
-export default async function Tienda() {
+export default async function Inicio({
+  searchParams,
+}: {
+  searchParams: Promise<{ c?: string }>;
+}) {
+  const { c } = await searchParams;
   const supabase = await crearClienteServidor();
 
   // catalogo_publico es lo único que el rol anónimo puede llamar en toda la
@@ -11,9 +16,10 @@ export default async function Tienda() {
   const { data } = await supabase.rpc("catalogo_publico");
 
   return (
-    <Vitrina
+    <Portada
       filas={(data ?? []) as FilaCatalogo[]}
       whatsapp={process.env.NEXT_PUBLIC_WHATSAPP ?? null}
+      coleccionInicial={c === "active" || c === "swim" ? c : ""}
     />
   );
 }

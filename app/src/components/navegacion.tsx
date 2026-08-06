@@ -22,7 +22,7 @@ const trazo = {
 
 const ITEMS: Item[] = [
   {
-    href: "/",
+    href: "/panel",
     etiqueta: "Panel",
     icono: (
       <svg viewBox="0 0 24 24" {...trazo}>
@@ -34,7 +34,7 @@ const ITEMS: Item[] = [
     ),
   },
   {
-    href: "/inventario",
+    href: "/panel/inventario",
     etiqueta: "Inventario",
     icono: (
       <svg viewBox="0 0 24 24" {...trazo}>
@@ -44,7 +44,7 @@ const ITEMS: Item[] = [
     ),
   },
   {
-    href: "/recibir",
+    href: "/panel/recibir",
     etiqueta: "Recibir",
     icono: (
       <svg viewBox="0 0 24 24" {...trazo}>
@@ -55,7 +55,7 @@ const ITEMS: Item[] = [
     ),
   },
   {
-    href: "/vender",
+    href: "/panel/vender",
     etiqueta: "Vender",
     icono: (
       <svg viewBox="0 0 24 24" {...trazo}>
@@ -66,7 +66,7 @@ const ITEMS: Item[] = [
     ),
   },
   {
-    href: "/caja",
+    href: "/panel/caja",
     etiqueta: "Caja",
     icono: (
       <svg viewBox="0 0 24 24" {...trazo}>
@@ -77,7 +77,7 @@ const ITEMS: Item[] = [
     ),
   },
   {
-    href: "/finanzas",
+    href: "/panel/finanzas",
     etiqueta: "Finanzas",
     icono: (
       <svg viewBox="0 0 24 24" {...trazo}>
@@ -87,7 +87,7 @@ const ITEMS: Item[] = [
     ),
   },
   {
-    href: "/clientes",
+    href: "/panel/clientes",
     etiqueta: "Clientes",
     icono: (
       <svg viewBox="0 0 24 24" {...trazo}>

@@ -205,7 +205,7 @@ export default function Lista({ iniciales: primeras }: { iniciales: Cliente[] })
           {resultados.map((c) => (
             <li key={c.id}>
               <Link
-                href={`/clientes/${c.id}`}
+                href={`/panel/clientes/${c.id}`}
                 className="flex items-center gap-3 rounded-2xl border border-borde bg-crema-alto p-3.5 hover:border-marron-suave"
               >
                 <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-marron-tenue text-sm text-marron-hondo">

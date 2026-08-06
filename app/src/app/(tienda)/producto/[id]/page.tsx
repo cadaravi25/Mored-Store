@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { crearClienteServidor } from "@/lib/supabase/server";
-import type { FilaCatalogo } from "../vitrina";
+import type { FilaCatalogo } from "../../portada";
 import Ficha from "./ficha";
 
 export const dynamic = "force-dynamic";

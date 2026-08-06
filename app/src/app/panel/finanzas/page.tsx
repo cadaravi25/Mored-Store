@@ -105,7 +105,7 @@ export default async function Finanzas({
           {PERIODOS.map((x) => (
             <Link
               key={x.id}
-              href={`/finanzas?p=${x.id}`}
+              href={`/panel/finanzas?p=${x.id}`}
               className={`rounded-full border px-3 py-1.5 text-sm ${
                 x.id === periodo.id
                   ? "border-marron bg-marron text-crema-alto"
