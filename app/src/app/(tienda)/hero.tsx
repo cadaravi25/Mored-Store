@@ -190,14 +190,9 @@ export default function Hero({
         </div>
       </div>
 
-      {/* Las modelas no se funden una con otra: la que sale se va por el borde
-          izquierdo y la que entra viene del mismo lado, con un retardo para
-          que no se crucen. Fundirlas dejaba un instante con las dos
-          superpuestas y se veía sucio.
-
-          Horizontal y no vertical porque el borde izquierdo ya está ahí: la
-          modela se sale de cuadro como quien sale de un plano, en vez de
-          hundirse hacia abajo. */}
+      {/* La que sale se apaga primero y la que entra aparece después, con un
+          retardo: es lo que evita el instante con las dos superpuestas. El
+          desplazamiento es corto, solo para que no se sienta un corte seco. */}
       <div className="pointer-events-none absolute inset-0 z-20">
         {(["active", "swim"] as const).map((id) => (
           <div
@@ -205,11 +200,12 @@ export default function Hero({
             className="absolute bottom-0 left-0 h-[88%] w-[62%] sm:h-[94%] sm:w-[46%] lg:w-[42%]"
             style={{
               ...SUAVE,
-              transitionProperty: "transform",
-              transitionDuration: coleccion === id ? "900ms" : "600ms",
-              transitionDelay: coleccion === id ? "480ms" : "0ms",
+              transitionProperty: "opacity, transform",
+              transitionDuration: coleccion === id ? "800ms" : "450ms",
+              transitionDelay: coleccion === id ? "420ms" : "0ms",
+              opacity: coleccion === id ? 1 : 0,
               transform:
-                coleccion === id ? "translateX(0)" : "translateX(-104%)",
+                coleccion === id ? "none" : "translateY(18px) scale(0.985)",
             }}
           >
             <Foto
