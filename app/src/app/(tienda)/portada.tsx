@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Carrito from "./carrito";
+import Hero, { type Coleccion } from "./hero";
 
 export interface FilaCatalogo {
   producto_id: string;
   producto: string;
-  coleccion: "active" | "swim";
+  coleccion: Coleccion;
   tipo: string | null;
   estilo: string | null;
   color_id: string;
@@ -27,12 +28,25 @@ const dinero = new Intl.NumberFormat("es-VE", {
   currency: "USD",
 });
 
+export const ACENTOS = {
+  active: {
+    "--acento": "var(--color-marron)",
+    "--acento-hondo": "var(--color-marron-hondo)",
+    "--acento-tenue": "var(--color-marron-tenue)",
+  },
+  swim: {
+    "--acento": "var(--color-rosa)",
+    "--acento-hondo": "var(--color-rosa-hondo)",
+    "--acento-tenue": "var(--color-rosa-tenue)",
+  },
+} as const;
+
 /** Cada tarjeta es un producto en un color: es como se mira la ropa. */
 interface Tarjeta {
   clave: string;
   producto_id: string;
   producto: string;
-  coleccion: "active" | "swim";
+  coleccion: Coleccion;
   tipo: string | null;
   color: string;
   foto_url: string;
@@ -67,18 +81,27 @@ function agrupar(filas: FilaCatalogo[]): Tarjeta[] {
   return [...mapa.values()];
 }
 
-export const ACENTOS = {
-  active: {
-    "--acento": "var(--color-marron)",
-    "--acento-hondo": "var(--color-marron-hondo)",
-    "--acento-tenue": "var(--color-marron-tenue)",
-  },
-  swim: {
-    "--acento": "var(--color-rosa)",
-    "--acento-hondo": "var(--color-rosa-hondo)",
-    "--acento-tenue": "var(--color-rosa-tenue)",
-  },
-} as const;
+/** Aparecer al entrar en pantalla, una sola vez. Repetirlo al subir y bajar
+ *  cansa: la primera vez es una bienvenida, la quinta es un parpadeo. */
+function useRevelar<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  useEffect(() => {
+    const nodo = ref.current;
+    if (!nodo) return;
+    const ojo = new IntersectionObserver(
+      ([entrada]) => {
+        if (entrada.isIntersecting) {
+          nodo.dataset.visible = "si";
+          ojo.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -12% 0px" },
+    );
+    ojo.observe(nodo);
+    return () => ojo.disconnect();
+  }, []);
+  return ref;
+}
 
 function Pildora({
   activo,
@@ -104,36 +127,50 @@ function Pildora({
   );
 }
 
-function Producto({ t }: { t: Tarjeta }) {
+function Producto({ t, orden }: { t: Tarjeta; orden: number }) {
+  const ref = useRevelar<HTMLLIElement>();
   const hay = t.tallas.filter((x) => x.disponible > 0);
+
   return (
-    <Link
-      href={`/producto/${t.producto_id}?color=${encodeURIComponent(t.color)}`}
-      className="group block"
+    <li
+      ref={ref}
+      className="revela"
+      // El escalonado es corto a propósito: con más de medio segundo entre la
+      // primera y la última, la fila se siente lenta en vez de viva.
+      style={{ transitionDelay: `${Math.min(orden, 7) * 70}ms` }}
     >
-      <div className="relative overflow-hidden bg-humo">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={t.foto_url}
-          alt={`${t.producto} ${t.color}`}
-          loading="lazy"
-          className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        {hay.length === 0 && (
-          <span className="absolute left-3 top-3 bg-nieve px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-gris">
-            Agotado
-          </span>
-        )}
-      </div>
-      <p className="mt-3 text-sm leading-snug">{t.producto}</p>
-      <p className="mt-0.5 text-[13px] capitalize text-gris">
-        {t.color}
-        {hay.length > 0 && (
-          <span className="normal-case"> · {hay.map((x) => x.talla).join(" ")}</span>
-        )}
-      </p>
-      <p className="mt-1 text-sm tabular-nums">{dinero.format(t.precio)}</p>
-    </Link>
+      <Link
+        href={`/producto/${t.producto_id}?color=${encodeURIComponent(t.color)}`}
+        className="group block"
+      >
+        <div className="relative overflow-hidden bg-humo">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={t.foto_url}
+            alt={`${t.producto} ${t.color}`}
+            loading="lazy"
+            className="aspect-[3/4] w-full object-cover transition-transform duration-[900ms] group-hover:scale-105"
+            style={{ transitionTimingFunction: "var(--curva)" }}
+          />
+          {hay.length === 0 && (
+            <span className="absolute left-3 top-3 bg-nieve px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-gris">
+              Agotado
+            </span>
+          )}
+        </div>
+        <p className="mt-3 text-sm leading-snug">{t.producto}</p>
+        <p className="mt-0.5 text-[13px] capitalize text-gris">
+          {t.color}
+          {hay.length > 0 && (
+            <span className="normal-case">
+              {" · "}
+              {hay.map((x) => x.talla).join(" ")}
+            </span>
+          )}
+        </p>
+        <p className="mt-1 text-sm tabular-nums">{dinero.format(t.precio)}</p>
+      </Link>
+    </li>
   );
 }
 
@@ -144,180 +181,68 @@ export default function Portada({
 }: {
   filas: FilaCatalogo[];
   whatsapp: string | null;
-  coleccionInicial: "" | "active" | "swim";
+  coleccionInicial: Coleccion;
 }) {
-  const [coleccion, setColeccion] = useState<"" | "active" | "swim">(
-    coleccionInicial,
-  );
+  const [coleccion, setColeccion] = useState<Coleccion>(coleccionInicial);
   const [tipo, setTipo] = useState("");
   const [talla, setTalla] = useState("");
 
-  useEffect(() => setTipo(""), [coleccion]);
+  // Al cambiar de colección se limpian los filtros: los tipos de una no son
+  // los de la otra, y quedarse con "Traje de baño" al pasar a Active dejaría
+  // la pantalla vacía sin motivo aparente.
+  useEffect(() => {
+    setTipo("");
+    setTalla("");
+  }, [coleccion]);
 
   const tarjetas = useMemo(() => agrupar(filas), [filas]);
-  const acento = ACENTOS[coleccion === "swim" ? "swim" : "active"];
+  const acento = ACENTOS[coleccion];
+
+  const dellColeccion = useMemo(
+    () => tarjetas.filter((t) => t.coleccion === coleccion),
+    [tarjetas, coleccion],
+  );
 
   const tipos = useMemo(
     () =>
       [
         ...new Set(
-          tarjetas
-            .filter((t) => !coleccion || t.coleccion === coleccion)
-            .map((t) => t.tipo)
-            .filter((t): t is string => Boolean(t)),
+          dellColeccion.map((t) => t.tipo).filter((t): t is string => Boolean(t)),
         ),
       ].sort(),
-    [tarjetas, coleccion],
+    [dellColeccion],
   );
 
   const visibles = useMemo(
     () =>
-      tarjetas.filter(
+      dellColeccion.filter(
         (t) =>
-          (!coleccion || t.coleccion === coleccion) &&
           (!tipo || t.tipo === tipo) &&
           (!talla || t.tallas.some((x) => x.talla === talla && x.disponible > 0)),
       ),
-    [tarjetas, coleccion, tipo, talla],
+    [dellColeccion, tipo, talla],
   );
 
-  // La foto del encabezado sale del propio catálogo: la primera con existencia
-  // de la colección que están mirando. Sin sesión de fotos y sin nada que
-  // mantener aparte.
-  const portada =
-    tarjetas.find(
-      (t) =>
-        (!coleccion || t.coleccion === coleccion) &&
-        t.tallas.some((x) => x.disponible > 0),
-    ) ?? tarjetas[0];
+  const refFranja = useRevelar<HTMLDivElement>();
+
+  function cambiar(c: Coleccion) {
+    setColeccion(c);
+    // La dirección queda contando en qué colección estás: si comparten el
+    // enlace, se abre en la misma.
+    window.history.replaceState(null, "", c === "active" ? "/" : `/?c=${c}`);
+  }
 
   return (
     <main style={acento as React.CSSProperties}>
-      {/* ------------------------------------------------------------------ */}
-      <section className="border-b border-linea bg-humo">
-        <div className="mx-auto grid w-full max-w-[1400px] items-center gap-10 px-5 py-14 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-20">
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.28em] text-[var(--acento-hondo)]">
-              {coleccion === "swim" ? "Mored Swim" : "Mored Active"}
-            </p>
-            <h1 className="mt-5 text-[2.6rem] font-light leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-              {coleccion === "swim" ? (
-                <>
-                  Playa,
-                  <br />
-                  sol y agua
-                </>
-              ) : (
-                <>
-                  Ropa para
-                  <br />
-                  moverte
-                </>
-              )}
-            </h1>
-            <p className="mt-6 max-w-md leading-relaxed text-gris">
-              {coleccion === "swim"
-                ? "Trajes de baño y salidas de playa. Piezas que se ven bien dentro y fuera del agua."
-                : "Tops, licras y sets que aguantan el entrenamiento y se ven bien fuera del gimnasio."}
-            </p>
+      <Hero coleccion={coleccion} onCambiar={cambiar} />
 
-            <div className="mt-9 flex flex-wrap gap-3">
-              <a
-                href="#catalogo"
-                className="bg-carbon px-8 py-3.5 text-sm text-nieve transition-opacity hover:opacity-90"
-              >
-                Ver el catálogo
-              </a>
-              <button
-                type="button"
-                onClick={() => setColeccion(coleccion === "swim" ? "active" : "swim")}
-                className="border border-carbon px-8 py-3.5 text-sm transition-colors hover:bg-carbon hover:text-nieve"
-              >
-                Ver {coleccion === "swim" ? "Active" : "Swim"}
-              </button>
-            </div>
-          </div>
-
-          <div className="relative">
-            {portada ? (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img
-                src={portada.foto_url}
-                alt=""
-                className="aspect-[4/5] w-full object-cover"
-              />
-            ) : (
-              <div className="grid aspect-[4/5] w-full place-items-center bg-[var(--acento-tenue)]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/mored-marron.png" alt="" className="w-1/3 opacity-40" />
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------------ */}
-      <section className="mx-auto grid w-full max-w-[1400px] gap-3 px-5 py-14 sm:grid-cols-2 lg:px-10">
-        {(
-          [
-            {
-              id: "active",
-              nombre: "Active",
-              texto: "Para entrenar",
-              fondo: "bg-marron-tenue",
-              color: "text-marron-hondo",
-            },
-            {
-              id: "swim",
-              nombre: "Swim",
-              texto: "Para la playa",
-              fondo: "bg-rosa-tenue",
-              color: "text-rosa-hondo",
-            },
-          ] as const
-        ).map((c) => {
-          const foto = tarjetas.find((t) => t.coleccion === c.id)?.foto_url;
-          return (
-            <button
-              key={c.id}
-              type="button"
-              onClick={() => {
-                setColeccion(c.id);
-                document
-                  .getElementById("catalogo")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className={`group relative overflow-hidden text-left ${c.fondo}`}
-            >
-              {foto ? (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img
-                  src={foto}
-                  alt=""
-                  loading="lazy"
-                  className="aspect-[16/10] w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
-                />
-              ) : (
-                <div className="aspect-[16/10] w-full" />
-              )}
-              <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-carbon/55 to-transparent p-7">
-                <p className="text-3xl font-light text-nieve">{c.nombre}</p>
-                <p className="mt-1 text-sm text-nieve/85">{c.texto}</p>
-              </div>
-            </button>
-          );
-        })}
-      </section>
-
-      {/* ------------------------------------------------------------------ */}
-      <section id="catalogo" className="mx-auto w-full max-w-[1400px] px-5 lg:px-10">
+      <section
+        id="catalogo"
+        className="mx-auto w-full max-w-[1400px] px-5 pt-16 lg:px-10"
+      >
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-linea pb-5">
           <h2 className="text-3xl font-light tracking-tight sm:text-4xl">
-            {coleccion === "active"
-              ? "Active"
-              : coleccion === "swim"
-                ? "Swim"
-                : "Todo"}
+            Mored {coleccion === "swim" ? "Swim" : "Active"}
           </h2>
           <p className="text-sm text-gris">
             {visibles.length} {visibles.length === 1 ? "pieza" : "piezas"}
@@ -325,24 +250,6 @@ export default function Portada({
         </div>
 
         <div className="space-y-3 py-6">
-          <div className="-mx-5 flex gap-2 overflow-x-auto px-5 lg:mx-0 lg:px-0">
-            <Pildora activo={coleccion === ""} onClick={() => setColeccion("")}>
-              Todo
-            </Pildora>
-            <Pildora
-              activo={coleccion === "active"}
-              onClick={() => setColeccion("active")}
-            >
-              Active
-            </Pildora>
-            <Pildora
-              activo={coleccion === "swim"}
-              onClick={() => setColeccion("swim")}
-            >
-              Swim
-            </Pildora>
-          </div>
-
           {tipos.length > 1 && (
             <div className="-mx-5 flex gap-2 overflow-x-auto px-5 lg:mx-0 lg:px-0">
               <Pildora activo={tipo === ""} onClick={() => setTipo("")}>
@@ -370,24 +277,27 @@ export default function Portada({
 
         {visibles.length === 0 ? (
           <p className="py-24 text-center text-gris">
-            {tarjetas.length === 0
-              ? "La tienda abre pronto."
+            {dellColeccion.length === 0
+              ? `Mored ${coleccion === "swim" ? "Swim" : "Active"} abre pronto.`
               : "Nada con esos filtros. Prueba con otra talla."}
           </p>
         ) : (
-          <ul className="grid grid-cols-2 gap-x-3 gap-y-9 pb-4 sm:grid-cols-3 lg:grid-cols-4">
-            {visibles.map((t) => (
-              <li key={t.clave}>
-                <Producto t={t} />
-              </li>
+          <ul
+            key={coleccion}
+            className="grid grid-cols-2 gap-x-3 gap-y-9 pb-4 sm:grid-cols-3 lg:grid-cols-4"
+          >
+            {visibles.map((t, i) => (
+              <Producto key={t.clave} t={t} orden={i} />
             ))}
           </ul>
         )}
       </section>
 
-      {/* ------------------------------------------------------------------ */}
-      <section id="visitanos" className="mt-20 border-y border-linea bg-humo">
-        <div className="mx-auto grid w-full max-w-[1400px] gap-8 px-5 py-14 sm:grid-cols-3 lg:px-10">
+      <section className="mt-20 border-y border-linea bg-humo">
+        <div
+          ref={refFranja}
+          className="revela mx-auto grid w-full max-w-[1400px] gap-8 px-5 py-14 sm:grid-cols-3 lg:px-10"
+        >
           {[
             {
               titulo: "Estamos en Chacaíto",

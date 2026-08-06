@@ -19,7 +19,7 @@ export default async function Inicio({
     <Portada
       filas={(data ?? []) as FilaCatalogo[]}
       whatsapp={process.env.NEXT_PUBLIC_WHATSAPP ?? null}
-      coleccionInicial={c === "active" || c === "swim" ? c : ""}
+      coleccionInicial={c === "swim" ? "swim" : "active"}
     />
   );
 }

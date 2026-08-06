@@ -6,7 +6,7 @@ const COLUMNAS = [
     enlaces: [
       { texto: "Mored Active", href: "/?c=active" },
       { texto: "Mored Swim", href: "/?c=swim" },
-      { texto: "Todo el catálogo", href: "/#catalogo" },
+      { texto: "Ver el catálogo", href: "/#catalogo" },
     ],
   },
   {

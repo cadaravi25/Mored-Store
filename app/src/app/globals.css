@@ -56,6 +56,91 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ==========================================================================
+   Movimiento
+   ==========================================================================
+   Una curva sola para todo. Lo que hace que un sitio se sienta caro no es
+   tener muchas animaciones distintas, es que todas se muevan igual. */
+:root {
+  --curva: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes acercar {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes abrir-letras {
+  from {
+    opacity: 0;
+    letter-spacing: 0.7em;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.surge {
+  animation: surgir 1s var(--curva) both;
+}
+.acerca {
+  animation: acercar 1.4s var(--curva) both;
+}
+.abre-letras {
+  animation: abrir-letras 1.2s var(--curva) both;
+}
+
+/* Aparecer al entrar en pantalla. El observador le pone data-visible. */
+.revela {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.9s var(--curva),
+    transform 0.9s var(--curva);
+}
+.revela[data-visible="si"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Quien pidió no ver movimiento, no lo ve. No es un detalle de cortesía: a
+   cierta gente el movimiento le produce mareo de verdad. */
+@media (prefers-reduced-motion: reduce) {
+  .surge,
+  .acerca,
+  .abre-letras {
+    animation: none;
+  }
+  .revela {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
 /* La tablet del local y los teléfonos se usan de pie y con prisa: sin zoom
    accidental al tocar dos veces, y sin resaltado azul al pulsar. */
 button,
