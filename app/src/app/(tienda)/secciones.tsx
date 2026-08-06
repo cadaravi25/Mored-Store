@@ -67,110 +67,53 @@ const ACCESOS = [
   { titulo: "Enterizos", tipo: "Enterizo", foto: "/fotos/moreda_17.webp" },
 ] as const;
 
-export function Estilos({ onElegir }: { onElegir: (tipo: string) => void }) {
-  const ref = useRevelar<HTMLElement>();
-
-  return (
-    <section ref={ref} className="parada revela grid sm:grid-cols-3">
-      {ACCESOS.map((a) => (
-        <button
-          key={a.tipo}
-          type="button"
-          onClick={() => onElegir(a.tipo)}
-          className="group relative block aspect-[3/4] overflow-hidden text-left"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={a.foto}
-            alt={a.titulo}
-            loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-[900ms] group-hover:scale-105"
-            style={{ transitionTimingFunction: "var(--curva)" }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-carbon/70 via-carbon/10 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 p-7">
-            <p className="text-3xl font-light uppercase tracking-[0.12em] text-nieve sm:text-4xl">
-              {a.titulo}
-            </p>
-            <span className="mt-5 inline-block rounded-full bg-nieve px-7 py-2.5 text-[12px] uppercase tracking-[0.2em] text-carbon">
-              Ver
-            </span>
-          </div>
-        </button>
-      ))}
-    </section>
-  );
-}
-
-// ---------------------------------------------------------------------------
-
-/**
- * Las categorías salen del inventario, no de una lista escrita a mano: son los
- * tipos de prenda que de verdad hay, con su cuenta real. Si mañana entran
- * enterizos, aparecen solos.
- */
-export function Categorias({
-  tarjetas,
+export function Estilos({
   coleccion,
   onElegir,
 }: {
-  tarjetas: Tarjeta[];
   coleccion: Coleccion;
   onElegir: (tipo: string) => void;
 }) {
   const ref = useRevelar<HTMLElement>();
 
-  const porTipo = new Map<string, { foto: string; piezas: number }>();
-  for (const t of tarjetas) {
-    if (!t.tipo) continue;
-    const y = porTipo.get(t.tipo) ?? { foto: t.foto_url, piezas: 0 };
-    y.piezas += t.tallas.reduce((s, x) => s + Math.max(x.disponible, 0), 0);
-    porTipo.set(t.tipo, y);
-  }
-  const categorias = [...porTipo.entries()].sort((a, b) =>
-    a[0].localeCompare(b[0]),
-  );
-
-  if (categorias.length === 0) return null;
-
   return (
     <section
       ref={ref}
-      className="parada revela mx-auto w-full max-w-[1400px] px-5 pt-24 lg:px-10"
+      className="parada revela mx-auto w-full max-w-[1400px] px-5 pt-20 lg:px-10"
     >
       <Titulo
         antetitulo={`Mored ${coleccion === "swim" ? "Swim" : "Active"}`}
-        titulo="Categorías"
+        titulo="Por prenda"
       />
-      <ul className="mt-8 grid grid-cols-2 gap-x-3 gap-y-7 sm:grid-cols-3 lg:grid-cols-5">
-        {categorias.map(([tipo, y]) => (
-          <li key={tipo}>
-            <button
-              type="button"
-              onClick={() => onElegir(tipo)}
-              className="group block w-full text-left"
-            >
-              <div className="overflow-hidden bg-humo">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={y.foto}
-                  alt={tipo}
-                  loading="lazy"
-                  className="aspect-square w-full object-cover transition-transform duration-[900ms] group-hover:scale-105"
-                  style={{ transitionTimingFunction: "var(--curva)" }}
-                />
-              </div>
-              <p className="mt-3 text-base">{tipo}</p>
-              <p className="text-[13px] text-gris">
-                {y.piezas} {y.piezas === 1 ? "pieza" : "piezas"}
-              </p>
-            </button>
-          </li>
+
+      <div className="mt-8 grid gap-3 sm:grid-cols-3">
+        {ACCESOS.map((a) => (
+          <button
+            key={a.tipo}
+            type="button"
+            onClick={() => onElegir(a.tipo)}
+            className="group relative block aspect-[4/5] overflow-hidden text-left sm:aspect-[4/3]"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={a.foto}
+              alt={a.titulo}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-[900ms] group-hover:scale-105"
+              style={{ transitionTimingFunction: "var(--curva)" }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-carbon/65 via-carbon/5 to-transparent" />
+            <p className="absolute bottom-5 left-5 text-xl font-light uppercase tracking-[0.14em] text-nieve sm:text-2xl">
+              {a.titulo}
+            </p>
+          </button>
         ))}
-      </ul>
+      </div>
     </section>
   );
 }
+
+// ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
 

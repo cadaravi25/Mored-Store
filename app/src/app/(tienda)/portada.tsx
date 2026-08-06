@@ -6,7 +6,6 @@ import Carrito from "./carrito";
 import Hero, { type Coleccion } from "./hero";
 import { agrupar, type FilaCatalogo } from "./piezas";
 import {
-  Categorias,
   Destacados,
   Estilos,
   FranjaCatalogo,
@@ -69,13 +68,7 @@ export default function Portada({
     <main style={acento as React.CSSProperties}>
       <Hero coleccion={coleccion} onCambiar={cambiar} />
 
-      <Estilos onElegir={irAlCatalogo} />
-
-      <Categorias
-        tarjetas={deLaColeccion}
-        coleccion={coleccion}
-        onElegir={irAlCatalogo}
-      />
+      <Estilos coleccion={coleccion} onElegir={irAlCatalogo} />
 
       <FranjaCatalogo coleccion={coleccion} />
 
