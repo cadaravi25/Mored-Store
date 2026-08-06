@@ -87,8 +87,8 @@ const CONTENIDO = {
     usuario: "@moredswim",
     accesos: [
       { titulo: "Trajes de baño", tipo: "Traje de baño", foto: "/fotos/swim-1.webp" },
-      { titulo: "Bañadores", tipo: "Bañador", foto: "/fotos/swim-2.webp" },
-      { titulo: "Salidas de playa", tipo: "Salida de baño", foto: "/fotos/swim-3.webp" },
+      { titulo: "Salidas de playa", tipo: "Salida de baño", foto: "/fotos/swim-2.webp" },
+      { titulo: "Accesorios", tipo: "Accesorios", foto: "/fotos/swim-3.webp" },
     ],
     franja: { video: null, poster: "/hero/swim-fondo.webp" },
     look: "/fotos/swim-look.webp",
