@@ -30,8 +30,7 @@ interface Escena {
   anchoPalabra: string;
   /** Se ve mientras carga la foto, y si el archivo todavía no existe. */
   respaldo: string;
-  esquinaIzq: string;
-  esquinaDer: string;
+  etiqueta: string;
 }
 
 const ESCENAS: Record<Coleccion, Escena> = {
@@ -42,8 +41,7 @@ const ESCENAS: Record<Coleccion, Escena> = {
     palabra: "/hero/active-palabra.svg",
     anchoPalabra: "41.5%",
     respaldo: "linear-gradient(150deg, #c9a583 0%, #a78a6a 50%, #6f5942 100%)",
-    esquinaIzq: "Ropa deportiva",
-    esquinaDer: "Tienda en Chacaíto",
+    etiqueta: "Ropa deportiva",
   },
   swim: {
     nombre: "Swim",
@@ -52,8 +50,7 @@ const ESCENAS: Record<Coleccion, Escena> = {
     palabra: "/hero/swim-palabra.svg",
     anchoPalabra: "28.7%",
     respaldo: "linear-gradient(150deg, #f3d9c9 0%, #e0827a 55%, #9fc3cc 100%)",
-    esquinaIzq: "Trajes de baño",
-    esquinaDer: "Envíos a todo el país",
+    etiqueta: "Trajes de baño",
   },
 };
 
@@ -174,7 +171,7 @@ export default function Hero({
                   key={id}
                   src={ESCENAS[id].palabra}
                   alt={ESCENAS[id].nombre}
-                  className="absolute left-1/2 top-1/2 h-auto -translate-x-1/2 -translate-y-1/2 transition-all duration-[700ms]"
+                  className="absolute left-1/2 top-1/2 h-auto transition-all duration-[700ms]"
                   style={{
                     ...SUAVE,
                     width: ESCENAS[id].anchoPalabra,
@@ -190,9 +187,9 @@ export default function Hero({
         </div>
       </div>
 
-      {/* La que sale se apaga primero y la que entra aparece después, con un
-          retardo: es lo que evita el instante con las dos superpuestas. El
-          desplazamiento es corto, solo para que no se sienta un corte seco. */}
+      {/* Fundido simple, las dos a la vez. Escalonarlas evitaba el instante
+          con las dos superpuestas, pero se sentía como si la página se hubiera
+          trabado: peor el remedio que la enfermedad. */}
       <div className="pointer-events-none absolute inset-0 z-20">
         {(["active", "swim"] as const).map((id) => (
           <div
@@ -201,8 +198,7 @@ export default function Hero({
             style={{
               ...SUAVE,
               transitionProperty: "opacity, transform",
-              transitionDuration: coleccion === id ? "800ms" : "450ms",
-              transitionDelay: coleccion === id ? "420ms" : "0ms",
+              transitionDuration: "700ms",
               opacity: coleccion === id ? 1 : 0,
               transform:
                 coleccion === id ? "none" : "translateY(18px) scale(0.985)",
@@ -216,31 +212,32 @@ export default function Hero({
         ))}
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 z-30 px-5 pb-7 lg:px-10">
-        {/* Mismo ancho y mismo margen derecho que la columna del logotipo:
-            así el botón queda centrado justo bajo MORED. */}
-        <div className="flex justify-center pb-9 lg:justify-end lg:pb-14 lg:pr-[9%]">
-          <div className="flex w-[74vw] max-w-[520px] justify-center lg:w-[36vw]">
-            <button
-              type="button"
-              onClick={() => onCambiar(otra)}
-              className="surge rounded-full border border-nieve/80 px-11 py-3.5 text-[12px] uppercase tracking-[0.28em] text-nieve backdrop-blur-[2px] transition-colors hover:bg-nieve hover:text-carbon"
-              style={{ animationDelay: "0.55s" }}
-            >
-              Ver {ESCENAS[otra].nombre}
-            </button>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-nieve/70">
-          <span key={`i${clave}`} className="surge">
-            {ESCENAS[coleccion].esquinaIzq}
-          </span>
-          <span key={`d${clave}`} className="surge text-right">
-            {ESCENAS[coleccion].esquinaDer}
-          </span>
+      {/* El botón repite EXACTAMENTE el contenedor del logotipo: mismo padre a
+          toda altura, mismo relleno lateral y mismo ancho de columna. Con
+          contenedores distintos, cualquier diferencia de relleno lo corría
+          unos píxeles y el centro dejaba de coincidir con MORED. */}
+      <div className="pointer-events-none absolute inset-0 z-30 flex justify-center px-6 lg:justify-end lg:pr-[9%]">
+        <div className="flex h-full w-[74vw] max-w-[520px] items-end justify-center pb-[16%] lg:w-[36vw] lg:pb-[13%]">
+          <button
+            type="button"
+            onClick={() => onCambiar(otra)}
+            className="surge pointer-events-auto rounded-full border border-nieve/80 px-11 py-3.5 text-[12px] uppercase tracking-[0.28em] text-nieve backdrop-blur-[2px] transition-colors hover:bg-nieve hover:text-carbon"
+            style={{ animationDelay: "0.55s" }}
+          >
+            Ver {ESCENAS[otra].nombre}
+          </button>
         </div>
       </div>
+
+      {/* Una sola etiqueta, a la derecha: dice qué es esta colección. La otra
+          esquina repetía datos que ya están en el pie. */}
+      <p
+        key={`e${clave}`}
+        className="surge absolute bottom-7 right-5 z-30 text-[10px] uppercase tracking-[0.24em] text-nieve/70 lg:right-10"
+      >
+        {ESCENAS[coleccion].etiqueta}
+      </p>
+
     </section>
   );
 }
