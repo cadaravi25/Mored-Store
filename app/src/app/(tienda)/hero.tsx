@@ -7,23 +7,21 @@ export type Coleccion = "active" | "swim";
 /**
  * El hero de la portada.
  *
- * La idea que lo sostiene: el LOGOTIPO VA DETRÁS DE LA MODELO. El fondo, el
- * texto y la modelo son tres capas separadas y por eso el apilado importa:
+ * Cuatro capas, y el orden es lo que le da profundidad:
  *
- *   z-0  el paisaje
- *   z-10 MORED y el nombre de la colección
- *   z-20 la modelo recortada, tapando parte del logotipo
- *   z-30 el botón
+ *   z-0   el paisaje
+ *   z-10  MORED y el nombre de la colección
+ *   z-20  la modela recortada, que tapa parte del logotipo
+ *   z-30  el botón y las esquinas
  *
- * Al entrar y al cambiar de colección cada capa se mueve a distinta velocidad,
- * así la escena tiene profundidad en vez de ser una foto plana con letras
- * encima. Para eso hacía falta la modelo recortada aparte del fondo.
+ * Al entrar y al cambiar de colección cada capa se mueve a distinta velocidad.
+ * Para eso hacía falta la modela recortada aparte del fondo.
  */
 
 interface Escena {
   nombre: string;
   fondo: string;
-  modelo: string;
+  modela: string;
   /** Se ve mientras carga la foto, y si el archivo todavía no existe. */
   respaldo: string;
   esquinaIzq: string;
@@ -34,16 +32,16 @@ const ESCENAS: Record<Coleccion, Escena> = {
   active: {
     nombre: "Active",
     fondo: "/hero/active-fondo.webp",
-    modelo: "/hero/active-modelo.webp",
-    respaldo: "linear-gradient(160deg, #c9a583 0%, #a78a6a 45%, #6f5942 100%)",
+    modela: "/hero/active-modela.webp",
+    respaldo: "linear-gradient(150deg, #c9a583 0%, #a78a6a 50%, #6f5942 100%)",
     esquinaIzq: "Ropa deportiva",
     esquinaDer: "Tienda en Chacaíto",
   },
   swim: {
     nombre: "Swim",
     fondo: "/hero/swim-fondo.webp",
-    modelo: "/hero/swim-modelo.webp",
-    respaldo: "linear-gradient(160deg, #f3d9c9 0%, #e0827a 55%, #9fc3cc 100%)",
+    modela: "/hero/swim-modela.webp",
+    respaldo: "linear-gradient(150deg, #f3d9c9 0%, #e0827a 55%, #9fc3cc 100%)",
     esquinaIzq: "Trajes de baño",
     esquinaDer: "Envíos a todo el país",
   },
@@ -51,8 +49,39 @@ const ESCENAS: Record<Coleccion, Escena> = {
 
 const SUAVE = { transitionTimingFunction: "var(--curva)" } as const;
 
+/**
+ * Una foto que todavía no existe no debe dejar el ícono de imagen rota. Nace
+ * invisible y solo se muestra cuando cargó; si falla, desaparece y queda el
+ * degradado de marca.
+ */
+function Foto({
+  src,
+  className,
+  style,
+}: {
+  src: string;
+  className: string;
+  style?: React.CSSProperties;
+}) {
+  const [estado, setEstado] = useState<"cargando" | "lista" | "falta">(
+    "cargando",
+  );
+  if (estado === "falta") return null;
+  return (
+    /* eslint-disable-next-line @next/next/no-img-element */
+    <img
+      src={src}
+      alt=""
+      aria-hidden
+      onLoad={() => setEstado("lista")}
+      onError={() => setEstado("falta")}
+      className={`${className} transition-opacity duration-700`}
+      style={{ ...style, opacity: estado === "lista" ? undefined : 0 }}
+    />
+  );
+}
+
 function Fondo({ escena, activa }: { escena: Escena; activa: boolean }) {
-  const [falta, setFalta] = useState(false);
   return (
     <div
       aria-hidden
@@ -60,47 +89,19 @@ function Fondo({ escena, activa }: { escena: Escena; activa: boolean }) {
       style={{ ...SUAVE, opacity: activa ? 1 : 0 }}
     >
       <div
-        className="absolute inset-0 transition-transform duration-[1400ms]"
+        className="absolute inset-0 transition-transform duration-[1600ms]"
         style={{
           ...SUAVE,
           transform: activa ? "scale(1)" : "scale(1.08)",
           background: escena.respaldo,
         }}
       >
-        {!falta && (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
-            src={escena.fondo}
-            alt=""
-            onError={() => setFalta(true)}
-            className="h-full w-full object-cover"
-          />
-        )}
+        <Foto src={escena.fondo} className="h-full w-full object-cover" />
       </div>
-      {/* Velo tenue: el logotipo es blanco y tiene que leerse sobre cualquier
-          foto, incluidas las de cielo claro. */}
-      <div className="absolute inset-0 bg-gradient-to-b from-carbon/25 via-carbon/10 to-carbon/35" />
+      {/* Velo muy tenue: el logotipo es blanco y tiene que leerse también
+          sobre un cielo claro, sin apagar la foto. */}
+      <div className="absolute inset-0 bg-gradient-to-b from-carbon/15 via-transparent to-carbon/30" />
     </div>
-  );
-}
-
-function Modelo({ escena, activa }: { escena: Escena; activa: boolean }) {
-  const [falta, setFalta] = useState(false);
-  if (falta) return null;
-  return (
-    /* eslint-disable-next-line @next/next/no-img-element */
-    <img
-      src={escena.modelo}
-      alt=""
-      aria-hidden
-      onError={() => setFalta(true)}
-      className="absolute bottom-0 left-0 h-[86%] w-auto max-w-[70%] object-contain object-left-bottom transition-all duration-[1100ms] sm:h-[92%] sm:max-w-[52%] lg:h-[95%] lg:max-w-[44%]"
-      style={{
-        ...SUAVE,
-        opacity: activa ? 1 : 0,
-        transform: activa ? "none" : "translateY(28px) scale(0.97)",
-      }}
-    />
   );
 }
 
@@ -115,8 +116,8 @@ export default function Hero({
   const [clave, setClave] = useState(0);
   const primera = useRef(true);
 
-  // El nombre de la colección se rearma en cada cambio. Es el detalle que hace
-  // que se lea como una escena nueva y no como un texto reemplazado.
+  // El nombre de la colección se rearma en cada cambio: se lee como una escena
+  // nueva y no como un texto que se reemplazó.
   useEffect(() => {
     if (primera.current) {
       primera.current = false;
@@ -126,39 +127,58 @@ export default function Hero({
   }, [coleccion]);
 
   return (
-    <section className="relative h-[78vh] min-h-[520px] w-full overflow-hidden bg-carbon lg:h-[88vh]">
+    <section className="relative h-[76vh] min-h-[500px] w-full overflow-hidden bg-carbon lg:h-[86vh]">
       <Fondo escena={ESCENAS.active} activa={coleccion === "active"} />
       <Fondo escena={ESCENAS.swim} activa={coleccion === "swim"} />
 
-      <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center px-5 text-center">
-        <div className="acerca">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/mored-blanco.png"
-            alt="Mored"
-            className="w-[64vw] max-w-[560px] drop-shadow-[0_2px_28px_rgba(0,0,0,0.28)] sm:w-[48vw]"
-          />
+      {/* El logotipo va corrido a la derecha: la modela ocupa la izquierda, y
+          así se cruzan sin taparse del todo, como en la referencia. */}
+      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6 lg:justify-end lg:pr-[10%]">
+        <div className="w-full max-w-[560px] text-center">
+          <div className="acerca">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/mored-texto-blanco.png"
+              alt="Mored"
+              className="mx-auto w-[68vw] max-w-[460px] drop-shadow-[0_2px_20px_rgba(0,0,0,0.22)] lg:w-[34vw]"
+            />
+          </div>
+          <p
+            key={clave}
+            className="abre-letras mt-4 pl-[0.55em] text-[11px] uppercase tracking-[0.55em] text-nieve/90 sm:text-sm"
+          >
+            {ESCENAS[coleccion].nombre}
+          </p>
         </div>
-        <p
-          key={clave}
-          className="abre-letras mt-5 pl-[0.5em] text-[13px] uppercase tracking-[0.5em] text-nieve sm:text-base"
-        >
-          {ESCENAS[coleccion].nombre}
-        </p>
       </div>
 
       <div className="pointer-events-none absolute inset-0 z-20">
-        <Modelo escena={ESCENAS.active} activa={coleccion === "active"} />
-        <Modelo escena={ESCENAS.swim} activa={coleccion === "swim"} />
+        {(["active", "swim"] as const).map((id) => (
+          <div
+            key={id}
+            className="absolute bottom-0 left-0 h-[88%] w-[62%] transition-all duration-[1100ms] sm:h-[94%] sm:w-[46%] lg:w-[42%]"
+            style={{
+              ...SUAVE,
+              opacity: coleccion === id ? 1 : 0,
+              transform:
+                coleccion === id ? "none" : "translateY(26px) scale(0.97)",
+            }}
+          >
+            <Foto
+              src={ESCENAS[id].modela}
+              className="h-full w-full object-contain object-left-bottom"
+            />
+          </div>
+        ))}
       </div>
 
       <div className="absolute inset-x-0 bottom-0 z-30 px-5 pb-7 lg:px-10">
-        <div className="flex justify-center pb-8 lg:pb-12">
+        <div className="flex justify-center pb-9 lg:justify-end lg:pb-14 lg:pr-[10%]">
           <button
             type="button"
             onClick={() => onCambiar(otra)}
-            className="surge border border-nieve/70 bg-nieve/10 px-10 py-3.5 text-[13px] uppercase tracking-[0.24em] text-nieve backdrop-blur-sm transition-colors hover:bg-nieve hover:text-carbon"
-            style={{ animationDelay: "0.5s" }}
+            className="surge border border-nieve/80 px-11 py-3.5 text-[12px] uppercase tracking-[0.28em] text-nieve backdrop-blur-[2px] transition-colors hover:bg-nieve hover:text-carbon"
+            style={{ animationDelay: "0.55s" }}
           >
             Ver {ESCENAS[otra].nombre}
           </button>
