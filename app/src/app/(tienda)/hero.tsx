@@ -22,9 +22,12 @@ interface Escena {
   nombre: string;
   fondo: string;
   modela: string;
-  /** MORED ACTIVE y MORED SWIM son el logotipo, no texto: vienen del propio
-   *  archivo de marca y no se recomponen con una tipografía cualquiera. */
-  logo: string;
+  /** ACTIVE y SWIM son parte del logotipo, no texto: vienen del propio
+   *  archivo de marca y no se recomponen con una tipografía cualquiera.
+   *  MORED va aparte porque no cambia entre colecciones. */
+  palabra: string;
+  /** Ancho de la palabra respecto al de MORED, tal como está en el diseño. */
+  anchoPalabra: string;
   /** Se ve mientras carga la foto, y si el archivo todavía no existe. */
   respaldo: string;
   esquinaIzq: string;
@@ -36,7 +39,8 @@ const ESCENAS: Record<Coleccion, Escena> = {
     nombre: "Active",
     fondo: "/hero/active-fondo.webp",
     modela: "/hero/active-modela.webp",
-    logo: "/hero/active-logo.svg",
+    palabra: "/hero/active-palabra.svg",
+    anchoPalabra: "41.5%",
     respaldo: "linear-gradient(150deg, #c9a583 0%, #a78a6a 50%, #6f5942 100%)",
     esquinaIzq: "Ropa deportiva",
     esquinaDer: "Tienda en Chacaíto",
@@ -45,7 +49,8 @@ const ESCENAS: Record<Coleccion, Escena> = {
     nombre: "Swim",
     fondo: "/hero/swim-fondo.webp",
     modela: "/hero/swim-modela.webp",
-    logo: "/hero/swim-logo.svg",
+    palabra: "/hero/swim-palabra.svg",
+    anchoPalabra: "28.7%",
     respaldo: "linear-gradient(150deg, #f3d9c9 0%, #e0827a 55%, #9fc3cc 100%)",
     esquinaIzq: "Trajes de baño",
     esquinaDer: "Envíos a todo el país",
@@ -149,37 +154,58 @@ export default function Hero({
       <Fondo escena={ESCENAS.swim} activa={coleccion === "swim"} />
 
       {/* El logotipo va corrido a la derecha: la modela ocupa la izquierda, y
-          así se cruzan sin taparse del todo, como en la referencia. */}
-      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6 lg:justify-end lg:pr-[9%]">
-        <div className="relative aspect-[705/227] w-[74vw] max-w-[520px] lg:w-[36vw]">
-          {(["active", "swim"] as const).map((id) => (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              key={id}
-              src={ESCENAS[id].logo}
-              alt={`Mored ${ESCENAS[id].nombre}`}
-              className="absolute inset-0 h-full w-full object-contain drop-shadow-[0_2px_20px_rgba(0,0,0,0.22)] transition-all duration-[900ms]"
-              style={{
-                ...SUAVE,
-                opacity: coleccion === id ? 1 : 0,
-                transform:
-                  coleccion === id ? "none" : "translateY(14px) scale(0.97)",
-              }}
-            />
-          ))}
+          así se cruzan sin taparse del todo, como en la referencia.
+
+          MORED no se mueve nunca: es el mismo en las dos colecciones y verlo
+          desaparecer para volver igual no aporta nada. Lo único que cambia es
+          la palabra de abajo. */}
+      <div className="pointer-events-none absolute inset-0 z-10 flex justify-center px-6 lg:justify-end lg:pr-[9%]">
+        <div className="flex h-full w-[74vw] max-w-[520px] flex-col justify-center lg:w-[36vw]">
+          <div className="acerca w-full drop-shadow-[0_2px_20px_rgba(0,0,0,0.22)]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/hero/mored.svg" alt="Mored" className="w-full" />
+
+            {/* Las dos palabras van centradas bajo MORED, como en el archivo
+                de marca, y del mismo alto relativo. */}
+            <div className="relative mt-[5.14%] aspect-[2032/100] w-full">
+              {(["active", "swim"] as const).map((id) => (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  key={id}
+                  src={ESCENAS[id].palabra}
+                  alt={ESCENAS[id].nombre}
+                  className="absolute left-1/2 top-1/2 h-auto -translate-x-1/2 -translate-y-1/2 transition-all duration-[700ms]"
+                  style={{
+                    ...SUAVE,
+                    width: ESCENAS[id].anchoPalabra,
+                    opacity: coleccion === id ? 1 : 0,
+                    transform: `translate(-50%, -50%) ${
+                      coleccion === id ? "" : "translateY(8px)"
+                    }`,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
+      {/* Las modelas no se funden una con otra: la que sale baja hasta salirse
+          del cuadro y la que entra sube detrás, con un retardo para que no
+          coincidan a medio camino. Fundirlas dejaba un instante con las dos
+          superpuestas y se veía sucio. */}
       <div className="pointer-events-none absolute inset-0 z-20">
         {(["active", "swim"] as const).map((id) => (
           <div
             key={id}
-            className="absolute bottom-0 left-0 h-[88%] w-[62%] transition-all duration-[1100ms] sm:h-[94%] sm:w-[46%] lg:w-[42%]"
+            className="absolute bottom-0 left-0 h-[88%] w-[62%] sm:h-[94%] sm:w-[46%] lg:w-[42%]"
             style={{
               ...SUAVE,
-              opacity: coleccion === id ? 1 : 0,
+              transitionProperty: "transform",
+              transitionDuration: coleccion === id ? "900ms" : "600ms",
+              transitionDelay: coleccion === id ? "480ms" : "0ms",
               transform:
-                coleccion === id ? "none" : "translateY(26px) scale(0.97)",
+                coleccion === id ? "translateY(0)" : "translateY(104%)",
             }}
           >
             <Foto
@@ -191,15 +217,19 @@ export default function Hero({
       </div>
 
       <div className="absolute inset-x-0 bottom-0 z-30 px-5 pb-7 lg:px-10">
-        <div className="flex justify-center pb-9 lg:justify-end lg:pb-14 lg:pr-[10%]">
-          <button
-            type="button"
-            onClick={() => onCambiar(otra)}
-            className="surge border border-nieve/80 px-11 py-3.5 text-[12px] uppercase tracking-[0.28em] text-nieve backdrop-blur-[2px] transition-colors hover:bg-nieve hover:text-carbon"
-            style={{ animationDelay: "0.55s" }}
-          >
-            Ver {ESCENAS[otra].nombre}
-          </button>
+        {/* Mismo ancho y mismo margen derecho que la columna del logotipo:
+            así el botón queda centrado justo bajo MORED. */}
+        <div className="flex justify-center pb-9 lg:justify-end lg:pb-14 lg:pr-[9%]">
+          <div className="flex w-[74vw] max-w-[520px] justify-center lg:w-[36vw]">
+            <button
+              type="button"
+              onClick={() => onCambiar(otra)}
+              className="surge rounded-full border border-nieve/80 px-11 py-3.5 text-[12px] uppercase tracking-[0.28em] text-nieve backdrop-blur-[2px] transition-colors hover:bg-nieve hover:text-carbon"
+              style={{ animationDelay: "0.55s" }}
+            >
+              Ver {ESCENAS[otra].nombre}
+            </button>
+          </div>
         </div>
 
         <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-nieve/70">

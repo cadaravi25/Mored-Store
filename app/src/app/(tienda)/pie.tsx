@@ -1,27 +1,12 @@
-import Link from "next/link";
-
-const COLUMNAS = [
-  {
-    titulo: "Comprar",
-    enlaces: [
-      { texto: "Mored Active", href: "/?c=active" },
-      { texto: "Mored Swim", href: "/?c=swim" },
-      { texto: "Ver el catálogo", href: "/#catalogo" },
-    ],
-  },
-  {
-    titulo: "La tienda",
-    enlaces: [
-      { texto: "CC Manuelita Sáenz", href: "/#visitanos" },
-      { texto: "Chacaíto, nivel 2", href: "/#visitanos" },
-      { texto: "Local 02-178", href: "/#visitanos" },
-    ],
-  },
-];
-
+/**
+ * El pie es el único sitio donde vive esta información.
+ *
+ * Antes estaba repetida: una franja encima decía lo mismo que el pie con otras
+ * palabras. Repetir no refuerza, resta: al leerlo dos veces se nota el relleno.
+ */
 export default function Pie() {
   return (
-    <footer className="mt-24 border-t border-linea bg-humo">
+    <footer id="visitanos" className="mt-24 border-t border-linea bg-humo">
       <div className="mx-auto grid w-full max-w-[1400px] gap-10 px-5 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:px-10">
         <div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -32,22 +17,31 @@ export default function Pie() {
           </p>
         </div>
 
-        {COLUMNAS.map((c) => (
-          <div key={c.titulo}>
-            <p className="text-[11px] uppercase tracking-[0.18em] text-carbon">
-              {c.titulo}
-            </p>
-            <ul className="mt-4 space-y-2.5 text-sm text-gris">
-              {c.enlaces.map((e) => (
-                <li key={e.texto}>
-                  <Link href={e.href} className="hover:text-carbon">
-                    {e.texto}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-carbon">
+            Cómo se pide
+          </p>
+          <p className="mt-4 text-sm leading-relaxed text-gris">
+            Armas tu pedido y se abre el chat de WhatsApp con todo escrito. Ahí
+            acordamos el pago y la entrega.
+          </p>
+        </div>
+
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-carbon">
+            La tienda
+          </p>
+          <p className="mt-4 text-sm leading-relaxed text-gris">
+            CC Manuelita Sáenz
+            <br />
+            Chacaíto, nivel 2
+            <br />
+            Local 02-178
+          </p>
+          <p className="mt-3 text-sm text-gris">
+            Puedes venir a medirte lo que viste aquí.
+          </p>
+        </div>
 
         <div>
           <p className="text-[11px] uppercase tracking-[0.18em] text-carbon">

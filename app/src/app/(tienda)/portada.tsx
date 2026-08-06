@@ -223,8 +223,6 @@ export default function Portada({
     [dellColeccion, tipo, talla],
   );
 
-  const refFranja = useRevelar<HTMLDivElement>();
-
   function cambiar(c: Coleccion) {
     setColeccion(c);
     // La dirección queda contando en qué colección estás: si comparten el
@@ -291,38 +289,6 @@ export default function Portada({
             ))}
           </ul>
         )}
-      </section>
-
-      <section className="mt-20 border-y border-linea bg-humo">
-        <div
-          ref={refFranja}
-          className="revela mx-auto grid w-full max-w-[1400px] gap-8 px-5 py-14 sm:grid-cols-3 lg:px-10"
-        >
-          {[
-            {
-              titulo: "Estamos en Chacaíto",
-              texto:
-                "CC Manuelita Sáenz, nivel 2, local 02-178. Puedes venir a medirte lo que viste aquí.",
-            },
-            {
-              titulo: "Se pide por WhatsApp",
-              texto:
-                "Armas tu pedido y se abre el chat con todo escrito. Ahí acordamos el pago y la entrega.",
-            },
-            {
-              titulo: "Cambio en 24 horas",
-              texto:
-                "Si la talla no te quedó, la cambias dentro de las 24 horas. Los colores claros no se prueban.",
-            },
-          ].map((b) => (
-            <div key={b.titulo}>
-              <p className="text-[11px] uppercase tracking-[0.18em] text-[var(--acento-hondo)]">
-                {b.titulo}
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-gris">{b.texto}</p>
-            </div>
-          ))}
-        </div>
       </section>
 
       <Carrito whatsapp={whatsapp} />
