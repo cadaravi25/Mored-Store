@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import type { Coleccion } from "./hero";
 import {
   TarjetaProducto,
@@ -339,6 +340,69 @@ export function Instagram({ coleccion }: { coleccion: Coleccion }) {
             </span>
           </a>
         ))}
+      </div>
+    </section>
+  );
+}
+
+// ---------------------------------------------------------------------------
+
+/**
+ * La franja que lleva al catálogo completo.
+ *
+ * Acepta video de fondo sin necesidad de tocar código: si existe el archivo
+ * /fotos/franja.mp4 se reproduce encima de la foto; si no, queda la foto. Así
+ * el día que tengan un clip se suelta el archivo y ya.
+ */
+export function FranjaCatalogo({ coleccion }: { coleccion: Coleccion }) {
+  const ref = useRevelar<HTMLElement>();
+  const [conVideo, setConVideo] = useState(false);
+
+  const foto =
+    coleccion === "swim" ? "/fotos/moreda_04.webp" : "/fotos/m0406-03.webp";
+
+  return (
+    <section
+      ref={ref}
+      className="parada revela relative mt-24 h-[62vh] min-h-[420px] overflow-hidden bg-carbon"
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={foto}
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+
+      <video
+        src="/fotos/franja.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        onCanPlay={() => setConVideo(true)}
+        className="absolute inset-0 h-full w-full object-cover transition-opacity duration-1000"
+        style={{ opacity: conVideo ? 1 : 0 }}
+      />
+
+      <div className="absolute inset-0 bg-carbon/45" />
+
+      <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
+        <p className="text-[11px] uppercase tracking-[0.28em] text-nieve/80">
+          Todo Mored {coleccion === "swim" ? "Swim" : "Active"}
+        </p>
+        <p className="mt-4 max-w-2xl text-4xl font-light leading-tight text-nieve sm:text-5xl">
+          Mira el catálogo completo
+        </p>
+        <p className="mt-4 max-w-md text-sm text-nieve/80">
+          Filtra por talla, color y tipo de prenda, y ve solo lo que hay
+          disponible.
+        </p>
+        <Link
+          href={`/catalogo${coleccion === "swim" ? "?c=swim" : ""}`}
+          className="mt-8 rounded-full bg-nieve px-10 py-3.5 text-[12px] uppercase tracking-[0.24em] text-carbon transition-opacity hover:opacity-90"
+        >
+          Ver todo el catálogo
+        </Link>
       </div>
     </section>
   );

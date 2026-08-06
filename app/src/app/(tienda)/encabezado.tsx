@@ -7,7 +7,7 @@ import { leerCarrito } from "@/lib/carrito";
 const ENLACES = [
   { href: "/?c=active", texto: "Active" },
   { href: "/?c=swim", texto: "Swim" },
-  { href: "/#catalogo", texto: "Catálogo" },
+  { href: "/catalogo", texto: "Catálogo" },
 ];
 
 /** Barra fina y blanca, con el logotipo al centro. Lo que tiene que resaltar
