@@ -358,23 +358,23 @@ export function FranjaCatalogo({ coleccion }: { coleccion: Coleccion }) {
   const ref = useRevelar<HTMLElement>();
   const [conVideo, setConVideo] = useState(false);
 
-  const foto =
-    coleccion === "swim" ? "/fotos/moreda_04.webp" : "/fotos/m0406-03.webp";
-
   return (
     <section
       ref={ref}
       className="parada revela relative mt-24 h-[62vh] min-h-[420px] overflow-hidden bg-carbon"
     >
+      {/* El primer cuadro del propio video, para que no haya un salto de
+          color mientras carga. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={foto}
+        src="/fotos/franja-poster.webp"
         alt=""
         className="absolute inset-0 h-full w-full object-cover"
       />
 
       <video
         src="/fotos/franja.mp4"
+        poster="/fotos/franja-poster.webp"
         autoPlay
         muted
         loop

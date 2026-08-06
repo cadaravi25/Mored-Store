@@ -110,16 +110,16 @@ export default function Vista({
   // ofrecer un filtro que no devuelve nada es peor que no ofrecerlo.
   const opciones = useMemo(() => {
     const tipos = new Set<string>();
-    const colores = new Set<string>();
+    const colores = new Map<string, string | null>();
     const tallas = new Set<string>();
     for (const t of deLaColeccion) {
       if (t.tipo) tipos.add(t.tipo);
-      colores.add(t.color);
+      if (!colores.has(t.color)) colores.set(t.color, t.hex);
       for (const x of t.tallas) tallas.add(x.talla);
     }
     return {
       tipos: [...tipos].sort(),
-      colores: [...colores].sort(),
+      colores: [...colores.entries()].sort((a, b) => a[0].localeCompare(b[0])),
       tallas: ORDEN_TALLAS.filter((x) => tallas.has(x)),
     };
   }, [deLaColeccion]);
@@ -226,16 +226,35 @@ export default function Vista({
 
       {opciones.colores.length > 0 && (
         <Grupo titulo="Color">
-          <div className="space-y-0.5">
-            {opciones.colores.map((c) => (
-              <Casilla
-                key={c}
-                marcada={colores.includes(c)}
-                onCambiar={() => alternar(colores, setColores, c)}
-              >
-                <span className="capitalize">{c}</span>
-              </Casilla>
-            ))}
+          {/* Muestras redondas y no casillas: el color se reconoce viéndolo,
+              y leer "burdeos" obliga a imaginárselo. El nombre queda como
+              etiqueta accesible y como ayuda al pasar por encima. */}
+          <div className="flex flex-wrap gap-2.5">
+            {opciones.colores.map(([nombre, hex]) => {
+              const puesto = colores.includes(nombre);
+              return (
+                <button
+                  key={nombre}
+                  type="button"
+                  onClick={() => alternar(colores, setColores, nombre)}
+                  title={nombre}
+                  aria-label={nombre}
+                  aria-pressed={puesto}
+                  className={`h-7 w-7 rounded-full border transition-all ${
+                    puesto
+                      ? "border-carbon ring-2 ring-carbon ring-offset-2 ring-offset-nieve"
+                      : "border-linea hover:border-gris"
+                  }`}
+                  style={{
+                    // Sin hex conocido, un rayado tenue: mejor que un blanco
+                    // que se confunde con el color "blanco" de verdad.
+                    background:
+                      hex ??
+                      "repeating-linear-gradient(45deg, #eee, #eee 4px, #ddd 4px, #ddd 8px)",
+                  }}
+                />
+              );
+            })}
           </div>
         </Grupo>
       )}

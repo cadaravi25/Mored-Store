@@ -28,6 +28,7 @@ export interface Tarjeta {
   coleccion: Coleccion;
   tipo: string | null;
   color: string;
+  hex: string | null;
   foto_url: string;
   precio: number;
   tallas: { talla: string; disponible: number }[];
@@ -51,6 +52,7 @@ export function agrupar(filas: FilaCatalogo[]): Tarjeta[] {
       coleccion: f.coleccion,
       tipo: f.tipo,
       color: f.color,
+      hex: f.hex,
       foto_url: f.foto_url,
       precio: Number(f.precio_usd),
       tallas: [],
