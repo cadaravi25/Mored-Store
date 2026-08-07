@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { crearClienteNavegador } from "@/lib/supabase/client";
 import Foto from "./foto";
+import Destacar from "./destacar";
 
 interface Variante {
   variante_id: string;
@@ -19,6 +20,7 @@ interface Variante {
   precio_usd: number;
   stock: number;
   disponible: number;
+  destacado: boolean;
 }
 
 const ORDEN_TALLAS = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -192,6 +194,10 @@ export default function Buscador() {
                   <p className="mt-0.5 text-sm text-tinta-suave">
                     {v.color_nombre}
                   </p>
+                  <Destacar
+                    productoId={v.producto_id}
+                    inicial={v.destacado}
+                  />
                 </div>
                 <span className="shrink-0 text-sm tabular-nums text-tinta-suave">
                   {dinero.format(v.precio_usd)}

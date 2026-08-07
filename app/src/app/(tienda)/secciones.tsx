@@ -154,10 +154,14 @@ export function Estilos({
 // ---------------------------------------------------------------------------
 
 /**
- * Lo último que entró, sobre fondo oscuro.
+ * Lo nuevo, sobre fondo oscuro.
  *
- * Se ordena por cuándo entró la prenda al inventario, no a mano: así la
- * sección se mantiene sola y nunca muestra como novedad algo de hace meses.
+ * Lo escogen ellas desde el panel, prenda por prenda. Ordenar por fecha de
+ * entrada parecía lo obvio y está mal: un restock de un top de marzo entraría
+ * como novedad. Nuevo es una decisión de tienda, no un dato del almacén.
+ *
+ * Si no hay ninguna marcada, la sección no aparece. Mejor que no esté a que
+ * muestre cualquier cosa diciendo que es lo último.
  *
  * El fondo negro le da un respiro a la página: después de mucho blanco, el ojo
  * agradece el corte.
@@ -170,9 +174,9 @@ export function Destacados({
   coleccion: Coleccion;
 }) {
   const ref = useRevelar<HTMLElement>();
-  const conStock = tarjetas
-    .filter((t) => t.tallas.some((x) => x.disponible > 0))
-    .sort((a, b) => b.entro_at.localeCompare(a.entro_at));
+  const conStock = tarjetas.filter(
+    (t) => t.destacado && t.tallas.some((x) => x.disponible > 0),
+  );
   if (conStock.length === 0) return null;
 
   return (

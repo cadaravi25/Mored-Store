@@ -18,7 +18,7 @@ export interface FilaCatalogo {
   talla: string;
   precio_usd: number;
   disponible: number;
-  entro_at: string | null;
+  destacado: boolean;
 }
 
 /** Cada tarjeta es un producto en un color: es como se mira la ropa. */
@@ -32,8 +32,8 @@ export interface Tarjeta {
   hex: string | null;
   foto_url: string;
   precio: number;
-  /** La más reciente de sus variantes: con eso se ordena "lo nuevo". */
-  entro_at: string;
+  /** Lo escogen ellas desde el panel: es lo que sale en "Lo nuevo". */
+  destacado: boolean;
   tallas: { talla: string; disponible: number }[];
 }
 
@@ -58,12 +58,11 @@ export function agrupar(filas: FilaCatalogo[]): Tarjeta[] {
       hex: f.hex,
       foto_url: f.foto_url,
       precio: Number(f.precio_usd),
-      entro_at: f.entro_at ?? "",
+      destacado: Boolean(f.destacado),
       tallas: [],
     };
     t.tallas.push({ talla: f.talla, disponible: f.disponible });
     t.precio = Math.min(t.precio, Number(f.precio_usd));
-    if ((f.entro_at ?? "") > t.entro_at) t.entro_at = f.entro_at ?? "";
     mapa.set(clave, t);
   }
   for (const t of mapa.values()) {
