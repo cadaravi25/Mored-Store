@@ -80,7 +80,11 @@ grant execute on function catalogo_publico(uuid) to anon, authenticated;
 -- EL INVENTARIO DEL PANEL TAMBIÉN, PARA PODER MARCARLO DESDE AHÍ
 -- ============================================================================
 
+-- Han existido dos firmas a lo largo del proyecto. Se sueltan las dos: con
+-- ambas vivas, cualquier GRANT o llamada sin lista de argumentos es ambigua.
 drop function if exists buscar_variantes(text, integer);
+drop function if exists buscar_variantes(text, text, integer);
+drop function if exists buscar_variantes(text);
 
 create function buscar_variantes(
   p_termino text default null,
@@ -144,6 +148,6 @@ as $$
   limit greatest(p_limite, 1);
 $$;
 
-grant execute on function buscar_variantes to authenticated;
+grant execute on function buscar_variantes(text, integer) to authenticated;
 
 commit;
