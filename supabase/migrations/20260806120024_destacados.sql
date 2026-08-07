@@ -9,19 +9,24 @@
 
 begin;
 
+-- if not exists por si la migracion se corrio a medias antes de fallar.
 alter table productos
-  add column destacado boolean not null default false;
+  add column if not exists destacado boolean not null default false;
 
 comment on column productos.destacado is
   'Sale en "Lo nuevo" de la tienda. Se marca a mano: la fecha de entrada no sirve porque un restock no es una novedad.';
 
-create index idx_productos_destacado on productos (destacado) where destacado;
+create index if not exists idx_productos_destacado on productos (destacado) where destacado;
 
 -- ============================================================================
 -- EL CATÁLOGO PÚBLICO LO EXPONE
 -- ============================================================================
 
-create or replace function catalogo_publico(p_producto uuid default null)
+-- Cambia la lista de columnas que devuelve, y eso `create or replace` no lo
+-- permite: hay que soltarla y volver a crearla.
+drop function if exists catalogo_publico(uuid);
+
+create function catalogo_publico(p_producto uuid default null)
 returns table (
   producto_id  uuid,
   producto     text,
