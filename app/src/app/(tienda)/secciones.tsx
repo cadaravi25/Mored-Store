@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import type { Coleccion } from "./hero";
 import {
+  tallasDe,
   TarjetaProducto,
   Titulo,
   useRevelar,
@@ -175,12 +176,12 @@ export function Destacados({
 }) {
   const ref = useRevelar<HTMLElement>();
   const conStock = tarjetas.filter(
-    (t) => t.destacado && t.tallas.some((x) => x.disponible > 0),
+    (t) => t.destacado && tallasDe(t).some((x) => x.disponible > 0),
   );
   if (conStock.length === 0) return null;
 
   return (
-    <section ref={ref} className="parada revela mt-24 bg-carbon py-20">
+    <section ref={ref} className="parada revela mt-24 bg-carbon py-14">
       <div className="mx-auto w-full max-w-[1400px] px-5 lg:px-10">
         <Titulo
           claro
@@ -198,7 +199,14 @@ export function Destacados({
             key={t.clave}
             className="w-[62vw] shrink-0 snap-start sm:w-[38vw] lg:w-[22vw] xl:w-[19vw]"
           >
-            <TarjetaProducto t={t} orden={i} claro />
+            {/* En una pantalla baja la foto a 3/4 sacaría la fila fuera de la
+                parada; el tope la recorta antes de que eso pase. */}
+            <TarjetaProducto
+              t={t}
+              orden={i}
+              claro
+              tope="max-h-[calc(var(--pantalla)_-_22rem)]"
+            />
           </div>
         ))}
       </div>
@@ -224,7 +232,7 @@ export function Inspiracion({
 }) {
   const ref = useRevelar<HTMLElement>();
   const sueltas = tarjetas
-    .filter((t) => t.tallas.some((x) => x.disponible > 0))
+    .filter((t) => tallasDe(t).some((x) => x.disponible > 0))
     .slice(0, 4);
 
   if (sueltas.length === 0) return null;
@@ -232,12 +240,22 @@ export function Inspiracion({
   return (
     <section
       ref={ref}
-      className="parada revela mx-auto w-full max-w-[1400px] px-5 pt-24 lg:px-10"
+      className="parada revela mx-auto w-full max-w-[1400px] px-5 pt-20 lg:px-10"
     >
       <Titulo antetitulo="Inspiración" titulo="Cómo se ve puesto" />
 
-      <div className="mt-8 grid gap-4 lg:grid-cols-[1.1fr_1fr]">
-        <div className="relative overflow-hidden bg-[var(--acento-tenue)]">
+      {/* La altura sale de la pantalla, no del contenido: es una parada de
+          lectura y tiene que caber entera.
+
+          La columna de la foto no lleva ancho: lo saca de su propia altura
+          manteniendo el 3/4 del original. Si se le fija el ancho, la caja
+          queda apaisada y el recorte le come la cabeza y los pies a la
+          modelo, que es justo lo que no se quiere ver.
+
+          En el teléfono no hay acomodo de lectura, así que ahí caben las
+          cuatro prendas apiladas; en pantalla ancha entran tres al lado. */}
+      <div className="mt-8 grid gap-4 lg:h-[max(360px,calc(var(--pantalla)_-_14rem))] lg:grid-cols-[auto_1fr]">
+        <div className="relative aspect-[3/4] overflow-hidden bg-[var(--acento-tenue)] lg:h-full lg:w-auto">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={CONTENIDO[coleccion].look}
@@ -247,9 +265,17 @@ export function Inspiracion({
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-x-3 gap-y-7 self-start">
+        <div className="grid grid-cols-2 gap-x-3 gap-y-7 self-center lg:grid-cols-3">
           {sueltas.map((t, i) => (
-            <TarjetaProducto key={t.clave} t={t} orden={i} />
+            <div key={t.clave} className={i > 2 ? "lg:hidden" : undefined}>
+              {/* En una pantalla ancha y baja, la tarjeta a 3/4 sería más alta
+                  que la caja y se saldría por debajo: el tope la contiene. */}
+              <TarjetaProducto
+                t={t}
+                orden={i}
+                tope="lg:max-h-[calc(var(--pantalla)_-_19rem)]"
+              />
+            </div>
           ))}
         </div>
       </div>

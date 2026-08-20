@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import Carrito from "../carrito";
+import { colorVisible } from "@/lib/prendas";
+import { precioVisible } from "@/lib/moneda";
+import { useMoneda } from "@/lib/usar-moneda";
 import type { Coleccion } from "../hero";
 import { ACENTOS } from "../portada";
 import {
   agrupar,
-  dinero,
   ORDEN_TALLAS,
   TarjetaProducto,
   type FilaCatalogo,
@@ -97,6 +99,7 @@ export default function Vista({
   const [orden, setOrden] = useState<Orden>("nombre");
   const [columnas, setColumnas] = useState(3);
   const [panel, setPanel] = useState(false);
+  const { moneda, tasa } = useMoneda();
 
   const acento = ACENTOS[coleccion];
   const todas = useMemo(() => agrupar(filas), [filas]);
@@ -114,8 +117,14 @@ export default function Vista({
     const tallas = new Set<string>();
     for (const t of deLaColeccion) {
       if (t.tipo) tipos.add(t.tipo);
-      if (!colores.has(t.color)) colores.set(t.color, t.hex);
-      for (const x of t.tallas) tallas.add(x.talla);
+      for (const c of t.colores) {
+        // Las prendas cuyo color todavía no se sabe no abren una muestra: sería
+        // un filtro llamado "Por definir", que no significa nada para quien compra.
+        if (colorVisible(c.color) && !colores.has(c.color)) {
+          colores.set(c.color, c.hex);
+        }
+        for (const x of c.tallas) tallas.add(x.talla);
+      }
     }
     return {
       tipos: [...tipos].sort(),
@@ -124,28 +133,44 @@ export default function Vista({
     };
   }, [deLaColeccion]);
 
+  // El precio que se está mirando manda en el orden y en el rango: en
+  // bolívares la más barata no tiene por qué ser la misma que en euros.
+  const enBs = moneda === "bs" && tasa;
+
   const visibles = useMemo(() => {
+    // Los filtros de color y talla se miran color por color, no sobre la
+    // prenda entera: un bikini que existe en verde S y en naranja M no
+    // cumple "verde y talla M" aunque tenga las dos cosas por separado.
     const lista = deLaColeccion.filter((t) => {
       if (tipos.length && (!t.tipo || !tipos.includes(t.tipo))) return false;
-      if (colores.length && !colores.includes(t.color)) return false;
-      if (tallas.length) {
-        const tiene = t.tallas.some(
-          (x) => tallas.includes(x.talla) && x.disponible > 0,
-        );
-        if (!tiene) return false;
-      }
-      if (soloDisponible && !t.tallas.some((x) => x.disponible > 0)) return false;
-      return true;
+
+      return t.colores.some((c) => {
+        if (colores.length && !colores.includes(c.color)) return false;
+        if (tallas.length) {
+          const tiene = c.tallas.some(
+            (x) => tallas.includes(x.talla) && x.disponible > 0,
+          );
+          if (!tiene) return false;
+        }
+        if (soloDisponible && !c.tallas.some((x) => x.disponible > 0)) {
+          return false;
+        }
+        return true;
+      });
     });
 
     return lista.sort((a, b) =>
       orden === "barato"
-        ? a.precio - b.precio
+        ? (enBs ? a.precioBs - b.precioBs : a.precio - b.precio)
         : orden === "caro"
-          ? b.precio - a.precio
+          ? (enBs ? b.precioBs - a.precioBs : b.precio - a.precio)
           : a.producto.localeCompare(b.producto),
     );
-  }, [deLaColeccion, tipos, colores, tallas, soloDisponible, orden]);
+  }, [deLaColeccion, tipos, colores, tallas, soloDisponible, orden, enBs]);
+
+  const precios = deLaColeccion.map((t) => (enBs ? t.precioBs : t.precio));
+  const desde = precios.length ? Math.min(...precios) : 0;
+  const hasta = precios.length ? Math.max(...precios) : 0;
 
   function alternar(
     lista: string[],
@@ -169,9 +194,6 @@ export default function Vista({
     setSoloDisponible(false);
   }
 
-  const precios = deLaColeccion.map((t) => t.precio);
-  const desde = precios.length ? Math.min(...precios) : 0;
-  const hasta = precios.length ? Math.max(...precios) : 0;
 
   const filtros = (
     <>
@@ -246,11 +268,17 @@ export default function Vista({
                       : "border-linea hover:border-gris"
                   }`}
                   style={{
+                    // "Multicolor" no tiene un tono que lo represente, y
+                    // pintarlo de uno solo sería mentir. La rueda entera se
+                    // reconoce al instante y es lo que la prenda es.
+                    //
                     // Sin hex conocido, un rayado tenue: mejor que un blanco
                     // que se confunde con el color "blanco" de verdad.
                     background:
-                      hex ??
-                      "repeating-linear-gradient(45deg, #eee, #eee 4px, #ddd 4px, #ddd 8px)",
+                      nombre.toLowerCase() === "multicolor"
+                        ? "conic-gradient(#e0827a, #f2d05a, #4a8c5c, #8ec5e6, #6b4a8c, #d6336c, #e0827a)"
+                        : (hex ??
+                          "repeating-linear-gradient(45deg, #eee, #eee 4px, #ddd 4px, #ddd 8px)"),
                   }}
                 />
               );
@@ -278,7 +306,8 @@ export default function Vista({
       {hasta > 0 && (
         <Grupo titulo="Precio" abiertoInicial={false}>
           <p className="text-sm text-gris">
-            De {dinero.format(desde)} a {dinero.format(hasta)}
+            De {precioVisible(desde, desde, moneda, tasa)} a{" "}
+            {precioVisible(hasta, hasta, moneda, tasa)}
           </p>
         </Grupo>
       )}
@@ -289,7 +318,10 @@ export default function Vista({
     <main style={acento as React.CSSProperties}>
       <div className="mx-auto w-full max-w-[1400px] px-5 pb-8 pt-10 lg:px-10">
         <p className="text-[11px] uppercase tracking-[0.2em] text-gris">
-          <Link href="/" className="hover:text-carbon">
+          <Link
+            href={coleccion === "swim" ? "/?c=swim" : "/"}
+            className="hover:text-carbon"
+          >
             Inicio
           </Link>
           <span className="px-2">/</span>
@@ -401,7 +433,12 @@ export default function Vista({
               }`}
             >
               {visibles.map((t, i) => (
-                <TarjetaProducto key={t.clave} t={t} orden={i} />
+                <TarjetaProducto
+                  key={t.clave}
+                  t={t}
+                  orden={i}
+                  soloColores={colores}
+                />
               ))}
             </div>
           )}

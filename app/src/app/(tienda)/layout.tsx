@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { crearClienteServidor } from "@/lib/supabase/server";
 import Encabezado from "./encabezado";
+import { ProveedorMoneda } from "@/lib/usar-moneda";
 import Pie from "./pie";
 
 export const metadata: Metadata = {
@@ -14,16 +16,28 @@ export const metadata: Metadata = {
  * la extensión de un sistema de trabajo: fondo blanco, mucho aire, y la foto
  * como lo único que grita. El marrón y el rosa entran solo como acento.
  */
-export default function TiendaLayout({
+export default async function TiendaLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // La tasa del euro vive aquí y no en cada página: el interruptor está en
+  // todas, y pedirla tres veces sería tres viajes para el mismo número.
+  const supabase = await crearClienteServidor();
+  const { data: tasa } = await supabase
+    .from("tasas_bcv")
+    .select("bs_por_eur")
+    .order("fecha", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
   return (
-    <div className="paradas min-h-dvh bg-nieve text-carbon">
-      <Encabezado />
-      {children}
-      <Pie />
-    </div>
+    <ProveedorMoneda tasa={tasa ? Number(tasa.bs_por_eur) : null}>
+      <div className="paradas min-h-dvh bg-nieve text-carbon">
+        <Encabezado />
+        {children}
+        <Pie />
+      </div>
+    </ProveedorMoneda>
   );
 }

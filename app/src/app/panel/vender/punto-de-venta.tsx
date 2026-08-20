@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { crearClienteNavegador } from "@/lib/supabase/client";
 import { diaEnCaracas, enCorto } from "@/lib/fechas";
@@ -14,6 +14,7 @@ interface Variante {
   foto_url: string | null;
   talla: string;
   precio_usd: number;
+  precio_bs: number;
   disponible: number;
 }
 
@@ -39,7 +40,9 @@ const METODOS: { id: string; nombre: string; moneda: "USD" | "BS" }[] = [
   { id: "punto", nombre: "Punto", moneda: "BS" },
 ];
 
-const usd = new Intl.NumberFormat("es-VE", { style: "currency", currency: "USD" });
+// Los precios de la tienda son euros. La columna se llama precio_usd por
+// herencia del esquema inicial, pero nunca tuvo dólares dentro.
+const usd = new Intl.NumberFormat("es-VE", { style: "currency", currency: "EUR" });
 const bs = new Intl.NumberFormat("es-VE", { maximumFractionDigits: 2 });
 
 export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | null }) {
@@ -53,6 +56,7 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
   const [cliente, setCliente] = useState<Elegido | null>(null);
   // Se puede cobrar sin registrar a nadie, pero tiene que ser una decisión.
   const [sinCliente, setSinCliente] = useState(false);
+  const panel = useRef<HTMLElement>(null);
   const [tasa, setTasa] = useState<number | null>(tasaInicial);
   const [tasaTexto, setTasaTexto] = useState("");
   const [vigencia, setVigencia] = useState<string | null>(null);
@@ -93,9 +97,44 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
     };
   }, []);
 
+  /**
+   * El panel de la venta se queda mirando el final.
+   *
+   * Cada prenda entra por abajo y empuja el total y el botón de cobrar fuera
+   * de la vista. En una venta de cinco o seis piezas eso obligaba a bajar a
+   * mano cada vez, que con la tablet en la mano y la clienta esperando es lo
+   * último que se quiere estar haciendo.
+   *
+   * Baja solo, y el desplazamiento queda para subir a revisar lo de arriba, que
+   * es lo que casi nunca hace falta.
+   */
+  useEffect(() => {
+    const caja = panel.current;
+    if (!caja) return;
+    caja.scrollTop = caja.scrollHeight;
+  }, [carrito, pagos]);
+
+  /**
+   * Qué precio se cobra.
+   *
+   * Cada prenda tiene dos, y no son una conversión: el de divisas y el de
+   * bolívares los fijan ellas por separado. Manda el método de pago que
+   * escogieron. Mientras no haya ninguno, se enseña el de divisas, que es el
+   * más bajo y el que la gente pregunta primero.
+   *
+   * Si mezclan divisas y bolívares en la misma venta, manda el primero: es
+   * raro que pase y partir la venta en dos precios daría un total que no
+   * cuadra con ninguno de los dos.
+   */
+  const enBs = pagos.length > 0 && pagos[0].moneda === "BS";
+  const precioDe = (l: { precio_usd: number; precio_bs: number }) =>
+    Number(enBs ? (l.precio_bs || l.precio_usd) : l.precio_usd);
+  const mezclan =
+    pagos.length > 1 && new Set(pagos.map((p) => p.moneda)).size > 1;
+
   const total = useMemo(
-    () => carrito.reduce((s, l) => s + l.cantidad * Number(l.precio_usd), 0),
-    [carrito],
+    () => carrito.reduce((s, l) => s + l.cantidad * precioDe(l), 0),
+    [carrito, enBs],
   );
 
   const pagadoUsd = useMemo(
@@ -153,7 +192,7 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
       p_lineas: carrito.map((l) => ({
         variante_id: l.variante_id,
         cantidad: l.cantidad,
-        precio_unitario_usd: Number(l.precio_usd),
+        precio_unitario_usd: precioDe(l),
       })),
       p_pagos: pagos.map((p) => ({
         metodo: p.metodo,
@@ -236,7 +275,7 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
                   </span>
                 </span>
                 <span className="shrink-0 text-sm tabular-nums text-tinta">
-                  {usd.format(Number(v.precio_usd))}
+                  {usd.format(precioDe(v))}
                 </span>
               </button>
             </li>
@@ -250,7 +289,15 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
         )}
       </section>
 
-      <aside className="space-y-3 lg:sticky lg:top-5 lg:self-start">
+      {/* Se queda fija al desplazar la lista de prendas, pero con su propio
+          desplazamiento por dentro. Sin eso, en cuanto la venta tiene cuatro o
+          cinco líneas el panel crece más que la pantalla, y como está fijo, la
+          página ya no lo mueve: el botón de cobrar queda debajo del borde y no
+          hay forma de llegar a él. */}
+      <aside
+        ref={panel}
+        className="space-y-3 lg:sticky lg:top-5 lg:max-h-[calc(100dvh-2.5rem)] lg:self-start lg:overflow-y-auto lg:pr-1"
+      >
         <div className="rounded-2xl border border-borde bg-crema-alto p-4">
           <p className="mb-3 text-xs uppercase tracking-wide text-tinta-suave">
             Venta
@@ -290,7 +337,7 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
                     +
                   </button>
                   <span className="w-16 shrink-0 text-right text-sm tabular-nums text-tinta">
-                    {usd.format(l.cantidad * Number(l.precio_usd))}
+                    {usd.format(l.cantidad * precioDe(l))}
                   </span>
                 </li>
               ))}
@@ -474,7 +521,9 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
 
                     {pagos.length > 0 && (
                       <p className="text-right text-sm tabular-nums text-tinta-suave">
-                        {falta > 0.01
+                        {mezclan
+                          ? "Métodos en divisas y en bolívares a la vez: se cobra el precio del primero"
+                          : falta > 0.01
                           ? `Falta ${usd.format(falta)}`
                           : pagadoUsd - total > 0.01
                             ? `Vuelto ${usd.format(pagadoUsd - total)}`

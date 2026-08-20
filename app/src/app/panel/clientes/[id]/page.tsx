@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import { enCorto } from "@/lib/fechas";
 import Datos from "./datos";
+import Pedidos from "./pedidos";
 
 export const dynamic = "force-dynamic";
 
@@ -58,7 +59,15 @@ export default async function FichaCliente({
 }) {
   const { id } = await params;
   const supabase = await crearClienteServidor();
-  const { data } = await supabase.rpc("ficha_cliente", { p_cliente_id: id });
+  const [{ data }, { data: tasa }] = await Promise.all([
+    supabase.rpc("ficha_cliente", { p_cliente_id: id }),
+    supabase
+      .from("tasas_venta")
+      .select("bs_por_usd")
+      .order("fecha", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+  ]);
 
   const f = data as Ficha | null;
   if (!f?.cliente) notFound();
@@ -174,53 +183,14 @@ export default async function FichaCliente({
 
       <Datos cliente={c} />
 
-      <section className="mt-3 rounded-2xl border border-borde bg-crema-alto p-5">
-        <p className="text-xs uppercase tracking-wide text-tinta-suave">
-          Qué se ha llevado
-        </p>
+      {/* Los pedidos con su detalle y el cambio de prenda dentro. El
+          historial de solo lectura que había antes se quedaba corto: para
+          gestionar un cambio hace falta saber de qué línea salió cada pieza. */}
+      <Pedidos
+        clienteId={c.id}
+        tasa={tasa ? Number(tasa.bs_por_usd) : null}
+      />
 
-        {f.historial.length === 0 ? (
-          <p className="py-10 text-center text-sm text-tinta-suave">
-            Todavía no tiene compras registradas.
-          </p>
-        ) : (
-          <ul className="mt-2 divide-y divide-borde">
-            {f.historial.map((v) => (
-              <li key={v.id} className="py-3">
-                <div className="flex items-baseline justify-between gap-3">
-                  <span className="text-sm text-tinta">
-                    {v.serie}-{v.numero}
-                  </span>
-                  <span className="text-xs capitalize text-tinta-suave">
-                    {enCorto(v.creado_at.slice(0, 10))} · {v.canal}
-                  </span>
-                  <span className="text-sm tabular-nums text-tinta">
-                    {usd.format(Number(v.total_usd))}
-                  </span>
-                </div>
-                <ul className="mt-1.5 space-y-0.5">
-                  {v.lineas.map((l, i) => (
-                    <li
-                      key={i}
-                      className="flex items-baseline gap-2 text-xs text-tinta-suave"
-                    >
-                      <span
-                        aria-hidden
-                        className="h-2 w-2 shrink-0 rounded-full border border-borde"
-                        style={{ background: l.hex ?? "transparent" }}
-                      />
-                      <span className="capitalize">
-                        {l.cantidad > 1 && `${l.cantidad}× `}
-                        {l.prenda} {l.color} · {l.talla}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
     </main>
   );
 }

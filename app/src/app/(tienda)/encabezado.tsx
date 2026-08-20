@@ -14,6 +14,7 @@ const ENLACES = [
  *  es la ropa, no la navegación. */
 export default function Encabezado() {
   const [piezas, setPiezas] = useState(0);
+  const [enSwim, setEnSwim] = useState(false);
 
   useEffect(() => {
     const contar = () =>
@@ -27,6 +28,22 @@ export default function Encabezado() {
     };
   }, []);
 
+  /**
+   * En qué colección está parado quien mira.
+   *
+   * Se lee de la dirección y no de un estado compartido porque el encabezado
+   * vive en la plantilla, por encima de las páginas, y no tiene forma de
+   * preguntárselo a ninguna. Se mira en cada navegación: sin eso, el logotipo
+   * devuelve a Active desde una prenda de Swim.
+   */
+  useEffect(() => {
+    const mirar = () =>
+      setEnSwim(new URLSearchParams(window.location.search).get("c") === "swim");
+    mirar();
+    window.addEventListener("popstate", mirar);
+    return () => window.removeEventListener("popstate", mirar);
+  });
+
   return (
     <header className="sticky top-0 z-30 border-b border-linea bg-nieve/95 backdrop-blur">
       <div className="mx-auto flex w-full max-w-[1400px] items-center gap-4 px-5 py-4 lg:px-10">
@@ -38,7 +55,7 @@ export default function Encabezado() {
           ))}
         </nav>
 
-        <Link href="/" className="shrink-0 md:mx-auto">
+        <Link href={enSwim ? "/?c=swim" : "/"} className="shrink-0 md:mx-auto">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/mored-texto.png" alt="Mored" className="h-4 w-auto lg:h-5" />
         </Link>

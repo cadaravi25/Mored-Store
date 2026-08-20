@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import type { FilaCatalogo } from "../piezas";
+import Interruptor from "../interruptor";
 import Vista from "./vista";
 
 export const dynamic = "force-dynamic";
@@ -22,11 +23,17 @@ export default async function Catalogo({
   const { data } = await supabase.rpc("catalogo_publico");
 
   return (
-    <Vista
-      filas={(data ?? []) as FilaCatalogo[]}
-      whatsapp={process.env.NEXT_PUBLIC_WHATSAPP ?? null}
-      coleccionInicial={c === "swim" ? "swim" : "active"}
-      tipoInicial={tipo ?? ""}
-    />
+    <>
+      {/* Solo aquí: es la pantalla donde se comparan precios de corrido. La
+          moneda escogida la respetan igual la portada y la ficha, que siguen
+          leyendo la misma preferencia. */}
+      <Interruptor />
+      <Vista
+        filas={(data ?? []) as FilaCatalogo[]}
+        whatsapp={process.env.NEXT_PUBLIC_WHATSAPP ?? null}
+        coleccionInicial={c === "swim" ? "swim" : "active"}
+        tipoInicial={tipo ?? ""}
+      />
+    </>
   );
 }

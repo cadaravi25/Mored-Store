@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { crearClienteServidor } from "@/lib/supabase/server";
+import { rutaDeFoto } from "@/lib/fotos";
 
 export const dynamic = "force-dynamic";
 
@@ -169,7 +170,7 @@ export async function POST(peticion: Request) {
   }
 
   const extension = tipo.split("/")[1].replace("jpeg", "jpg");
-  const ruta = `${producto_id}/${encodeURIComponent(color)}-${Date.now()}.${extension}`;
+  const ruta = rutaDeFoto(producto_id, color, extension);
 
   const { error: falloSubida } = await supabase.storage
     .from("fotos")

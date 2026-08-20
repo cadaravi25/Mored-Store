@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Carrito from "./carrito";
 import Hero, { type Coleccion } from "./hero";
@@ -40,6 +40,20 @@ export default function Portada({
   const router = useRouter();
   const [coleccion, setColeccion] = useState<Coleccion>(coleccionInicial);
 
+  /**
+   * La colección se cambia desde dos sitios y hay que atender los dos.
+   *
+   * Desde el hero se cambia aquí mismo, al instante, sin ir al servidor: es
+   * una animación y no puede esperar a nadie.
+   *
+   * Desde el encabezado se cambia navegando, y esa navegación llega hasta aquí
+   * como una propiedad nueva. Sin esto, el estado se quedaba con la anterior:
+   * la dirección decía swim y la página seguía entera en active.
+   */
+  useEffect(() => {
+    setColeccion(coleccionInicial);
+  }, [coleccionInicial]);
+
   const tarjetas = useMemo(() => agrupar(filas), [filas]);
   const acento = ACENTOS[coleccion];
 
@@ -49,10 +63,19 @@ export default function Portada({
   );
 
   function cambiar(c: Coleccion) {
+    // El cambio se ve al instante, sin esperar al servidor: es una animación.
     setColeccion(c);
-    // La dirección queda contando en qué colección estás: si comparten el
-    // enlace, se abre en la misma.
-    window.history.replaceState(null, "", c === "active" ? "/" : `/?c=${c}`);
+
+    // Y la dirección queda contando en qué colección estás, para que compartir
+    // el enlace abra la misma.
+    //
+    // Va por el router de Next y no por history.replaceState, aunque este
+    // último sea más barato. Con replaceState la barra de direcciones cambiaba
+    // pero Next seguía creyendo que estaba en la anterior, y entonces pulsar
+    // ACTIVE en el encabezado no navegaba a ninguna parte: para él ya estabas
+    // ahí. El resultado era una tienda que decía Swim con la dirección en
+    // active y sin forma de volver.
+    router.replace(c === "active" ? "/" : `/?c=${c}`, { scroll: false });
   }
 
   // Los accesos y las categorías llevan al catálogo completo con el filtro ya

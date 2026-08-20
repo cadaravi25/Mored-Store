@@ -6,6 +6,9 @@
  * guardarlo en el servidor sería inventarle estado a algo que no lo necesita.
  */
 
+import { colorVisible, SIN_TALLA } from "./prendas";
+import { precioVisible, type Moneda } from "./moneda";
+
 const LLAVE = "mored-carrito";
 
 export interface ItemCarrito {
@@ -14,6 +17,8 @@ export interface ItemCarrito {
   color: string;
   talla: string;
   precio_usd: number;
+  /** Base del precio en bolívares, también en euros. */
+  precio_bs: number;
   foto_url: string | null;
   cantidad: number;
 }
@@ -57,34 +62,86 @@ export function vaciarCarrito() {
   guardarCarrito([]);
 }
 
-export function totalCarrito(items: ItemCarrito[]): number {
-  return items.reduce((s, x) => s + x.cantidad * Number(x.precio_usd), 0);
+/**
+ * El total en la moneda que se esté mirando.
+ *
+ * No es una conversión del mismo número: son dos precios distintos, así que el
+ * total en bolívares no es el total en euros por la tasa.
+ */
+export function totalCarrito(
+  items: ItemCarrito[],
+  moneda: Moneda = "eur",
+  tasa: number | null = null,
+): number {
+  const enBs = moneda === "bs" && tasa;
+  return items.reduce(
+    (s, x) =>
+      s +
+      x.cantidad *
+        (enBs ? Number(x.precio_bs ?? x.precio_usd) * tasa : Number(x.precio_usd)),
+    0,
+  );
+}
+
+/** La suma de las bases de bolívares, en euros. Se multiplica por la tasa
+ *  para mostrarla; separada así porque el total en bolívares no es el total
+ *  en euros convertido. */
+export function baseBsCarrito(items: ItemCarrito[]): number {
+  return items.reduce(
+    (s, x) => s + x.cantidad * Number(x.precio_bs ?? x.precio_usd),
+    0,
+  );
 }
 
 const dinero = new Intl.NumberFormat("es-VE", {
   style: "currency",
-  currency: "USD",
+  currency: "EUR",
 });
 
 /** El mensaje que llega al WhatsApp de la tienda. */
-export function mensajeWhatsapp(items: ItemCarrito[]): string {
-  const lineas = items.map(
-    (x) =>
-      `• ${x.cantidad}x ${x.producto} · ${x.color} · talla ${x.talla} — ${dinero.format(
-        x.cantidad * Number(x.precio_usd),
-      )}`,
-  );
+export function mensajeWhatsapp(
+  items: ItemCarrito[],
+  moneda: Moneda = "eur",
+  tasa: number | null = null,
+): string {
+  const lineas = items.map((x) => {
+    // Ni el color pendiente ni la marca de talla única entran al mensaje: son
+    // vocabulario interno, y en un pedido leído por una persona solo confunden.
+    const partes = [
+      `${x.cantidad}x ${x.producto}`,
+      colorVisible(x.color),
+      x.talla === SIN_TALLA ? "talla única" : `talla ${x.talla}`,
+    ].filter(Boolean);
+
+    // El precio va en la moneda que escogió: es lo que va a pagar.
+    const linea = precioVisible(
+      x.cantidad * Number(x.precio_usd),
+      x.cantidad * Number(x.precio_bs ?? x.precio_usd),
+      moneda,
+      tasa,
+    );
+    return `• ${partes.join(" · ")} — ${linea}`;
+  });
   return [
     "¡Hola! Quiero pedir:",
     "",
     ...lineas,
     "",
-    `Total: ${dinero.format(totalCarrito(items))}`,
+    `Total: ${
+      moneda === "bs" && tasa
+        ? `Bs ${totalCarrito(items, "bs", tasa).toLocaleString("es-VE", { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`
+        : dinero.format(totalCarrito(items))
+    }`,
   ].join("\n");
 }
 
-export function enlaceWhatsapp(items: ItemCarrito[], numero: string): string {
+export function enlaceWhatsapp(
+  items: ItemCarrito[],
+  numero: string,
+  moneda: Moneda = "eur",
+  tasa: number | null = null,
+): string {
   return `https://wa.me/${numero.replace(/\D/g, "")}?text=${encodeURIComponent(
-    mensajeWhatsapp(items),
+    mensajeWhatsapp(items, moneda, tasa),
   )}`;
 }

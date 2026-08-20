@@ -1,18 +1,21 @@
 "use client";
 
+import { precioVisible } from "@/lib/moneda";
+import { useMoneda } from "@/lib/usar-moneda";
 import { useEffect, useState } from "react";
 import {
   cambiarCantidad,
   enlaceWhatsapp,
   leerCarrito,
   totalCarrito,
+  baseBsCarrito,
   vaciarCarrito,
   type ItemCarrito,
 } from "@/lib/carrito";
 
 const dinero = new Intl.NumberFormat("es-VE", {
   style: "currency",
-  currency: "USD",
+  currency: "EUR",
 });
 
 /**
@@ -22,6 +25,7 @@ const dinero = new Intl.NumberFormat("es-VE", {
  */
 export default function Carrito({ whatsapp }: { whatsapp: string | null }) {
   const [items, setItems] = useState<ItemCarrito[]>([]);
+  const { moneda, tasa } = useMoneda();
   const [abierto, setAbierto] = useState(false);
 
   useEffect(() => {
@@ -63,7 +67,7 @@ export default function Carrito({ whatsapp }: { whatsapp: string | null }) {
             {piezas} {piezas === 1 ? "pieza" : "piezas"}
           </span>
           <span className="text-sm tabular-nums">
-            {dinero.format(totalCarrito(items))}
+            {precioVisible(totalCarrito(items), baseBsCarrito(items), moneda, tasa)}
           </span>
           <span className="text-sm uppercase tracking-[0.14em]">Pedir</span>
         </button>
@@ -113,7 +117,12 @@ export default function Carrito({ whatsapp }: { whatsapp: string | null }) {
                         {x.color} · {x.talla}
                       </p>
                       <p className="mt-auto text-sm tabular-nums">
-                        {dinero.format(x.cantidad * Number(x.precio_usd))}
+                        {precioVisible(
+                          x.cantidad * Number(x.precio_usd),
+                          x.cantidad * Number(x.precio_bs ?? x.precio_usd),
+                          moneda,
+                          tasa,
+                        )}
                       </p>
                     </div>
                     <div className="flex shrink-0 flex-col items-end justify-between">
@@ -149,13 +158,13 @@ export default function Carrito({ whatsapp }: { whatsapp: string | null }) {
                 <div className="flex items-baseline justify-between">
                   <span className="text-sm text-gris">Total</span>
                   <span className="text-2xl font-light tabular-nums">
-                    {dinero.format(totalCarrito(items))}
+                    {precioVisible(totalCarrito(items), baseBsCarrito(items), moneda, tasa)}
                   </span>
                 </div>
 
                 {whatsapp ? (
                   <a
-                    href={enlaceWhatsapp(items, whatsapp)}
+                    href={enlaceWhatsapp(items, whatsapp, moneda, tasa)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-5 block bg-carbon px-6 py-4 text-center text-sm uppercase tracking-[0.14em] text-nieve"

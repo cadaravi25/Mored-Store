@@ -1,9 +1,12 @@
 ﻿"use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { crearClienteNavegador } from "@/lib/supabase/client";
 import Foto from "./foto";
 import Destacar from "./destacar";
+import Completar from "./completar";
+import Precios from "./precios";
+import { COLOR_PENDIENTE, SIN_DEFINIR } from "@/lib/prendas";
 
 interface Variante {
   variante_id: string;
@@ -12,12 +15,14 @@ interface Variante {
   tipo: string | null;
   estilo: string | null;
   coleccion: string;
+  color_id: string;
   color_nombre: string;
   color_hex: string | null;
   foto_url: string | null;
   talla: string;
   sku: string;
   precio_usd: number;
+  precio_bs: number;
   stock: number;
   disponible: number;
   destacado: boolean;
@@ -25,9 +30,10 @@ interface Variante {
 
 const ORDEN_TALLAS = ["XS", "S", "M", "L", "XL", "XXL"];
 
+// Los precios de la tienda son euros pese al nombre de la columna.
 const dinero = new Intl.NumberFormat("es-VE", {
   style: "currency",
-  currency: "USD",
+  currency: "EUR",
 });
 
 /** Desplegable nativo: en el teléfono abre el selector del sistema, que es
@@ -63,7 +69,7 @@ function Selector({
   );
 }
 
-export default function Buscador() {
+export default function Buscador({ tasa }: { tasa: number | null }) {
   const [termino, setTermino] = useState("");
   const [resultados, setResultados] = useState<Variante[]>([]);
   const [cargando, setCargando] = useState(true);
@@ -71,18 +77,26 @@ export default function Buscador() {
   const [talla, setTalla] = useState("");
   const [estilo, setEstilo] = useState("");
 
-  useEffect(() => {
-    const t = setTimeout(async () => {
-      setCargando(true);
-      const supabase = crearClienteNavegador();
-      const { data } = await supabase.rpc("buscar_variantes", {
-        p_termino: termino,
-      });
-      setResultados((data ?? []) as Variante[]);
-      setCargando(false);
-    }, 250);
-    return () => clearTimeout(t);
+  // El tope existe para que la pantalla no se ahogue, pero tiene que quedar
+  // por encima del inventario real: con 231 variantes y un tope de 200, la
+  // lista escondía 31 prendas sin decir nada.
+  const TOPE = 800;
+
+  const buscar = useCallback(async () => {
+    setCargando(true);
+    const supabase = crearClienteNavegador();
+    const { data } = await supabase.rpc("buscar_variantes", {
+      p_termino: termino,
+      p_limite: TOPE,
+    });
+    setResultados((data ?? []) as Variante[]);
+    setCargando(false);
   }, [termino]);
+
+  useEffect(() => {
+    const t = setTimeout(buscar, 250);
+    return () => clearTimeout(t);
+  }, [buscar]);
 
   // Las opciones salen de los resultados, no de un catálogo fijo: así los
   // desplegables no ofrecen nada que lleve a una pantalla vacía.
@@ -122,8 +136,17 @@ export default function Buscador() {
   }, [visibles]);
 
   const totalPrendas = visibles.reduce((s, v) => s + v.disponible, 0);
-  // Sin foto, la prenda no sale en la tienda pública.
-  const sinFoto = grupos.filter((g) => !g.v.foto_url).length;
+
+  // Un color sin foto propia no es una prenda invisible: la tienda le presta
+  // la primera foto del producto. La que no sale es la que no tiene ninguna
+  // foto en ningún color, y esa es la que hay que avisar en rojo.
+  const conFoto = useMemo(() => {
+    const s = new Set<string>();
+    for (const v of resultados) if (v.foto_url) s.add(v.producto_id);
+    return s;
+  }, [resultados]);
+
+  const sinFoto = grupos.filter((g) => !conFoto.has(g.v.producto_id)).length;
   const hayFiltro = Boolean(color || talla || estilo);
 
   return (
@@ -155,6 +178,14 @@ export default function Buscador() {
               {sinFoto} sin foto
             </span>
           )}
+          {/* Si se llegó al tope hay más y no se ven. Callarlo haría creer que
+              el inventario es más pequeño de lo que es. */}
+          {!cargando && resultados.length >= TOPE && (
+            <span className="text-alerta">
+              {" · "}
+              hay más, afina la búsqueda
+            </span>
+          )}
         </p>
         {hayFiltro && (
           <button
@@ -172,7 +203,18 @@ export default function Buscador() {
       </div>
 
       <ul className="space-y-2">
-        {grupos.map(({ v, tallas }) => (
+        {grupos.map(({ v, tallas }) => {
+          // Lo que entró del catálogo de Treinta sin saber el reparto queda
+          // bajo una talla marcada. No se muestra como una talla más: se
+          // muestra como lo que es, trabajo pendiente.
+          const reales = tallas.filter((t) => t.talla !== SIN_DEFINIR);
+          const sinRepartir = tallas
+            .filter((t) => t.talla === SIN_DEFINIR)
+            .reduce((s, t) => s + t.stock, 0);
+          const aMedias =
+            sinRepartir > 0 || v.color_nombre === COLOR_PENDIENTE;
+
+          return (
           <li
             key={v.producto_id + v.color_nombre}
             className="flex gap-3.5 rounded-xl border border-borde bg-crema-alto p-3"
@@ -191,21 +233,55 @@ export default function Buscador() {
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="truncate text-tinta">{v.producto_nombre}</p>
-                  <p className="mt-0.5 text-sm text-tinta-suave">
-                    {v.color_nombre}
+                  <p
+                    className={`mt-0.5 text-sm ${
+                      v.color_nombre === COLOR_PENDIENTE
+                        ? "text-alerta"
+                        : "text-tinta-suave"
+                    }`}
+                  >
+                    {v.color_nombre === COLOR_PENDIENTE
+                      ? "Sin color"
+                      : v.color_nombre}
                   </p>
+                  {/* Sin foto la prenda no sale en la tienda, y eso desde el
+                      panel no se notaba: se cargaba el inventario, se miraba
+                      la web y no estaba, sin ninguna explicación.
+                      Que este color no tenga la suya es otra cosa: sale, pero
+                      enseñando la foto de otro color, así que conviene saberlo
+                      sin que parezca una avería. */}
+                  {!conFoto.has(v.producto_id) ? (
+                    <p className="mt-1 text-xs text-alerta">
+                      Sin foto · no sale en la tienda
+                    </p>
+                  ) : (
+                    !v.foto_url && (
+                      <p className="mt-1 text-xs text-tinta-suave">
+                        Sale con la foto de otro color
+                      </p>
+                    )
+                  )}
                   <Destacar
                     productoId={v.producto_id}
                     inicial={v.destacado}
                   />
                 </div>
-                <span className="shrink-0 text-sm tabular-nums text-tinta-suave">
-                  {dinero.format(v.precio_usd)}
-                </span>
+                <div className="shrink-0 text-right">
+                  <span className="text-sm tabular-nums text-tinta-suave">
+                    {dinero.format(v.precio_usd)}
+                  </span>
+                  <Precios
+                    colorId={v.color_id}
+                    precioEur={Number(v.precio_usd)}
+                    precioBs={Number(v.precio_bs ?? v.precio_usd)}
+                    tasa={tasa}
+                    onGuardado={buscar}
+                  />
+                </div>
               </div>
 
               <div className="mt-2.5 flex flex-wrap gap-1.5">
-                {tallas
+                {reales
                   .sort(
                     (a, b) =>
                       ORDEN_TALLAS.indexOf(a.talla) -
@@ -230,9 +306,20 @@ export default function Buscador() {
                     );
                   })}
               </div>
+
+              {aMedias && (
+                <Completar
+                  productoId={v.producto_id}
+                  colorId={v.color_id}
+                  color={v.color_nombre}
+                  pendiente={sinRepartir}
+                  onListo={buscar}
+                />
+              )}
             </div>
           </li>
-        ))}
+          );
+        })}
       </ul>
 
       {!cargando && grupos.length === 0 && (

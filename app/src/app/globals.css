@@ -150,11 +150,31 @@ html:has(.paradas) {
   scroll-snap-align: start;
   /* Debajo del encabezado fijo, para que no le tape el título. */
   scroll-margin-top: 4.5rem;
+
+  /* Lo que le queda a una parada una vez descontado el encabezado fijo.
+     Las secciones miden su contenido contra esto en vez de contra el ancho:
+     una parada más alta que la pantalla se acomoda arriba y deja el resto
+     fuera, que es exactamente lo que las paradas venían a evitar. */
+  --pantalla: calc(100dvh - 4.5rem);
 }
 
-/* En una pantalla baja una sección puede no caber entera; ahí el acomodo
-   estorba más de lo que ayuda. */
-@media (max-height: 700px), (prefers-reduced-motion: reduce) {
+/* El pie también es un sitio donde parar.
+   Sin esto no lo es, y el efecto es feo: la última sección se queda con el
+   único punto de acomodo cercano, el pie asoma cortado por abajo, y al tocar
+   cualquier cosa dentro de él el navegador baja a enseñarlo entero y medio
+   segundo después el acomodo lo devuelve arriba de un tirón.
+
+   Va "end" y no "start" porque el sitio donde el pie se ve entero es con su
+   final pegado al borde de abajo, que además es el final de la página. */
+.paradas > footer {
+  scroll-snap-align: end;
+}
+
+/* El acomodo es de pantalla ancha.
+   En un teléfono todo se apila, así que una sección mide por fuerza más de una
+   pantalla, y acomodar el inicio de algo que no cabe deja siempre la mitad
+   fuera: se lee peor que desplazándose libre. Igual en pantallas bajas. */
+@media (max-width: 1023px), (max-height: 700px), (prefers-reduced-motion: reduce) {
   html:has(.paradas) {
     scroll-snap-type: none;
   }

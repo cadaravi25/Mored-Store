@@ -11,6 +11,14 @@ export default async function Inventario() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/entrar");
 
+  // La tasa del euro, para enseñar en qué se convierte el precio de bolívares.
+  const { data: tasa } = await supabase
+    .from("tasas_bcv")
+    .select("bs_por_eur")
+    .order("fecha", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
   return (
     <main className="mx-auto w-full max-w-2xl px-4 pb-16 pt-6">
       <header className="mb-6 flex items-baseline justify-between gap-4">
@@ -23,7 +31,7 @@ export default async function Inventario() {
         
       </header>
 
-      <Buscador />
+      <Buscador tasa={tasa ? Number(tasa.bs_por_eur) : null} />
     </main>
   );
 }

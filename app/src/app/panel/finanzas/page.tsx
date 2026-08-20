@@ -1,7 +1,7 @@
 ﻿import Link from "next/link";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import { diaEnCaracas, inicioDelDia } from "@/lib/fechas";
-import { NuevoMovimiento } from "./acciones";
+import { NuevoCambio, NuevoMovimiento } from "./acciones";
 import { BarraTasas, TasaDeVenta } from "./tasas";
 
 export const dynamic = "force-dynamic";
@@ -75,7 +75,7 @@ export default async function Finanzas({
         .maybeSingle(),
       supabase
         .from("movimientos_financieros")
-        .select("id,tipo,concepto,categoria,monto_original,moneda,monto_usd,ocurrido_at")
+        .select("id,tipo,concepto,categoria,monto_original,moneda,monto_usd,metodo_pago,ocurrido_at")
         .gte("ocurrido_at", inicioDelDia(desde))
         .order("ocurrido_at", { ascending: false })
         .limit(25),
@@ -182,9 +182,12 @@ export default async function Finanzas({
           <p className="text-xs uppercase tracking-wide text-tinta-suave">
             Movimientos
           </p>
-          <NuevoMovimiento
-            tasa={tasaVenta ? Number(tasaVenta.bs_por_usd) : null}
-          />
+          <div className="flex flex-wrap gap-2">
+            <NuevoMovimiento
+              tasa={tasaVenta ? Number(tasaVenta.bs_por_usd) : null}
+            />
+            <NuevoCambio />
+          </div>
         </div>
 
         {(movimientos ?? []).length === 0 ? (
@@ -195,22 +198,33 @@ export default async function Finanzas({
           <ul className="divide-y divide-borde">
             {(movimientos ?? []).map((m) => (
               <li key={m.id} className="flex items-center gap-3 py-2.5">
+                {/* Un cambio no es ni ingreso ni gasto: el dinero solo se mudó
+                    de caja. Pintarlo en rojo como un gasto haría creer que el
+                    negocio perdió esa plata. */}
                 <span
                   aria-hidden
                   className={`h-1.5 w-1.5 shrink-0 rounded-full ${
-                    m.tipo === "ingreso" ? "bg-marron" : "bg-alerta"
+                    m.tipo === "ingreso"
+                      ? "bg-marron"
+                      : m.tipo === "cambio"
+                        ? "bg-tinta-suave"
+                        : "bg-alerta"
                   }`}
                 />
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm text-tinta">{m.concepto}</p>
                   <p className="text-xs capitalize text-tinta-suave">
-                    {[m.categoria, new Date(m.ocurrido_at).toLocaleDateString("es-VE")]
+                    {[
+                      m.categoria,
+                      m.tipo === "cambio" ? m.metodo_pago?.replace(/_/g, " ") : null,
+                      new Date(m.ocurrido_at).toLocaleDateString("es-VE"),
+                    ]
                       .filter(Boolean)
                       .join(" · ")}
                   </p>
                 </div>
                 <span className="shrink-0 text-right text-sm tabular-nums text-tinta">
-                  {m.tipo === "egreso" ? "−" : "+"}
+                  {m.tipo === "egreso" ? "−" : m.tipo === "cambio" ? "⇄ " : "+"}
                   {usd.format(Number(m.monto_usd))}
                   {m.moneda === "BS" && (
                     <span className="block text-xs text-tinta-suave">

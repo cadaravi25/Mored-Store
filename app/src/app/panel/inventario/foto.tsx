@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { crearClienteNavegador } from "@/lib/supabase/client";
+import { rutaDeFoto } from "@/lib/fotos";
 
 const MAXIMO = 5 * 1024 * 1024;
 
@@ -125,8 +126,7 @@ export default function Foto({
 
     const supabase = crearClienteNavegador();
     const extension = archivo.name.split(".").pop()?.toLowerCase() ?? "jpg";
-    // La marca de tiempo evita que la foto vieja quede pegada en la caché.
-    const ruta = `${productoId}/${encodeURIComponent(color)}-${Date.now()}.${extension}`;
+    const ruta = rutaDeFoto(productoId, color, extension);
 
     const { error: fallo } = await supabase.storage
       .from("fotos")
