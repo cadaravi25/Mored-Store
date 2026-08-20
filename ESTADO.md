@@ -14,6 +14,27 @@ dirección la da el router por DHCP y cambia si se reinicia. **Proton VPN bloque
 la red local**: si el iPad no entra, hay que activar "Allow LAN connections" en
 Proton, sin apagar la VPN.
 
+## Dónde vive publicada
+
+`https://vermillion-horse-359f90.netlify.app`
+
+Netlify escucha la rama `main` de `github.com/cadaravi25/Mored-Store`: **cada
+push es un despliegue**, no hay nada más que hacer. La configuración está en
+`netlify.toml` y las variables en el panel de Netlify.
+
+Dos cosas que costaron tres intentos y conviene no volver a descubrir:
+
+- **El complemento de Next hay que declararlo.** Netlify detecta el proyecto
+  pero no lo ejecuta solo. Sin él la compilación sale en verde y la tienda
+  responde 404 en todas sus direcciones, que es el fallo más confuso posible.
+- **`publish` hay que escribirlo.** Sin él Netlify supone que es la misma
+  carpeta que `base` y el complemento se planta. Va relativo a la base, así que
+  `.next` significa `app/.next`.
+
+La tasa del BCV solo se refresca cuando alguien abre Finanzas o el punto de
+venta, que son los únicos que llaman a `/api/bcv`. Si pasan días sin entrar al
+panel, los precios en bolívares de la tienda salen con la tasa vieja.
+
 ## El inventario hoy
 
 | | |
