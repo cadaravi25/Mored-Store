@@ -41,3 +41,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Fotos bajadas de Treinta: son 141 jpg, no tienen por que viajar en el repo.
+scripts/datos/fotos/
+scripts/datos/porcolor/
+scripts/datos/resto/
+scripts/datos/mezcla/
+scripts/datos/multicolor/
+scripts/datos/faltan/
+scripts/datos/ultimas/

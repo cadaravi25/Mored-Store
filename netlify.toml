@@ -1,0 +1,38 @@
+# Cómo se publica Mored Store.
+#
+# LA APLICACIÓN NO ESTÁ EN LA RAÍZ
+#
+# El repositorio tiene la aplicación en `app/` y las migraciones de la base en
+# `supabase/`. Por eso `base`: sin eso Netlify busca el package.json arriba, no
+# lo encuentra y no compila.
+#
+# ESTO NO ES UN SITIO ESTÁTICO
+#
+# Ni una sola página se genera de antemano: el catálogo, la ficha y todo el
+# panel se arman en el servidor a cada visita, porque leen el inventario en
+# ese momento. Hace falta Node corriendo, no una carpeta de archivos. De eso se
+# encarga el complemento oficial de Next, que Netlify instala solo al detectar
+# el proyecto y traduce cada página a una función.
+#
+# Dónde queda lo compilado no se escribe aquí a propósito: lo decide ese mismo
+# complemento, y fijarlo a mano es la forma más común de romper el despliegue.
+
+[build]
+  base = "app"
+  command = "npm run build"
+
+[build.environment]
+  # Next 16 pide 20.9 para arriba. Se fija para que una actualización del
+  # valor por omisión de Netlify no cambie la versión bajo los pies.
+  NODE_VERSION = "22"
+
+# ---------------------------------------------------------------------------
+# LAS CLAVES NO VAN AQUÍ
+# ---------------------------------------------------------------------------
+# Este archivo sí viaja en el repositorio, así que nada secreto puede vivir en
+# él. Las variables se cargan en el panel de Netlify, en Site configuration ->
+# Environment variables. Cuáles hacen falta está en app/.env.example.
+#
+# Y una que NO se carga nunca: SUPABASE_SERVICE_ROLE_KEY. Se salta todas las
+# reglas de la base y la aplicación no la usa jamás. Solo la leen los programas
+# de scripts/, que corren en la máquina de Carlos.
