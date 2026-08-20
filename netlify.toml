@@ -11,15 +11,25 @@
 # Ni una sola página se genera de antemano: el catálogo, la ficha y todo el
 # panel se arman en el servidor a cada visita, porque leen el inventario en
 # ese momento. Hace falta Node corriendo, no una carpeta de archivos. De eso se
-# encarga el complemento oficial de Next, que Netlify instala solo al detectar
-# el proyecto y traduce cada página a una función.
+# encarga el complemento oficial de Next, que traduce cada página a una función.
 #
-# Dónde queda lo compilado no se escribe aquí a propósito: lo decide ese mismo
-# complemento, y fijarlo a mano es la forma más común de romper el despliegue.
+# EL COMPLEMENTO SE DECLARA, NO SE DA POR SUPUESTO
+#
+# La primera versión de este archivo no lo nombraba, confiando en que Netlify lo
+# instala solo al detectar Next. Lo detecta, pero no lo ejecutó: el registro
+# pasaba de terminar `next build` a terminar el despliegue sin empaquetar una
+# sola función, y la tienda respondía 404 en todas sus direcciones con la
+# compilación en verde. Escrito aquí no depende de que nadie adivine nada.
+#
+# Dónde queda lo compilado sigue sin escribirse: lo decide el complemento, y
+# fijarlo a mano es la otra forma común de romper esto.
 
 [build]
   base = "app"
   command = "npm run build"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 [build.environment]
   # Next 16 pide 20.9 para arriba. Se fija para que una actualización del
