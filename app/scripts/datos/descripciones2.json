@@ -1,0 +1,496 @@
+[
+ {
+  "nombre": "?",
+  "ref": "Ref 17€/ talla XS S y M",
+  "desc": "Bikini con logo metálico y pliegues retorcidos, adecuado para vacaciones de verano en la playa"
+ },
+ {
+  "nombre": "Bikini amarillo lunares",
+  "ref": "Ref 13€/ amarillo S y M, morado M",
+  "desc": "Traje de baño de dos piezas con estampado de lunares y tirantes cruzados delgados",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini azul lunares",
+  "ref": "Ref 14€/ talla S y M",
+  "desc": "Traje de baño de dos piezas con lazo halter y lunares",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini azul marino",
+  "ref": "Ref 20€/ talla XS S y M",
+  "desc": "Traje de baño de dos piezas con tirantes, decoración de estrella de mar metálica y lazo lateral",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini azul rey",
+  "ref": "Ref 17€/ talla S y M",
+  "desc": "Traje de baño de dos piezas casual bohemio con detalle de sol y anudado",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini azul rayas",
+  "ref": "Ref 11€/ talla S",
+  "desc": "Traje de baño de dos piezas con estampado retro de rayas y flores de hibisco, estilo Y2K",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini azul y marron",
+  "ref": "Ref 20€/ azul S, marrón y rosado S y M",
+  "desc": "Traje de baño de dos piezas con estampado gráfico vintage a rayas",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini beige y azul",
+  "ref": "Ref 17€/ talla S",
+  "desc": "Traje de baño de dos piezas con top triángulo halter",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini bicolor",
+  "ref": "Ref 17€/ azul XS S y Marrom S y M",
+  "desc": "Traje de baño de dos piezas con top halter corto y bottom de contraste de color",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini blanco y negro",
+  "ref": "Ref 14€/ talla XS",
+  "desc": "Traje de baño de dos piezas con top halter y bottom de contraste de color",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini floral rosa",
+  "ref": "Ref 13€/ talla S",
+  "desc": "Traje de baño de dos piezas con decoración de conchas coloridas",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini marron con pareo",
+  "ref": "Ref 23€/ talla S y M",
+  "desc": "Traje de baño de dos piezas con falda, triángulo con sujetador halter y decoración de conchas",
+  "nombreNuevo": "Conjunto bikini"
+ },
+ {
+  "nombre": "Bikini naranja floral",
+  "ref": "Ref 14€/ talla XS",
+  "desc": "Traje de baño de dos piezas triangular retro minimalista con separados anudados, para busto pequeño",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini rojo estampado animal",
+  "ref": "Ref 17€/ XS S y M",
+  "desc": "Traje de baño de dos piezas minimalista con estampado de leopardo y tirantes halter",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini rosa con fresas",
+  "ref": "Ref 17€/ talla XS S y M",
+  "desc": "Traje de baño de dos piezas con estampado de frutas, espalda descubierta y lazos",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini rojo y beige",
+  "ref": "Ref 21€ / talla S y M",
+  "desc": "Traje de baño de dos piezas con recorte de bloques de color, estilo americano",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini rosa flores set",
+  "ref": "Ref 22€/ rosa XS S y M, morado S",
+  "conjunto": true,
+  "desc": "Traje de baño de dos piezas con falda sarong, top halter de estampado floral de acuarela y bottom con lazo lateral",
+  "nombreNuevo": "Conjunto bikini"
+ },
+ {
+  "nombre": "Bikini rosa lunares",
+  "ref": "Ref 14€/ talla XS",
+  "desc": "Traje de baño de dos piezas con cuello halter, lazo, estampado de lunares, colgante rojo en forma de sol y corte alto ajustable",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini triangulo",
+  "ref": "Ref 17€/ talla S y M",
+  "desc": "Traje de baño de dos piezas y tanga triangular de unicolor con escote halter y detalle con aros",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini vino tinto",
+  "ref": "Ref 17€/ talla S",
+  "desc": "Traje de baño de dos piezas con copa, color sólido y joyas metálicas",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bikini vinotinto de amarre",
+  "ref": "Ref 17€/ talla XS S y M",
+  "desc": "Traje de baño de dos piezas unicolor con escote halter y lazos",
+  "nombreNuevo": "Bikini"
+ },
+ {
+  "nombre": "Bolso beige tejido",
+  "ref": "Ref 17€",
+  "nombreNuevo": "Cartera",
+  "desc": "Tote de paja de gran capacidad, de hombro y versátil"
+ },
+ {
+  "nombre": "Conjunto crochet azul claro",
+  "ref": "Ref 22€/ talla S y M",
+  "nombreNuevo": "Conjunto",
+  "desc": "De 2 piezas: suéter corto de manga larga con hombros caídos, diseño hueco en unicolor, y shorts cortos"
+ },
+ {
+  "nombre": "Bolso tejido beige con cadena",
+  "ref": "Ref 27€",
+  "nombreNuevo": "Cartera",
+  "desc": "De paja semicircular hueco, bolso de playa"
+ },
+ {
+  "nombre": "Diadema perlada con estrella",
+  "ref": "Ref 6€",
+  "nombreNuevo": "Accesorio",
+  "desc": "Para el cabello, con cadena de perlas y colgante de estrella de mar, estilo bohemia"
+ },
+ {
+  "nombre": "Falda playera",
+  "ref": "Ref 10€/ talla S y M",
+  "nombreNuevo": "Falda",
+  "desc": "Con estampado de estrella de mar en un lado, para cubrir traje de baño"
+ },
+ {
+  "nombre": "HAWU bolso de paja beige",
+  "ref": "Ref 27€",
+  "nombreNuevo": "Cartera",
+  "desc": "De paja semicircular hueco, bolso de playa de moda"
+ },
+ {
+  "nombre": "Gancho de Flor tropical",
+  "nombreNuevo": "Accesorio",
+  "desc": "Pinzas para el cabello con flores hawaianas"
+ },
+ {
+  "nombre": "Lentes",
+  "ref": "Ref 6€",
+  "nombreNuevo": "Lentes",
+  "desc": "De aviador con marco espejado de estilo bohemio"
+ },
+ {
+  "nombre": "Lentes 3",
+  "ref": "Ref 6€",
+  "nombreNuevo": "Lentes",
+  "desc": "Con montura oversize tipo aviador"
+ },
+ {
+  "nombre": "Lentes 1",
+  "ref": "Ref 6€",
+  "nombreNuevo": "Lentes",
+  "desc": "Cuadradas unisex, apropiadas para usar en exteriores"
+ },
+ {
+  "nombre": "Lentes 4",
+  "ref": "6€",
+  "nombreNuevo": "Lentes",
+  "desc": "Con diseño de marco ovalado completo de plástico con estampado de leopardo multicolor"
+ },
+ {
+  "nombre": "Lentes deportivos multicolor",
+  "ref": "Ref 6€",
+  "nombreNuevo": "Lentes",
+  "desc": "De moda envolventes de color rosa retro con decoración de plástico, estilo runner"
+ },
+ {
+  "nombre": "Lentes oversized transparentes",
+  "ref": "Ref 11€",
+  "nombreNuevo": "Lentes",
+  "desc": "De marco grande unisex con reflejo de mercurio"
+ },
+ {
+  "nombre": "Lentes oscuros carey",
+  "ref": "Ref 9€",
+  "nombreNuevo": "Lentes",
+  "desc": "De marco ovalado retro con lentes marrones y detalles de metal"
+ },
+ {
+  "nombre": "Malla playera",
+  "ref": "Ref 11,5€/ talla XS",
+  "nombreNuevo": "Vestido",
+  "desc": "De manga larga con hombros descubiertos, de malla transparente y ajustado al cuerpo"
+ },
+ {
+  "nombre": "Pañoletas",
+  "ref": "Ref 6€",
+  "nombreNuevo": "Accesorio",
+  "desc": "Pañuelo cuadrado de satén con estampado paisley"
+ },
+ {
+  "nombre": "Pareo 1",
+  "ref": "Ref 12€/ talla S y M",
+  "nombreNuevo": "Falda",
+  "desc": "Cover up de cintura con nudo"
+ },
+ {
+  "nombre": "Pareo",
+  "ref": "Ref 18€/ talla única",
+  "nombreNuevo": "Vestido",
+  "desc": "Con aberturas altas, espalda descubierta y malla hueca para el verano"
+ },
+ {
+  "nombre": "Pareo beige de malla",
+  "ref": "Ref 12€/ talla M",
+  "nombreNuevo": "Vestido",
+  "desc": "De malla transparente con cuello drapeado, espalda descubierta y estilo bohemio"
+ },
+ {
+  "nombre": "Pulsera dorada estrella de mar",
+  "ref": "Ref 6€",
+  "nombreNuevo": "Accesorio",
+  "desc": "Brazalete de estrella de mar y concha para vacaciones"
+ },
+ {
+  "nombre": "Set playero 1",
+  "ref": "Ref 22€/ talla M",
+  "nombreNuevo": "Conjunto",
+  "desc": "De dos piezas con top de malla con estampado floral tie-dye retro, cuello halter, espalda descubierta y cordones, y minifalda"
+ },
+ {
+  "nombre": "Set blanco playa top y falda",
+  "ref": "Ref 23€/ talla S",
+  "nombreNuevo": "Conjunto",
+  "desc": "De 2 piezas: top corto de ganchillo con cuello en V, espalda descubierta, halter y calado, y minifalda"
+ },
+ {
+  "nombre": "Set playero 2",
+  "ref": "Ref 22€/ talla M",
+  "nombreNuevo": "Conjunto",
+  "desc": "De 2 piezas: falda y top con tirantes finos"
+ },
+ {
+  "nombre": "Set playero 5",
+  "ref": "Ref 22€/ talla S",
+  "nombreNuevo": "Conjunto",
+  "desc": "De 2 piezas: top halter con escote en pico y decoración de hebilla metálica con estampado degradado atardecer, y minifalda multicapa"
+ },
+ {
+  "nombre": "Set playero 8",
+  "ref": "Ref 24€/ talla M",
+  "nombreNuevo": "Conjunto",
+  "desc": "De top y falda de encaje"
+ },
+ {
+  "nombre": "Set playero 6",
+  "ref": "Ref 22€/ talla M",
+  "nombreNuevo": "Conjunto",
+  "desc": "Top de manga larga con lentejuelas y falda estilo Y2K con lentejuelas"
+ },
+ {
+  "nombre": "Set playero 9",
+  "ref": "Ref 24€/ talla XS",
+  "nombreNuevo": "Conjunto",
+  "desc": "Camisa de lino blanca casual con cuello de botones y manga larga holgada, con shorts"
+ },
+ {
+  "nombre": "Set verde bikini y falda",
+  "ref": "Ref 27€/ talla S y M",
+  "nombreNuevo": "Conjunto bikini",
+  "desc": "Traje de baño de dos piezas con falda, cuello halter y decoración de metal dorada"
+ },
+ {
+  "nombre": "Sombrero ajustable",
+  "ref": "Ref 11€",
+  "nombreNuevo": "Sombrero",
+  "desc": "Con borde deshilachado"
+ },
+ {
+  "nombre": "Sombrero",
+  "ref": "Ref 12€",
+  "nombreNuevo": "Sombrero",
+  "desc": "De paja con decoración de lazo"
+ },
+ {
+  "nombre": "Sombrero beige con cordon",
+  "ref": "Ref 6€",
+  "nombreNuevo": "Sombrero",
+  "desc": "De ala ancha con letra"
+ },
+ {
+  "nombre": "Sombrero de playa",
+  "ref": "Ref 20€",
+  "nombreNuevo": "Sombrero",
+  "desc": "De paja hueco, unicolor, estilo bohemio y decorativo"
+ },
+ {
+  "nombre": "Top playero",
+  "ref": "Ref 12€/ talla S y M",
+  "nombreNuevo": "Top",
+  "desc": "Estilo boho, unicolor, hecho a mano a ganchillo con decoración floral"
+ },
+ {
+  "nombre": "Sombrero vaquero",
+  "ref": "Ref 22€",
+  "nombreNuevo": "Sombrero",
+  "desc": "De paja hueco, unicolor, estilo bohemio y decorativo"
+ },
+ {
+  "nombre": "Top playero 3",
+  "ref": "Ref 10€/ talla Única",
+  "nombreNuevo": "Top",
+  "desc": "Blusa sin espalda con hebilla de estrella de metal"
+ },
+ {
+  "nombre": "Traje de baño 4 piezas",
+  "ref": "Ref 28€/ talla S y M",
+  "nombreNuevo": "Conjunto bikini",
+  "desc": "Traje de baño de dos piezas con top y falda de malla, unicolor y elegante"
+ },
+ {
+  "nombre": "Traje de bano azul 3 piezas",
+  "ref": "Ref 29€/ talla S y M",
+  "nombreNuevo": "Conjunto bikini",
+  "desc": "Traje de baño de dos piezas con conjunto de top y falda, estampado de teñido anudado para playa"
+ },
+ {
+  "nombre": "Traje de baño amarillo bikini",
+  "ref": "Ref 20€/ talla S y M",
+  "nombreNuevo": "Bikini",
+  "desc": "Traje de baño de dos piezas con parte superior tipo triángulo con cordón, espalda descubierta y tela jacquard en unicolor"
+ },
+ {
+  "nombre": "Traje de baño azul con pareo",
+  "ref": "Ref 20€/ talla S y M",
+  "nombreNuevo": "Conjunto bikini",
+  "desc": "Traje de baño de dos piezas con falda larga maxi, estampado tie-dye irregular y cuerda trenzada"
+ },
+ {
+  "nombre": "Traje de baño blanco triangular",
+  "ref": "Ref 17€/ talla XS S y M",
+  "nombreNuevo": "Bikini",
+  "desc": "Traje de baño de dos piezas unicolor con escote halter y lazos"
+ },
+ {
+  "nombre": "Traje de baño morado con aro",
+  "ref": "Ref 23€/ talla XS S y M",
+  "nombreNuevo": "Conjunto bikini",
+  "desc": "Traje de baño de dos piezas con cover up con aros, triángulo halter y estampado de mármol"
+ },
+ {
+  "nombre": "Traje de baño negro de dos piezas",
+  "ref": "Ref 17€/ talla S y M",
+  "nombreNuevo": "Bikini",
+  "desc": "Traje de baño de dos piezas y tanga triangular de unicolor con escote halter y nudo"
+ },
+ {
+  "nombre": "Traje de bano negro y blanco",
+  "ref": "Ref 14€/ talla S",
+  "nombreNuevo": "Bikini",
+  "desc": "Traje de baño de dos piezas con cuello halter y ajustable"
+ },
+ {
+  "nombre": "Trikini",
+  "ref": "Ref 14€/ rojo S",
+  "nombreNuevo": "Trikini",
+  "desc": "Traje de baño trikini con espalda descubierta y entrelazado de contraste blanco y rojo"
+ },
+ {
+  "nombre": "Trikini 2",
+  "ref": "Ref 14€/ talla S y M",
+  "nombreNuevo": "Trikini",
+  "desc": "Traje de baño trikini de estilo sólido embellecido con perlas"
+ },
+ {
+  "nombre": "Vestido",
+  "ref": "Ref 29€/ talla S",
+  "nombreNuevo": "Vestido",
+  "desc": "De 2 piezas: top corto transparente con cuello oblicuo y falda larga ajustada"
+ },
+ {
+  "nombre": "Vestido 2",
+  "ref": "Ref 29€/ Talla M",
+  "nombreNuevo": "Vestido",
+  "desc": "Ajustado con tirantes cruzados y espalda descubierta, adecuado para vacaciones"
+ },
+ {
+  "nombre": "Accesorios playero",
+  "ref": "Ref 6€",
+  "nombreNuevo": "Collar",
+  "desc": "Con colgante de concha y brazalete con diseño de estrella de mar ajustable, temática oceánica"
+ },
+ {
+  "nombre": "Vestido 4",
+  "ref": "Ref 29€/ talla M",
+  "nombreNuevo": "Vestido",
+  "desc": "Elegante con estampado en degradés, espalda descubierta y cuello recto"
+ },
+ {
+  "nombre": "Vestido dorado halter",
+  "ref": "Ref 20€/ talla S y M",
+  "nombreNuevo": "Vestido",
+  "desc": "Ajustado con diseño de bufanda y adornado con lentejuelas"
+ },
+ {
+  "nombre": "Vestido escote profundo",
+  "ref": "",
+  "nombreNuevo": "Vestido",
+  "desc": "Formal de cuello en V profundo"
+ },
+ {
+  "nombre": "Vestido floral blanco y rosa",
+  "nombreNuevo": "Conjunto",
+  "desc": "Set de 2 piezas: top de tirantes y minifalda"
+ },
+ {
+  "nombre": "Vestido playero 1",
+  "ref": "Ref 24€/ talla XS S y M",
+  "nombreNuevo": "Vestido",
+  "desc": "Con abertura alta, espalda descubierta y decoración metálica"
+ },
+ {
+  "nombre": "Vestido playero 18",
+  "ref": "Ref 22€/ talla S",
+  "nombreNuevo": "Vestido",
+  "desc": "Mini con cuello en V, decoración de estrella de mar de metal, cuello con lazo, espalda descubierta y textura de línea"
+ },
+ {
+  "nombre": "Vestido playero 4",
+  "ref": "Ref 18€/ talla S",
+  "nombreNuevo": "Vestido",
+  "desc": "Mini con lazo en la espalda, abertura y decorado con hebilla metálica"
+ },
+ {
+  "nombre": "Vestido playero 6",
+  "ref": "Ref 24€/ talla S",
+  "nombreNuevo": "Vestido",
+  "desc": "Mini ajustado estilo retro con estampado tie-dye rosa, escote en V y espalda descubierta"
+ },
+ {
+  "nombre": "Vestido playero 5",
+  "ref": "Ref 18€/ talla M",
+  "nombreNuevo": "Vestido",
+  "desc": "Elegante con escote trasero"
+ },
+ {
+  "nombre": "Vestido playero 7",
+  "nombreNuevo": "Vestido",
+  "desc": "Mini con tirantes finos, escote en V profundo y fruncido"
+ },
+ {
+  "nombre": "Vestido playero 8",
+  "nombreNuevo": "Vestido",
+  "desc": "Sin mangas, estilo casual, maxi elegante ajustado y unicolor"
+ },
+ {
+  "nombre": "Vestido rosa estampado",
+  "ref": "Ref 23€/ talla S y M",
+  "nombreNuevo": "Conjunto",
+  "desc": "De 2 piezas: top corto de ganchillo con cuello en V, espalda descubierta y calado, y minifalda"
+ },
+ {
+  "nombre": "Vestido strapless beige",
+  "ref": "Ref 22€/ talla S y M",
+  "nombreNuevo": "Vestido",
+  "desc": "Con decoración de estrella de mar y tela de alta calidad"
+ },
+ {
+  "nombre": "Vestido tubo floral amarillo",
+  "ref": "Ref 14€/ amarillo S, blanco XS S y M",
+  "nombreNuevo": "Vestido",
+  "desc": "Mini sin mangas ajustado con estampado floral tipo bandeau"
+ }
+]

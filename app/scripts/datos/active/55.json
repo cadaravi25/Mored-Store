@@ -1,0 +1,207 @@
+{
+ "video": "55.mp4",
+ "capturas": 55,
+ "nota": "Cuadra exacto: 54 capturas con nombre más la del top vino, que va sin nombre. Esa es la variante de color que me señalaste, y se anida con el lila del cuadro 182 porque comparten precio y Ref.",
+ "prendas": [
+  { "cuadro": "55/0004", "rotulo": "set", "desc": "Conjunto de Top Halter y Pantalón Ajustado con Realce de Glúteos", "eur": 25, "bs": 27,
+    "colores": [
+      { "color": "Marrón", "tallas": ["S"] },
+      { "color": "Negro", "tallas": ["S"] },
+      { "color": "Vinotinto", "tallas": ["M"] }],
+    "origen": "Ref 27€/ marrón y negro S, vinotinto M" },
+
+  { "cuadro": "55/0010", "rotulo": "set", "desc": "Conjunto Deportivo de Sujetador de Yoga y Shorts", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Azul", "tallas": ["S", "M", "L"] }], "origen": "Ref 27€/ talla S m y L" },
+
+  { "cuadro": "55/0013", "rotulo": "set pink", "desc": "Conjunto Sin Costuras con Top Halter y Shorts de Cintura Baja", "eur": 22, "bs": 24,
+    "colores": [
+      { "color": "Gris", "tallas": ["S", "M"] },
+      { "color": "Negro", "tallas": ["S", "M"] },
+      { "color": "Azul marino", "tallas": ["M"] },
+      { "color": "Vino", "tallas": ["M"] },
+      { "color": "Rosa", "tallas": ["M"] }],
+    "origen": "Ref 24€/ talla S gris y negro, talla M todos los colores",
+    "duda": "Los colores de la talla M salen de la foto, que enseña cinco. El texto solo dice 'todos los colores'." },
+
+  { "cuadro": "55/0017", "rotulo": "set musera", "desc": "Conjunto para Pádel y Gimnasio con Sujetador de Espalda Cruzada", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Blanco", "tallas": ["M"] }], "origen": "Ref 22€/ talla M" },
+
+  { "cuadro": "55/0021", "rotulo": "set dupe dfyne", "desc": "Conjunto Deportivo de Top Largo con Espalda Descubierta y Leggings", "eur": 32, "bs": 34,
+    "colores": [{ "color": "Azul acero", "tallas": ["M"] }], "origen": "ref 34€/ talla M" },
+
+  { "cuadro": "55/0025", "rotulo": "set", "desc": "Conjunto de Escote en V y Leggings de Cintura Cruzada", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Azul marino y blanco", "tallas": ["S", "M"] }], "origen": "Ref 27€/ talla S y M" },
+
+  { "cuadro": "55/0027", "rotulo": "set", "desc": "Conjunto Deportivo de Sujetador y Leggings con Franjas en Contraste", "eur": 30, "bs": 33,
+    "colores": [{ "color": "Marrón", "tallas": ["S", "M"] }], "origen": "ref 33€/ talla S y M" },
+
+  { "cuadro": "55/0030", "rotulo": "set musera", "desc": "Conjunto con Top de Espalda Cruzada y Leggings", "eur": 30, "bs": 32,
+    "colores": [{ "color": "Vino", "tallas": ["S", "M"] }], "origen": "Ref 32€/ talla S y M" },
+
+  { "cuadro": "55/0033", "rotulo": "set", "desc": "Conjunto Esencial Negro: Sujetador Doble Capa y Shorts Ciclistas", "eur": 15, "bs": 15,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref / talla S y M",
+    "duda": "No trae Ref: puse el mismo número en los dos precios." },
+
+  { "cuadro": "55/0039", "rotulo": "set", "desc": "Conjunto Unicolor de Top Halter con Espalda Descubierta y Shorts", "eur": 18, "bs": 20,
+    "colores": [{ "color": "Negro", "tallas": ["M"] }], "origen": "Ref 20€/ talla M" },
+
+  { "cuadro": "55/0041", "rotulo": "set", "desc": "Conjunto Sin Costuras de Manga Corta y Shorts Ciclistas", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Negro", "tallas": ["S"] }], "origen": "Ref 17€/ talla S" },
+
+  { "cuadro": "55/0045", "rotulo": "set", "desc": "Conjunto Unicolor con Paneles en Bloques de Color", "eur": 20, "bs": 23,
+    "colores": [{ "color": "Negro y blanco", "tallas": ["S", "M"] }], "origen": "Ref 23€/ talla S y M" },
+
+  { "cuadro": "55/0049", "rotulo": "set", "desc": "Conjunto Sin Costuras con Sujetador Halter", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 22€/ talla S y M" },
+
+  { "cuadro": "55/0050", "rotulo": "set", "desc": "Conjunto de Tirantes con Franjas en Contraste", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Azul marino y blanco", "tallas": ["S", "M"] }], "origen": "Ref 17€/ talla S y M" },
+
+  { "cuadro": "55/0056", "rotulo": "set", "desc": "Conjunto Acanalado de 3 Piezas", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 27€/ talla S y M" },
+
+  { "cuadro": "55/0058", "rotulo": "set", "desc": "Conjunto de Top de Tirantes y Ribete en Contraste", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Vino", "tallas": ["S", "M"] }], "origen": "Ref 22€/ talla S y M" },
+
+  { "cuadro": "55/0061", "rotulo": "set", "desc": "Conjunto Sin Costuras para Fitness y Yoga", "eur": 30, "bs": 32,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 32€/ talla S y M" },
+
+  { "cuadro": "55/0066", "rotulo": "set", "desc": "Enterizo Corto Sin Costuras con Sujetador Integrado y Tirantes Cruzados", "eur": 18, "bs": 20,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 20€/ talla S y M",
+    "duda": "Ellas lo venden como set pero el nombre de SHEIN dice enterizo. Lo dejo en Conjunto por la palabra de ellas." },
+
+  { "cuadro": "55/0069", "rotulo": "set", "desc": "Conjunto Deportivo Unicolor Sin Costuras con Espalda Abierta", "eur": 25, "bs": 28,
+    "colores": [{ "color": "Azul marino", "tallas": ["S", "M"] }], "origen": "Ref 28€/ talla S y M" },
+
+  { "cuadro": "55/0073", "rotulo": "set", "desc": "Conjunto Deportivo Casual de Sudadera Cuello Redondo y Shorts", "eur": 20, "bs": 23,
+    "colores": [{ "color": "Verde menta", "tallas": ["M"] }], "origen": "Ref 23€/ talla M" },
+
+  { "cuadro": "55/0077", "rotulo": "set", "desc": "Conjunto Unicolor de Manga Larga y Leggings de Entrenamiento", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 22€/ talla S y M" },
+
+  { "cuadro": "55/0078", "rotulo": "set musera", "desc": "Conjunto Coordinado de Sujetador Deportivo y Leggings de Tiro Alto", "eur": 30, "bs": 33,
+    "colores": [{ "color": "Vino", "tallas": ["S", "M"] }], "origen": "Ref 33€/ talla S y M" },
+
+  { "cuadro": "55/0082", "rotulo": "set", "desc": "Conjunto Deportivo de Cintura Alta con Bloques en Contraste y Calados", "eur": 20, "bs": 23,
+    "colores": [
+      { "color": "Amarillo", "tallas": ["XS"] },
+      { "color": "Rosado", "tallas": ["S", "M"] }],
+    "origen": "Ref 23€/ amarillo XS, demás colores s y m",
+    "duda": "'Demás colores' sin nombrar: el rosado sale de la foto." },
+
+  { "cuadro": "55/0085", "rotulo": "set musera", "desc": "Conjunto Deportivo de Top con Espalda Descubierta y Minishorts de Cintura Alta", "eur": 24, "bs": 26,
+    "colores": [{ "color": "Blanco", "tallas": ["M"] }], "origen": "ref 26€/ talla M" },
+
+  { "cuadro": "55/0089", "rotulo": "set", "desc": "Conjunto Deportivo de Top a Rayas con Espalda Abierta y Falda Pantalón Plisada", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Blanco y rosa", "tallas": ["S"] }], "origen": "Ref 27€/ talla S" },
+
+  { "cuadro": "55/0093", "rotulo": "set", "desc": "Conjunto Deportivo de Top Halter con Ribetes a Contraste y Shorts Ciclistas", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Azul marino y rojo", "tallas": ["M"] }], "origen": "Ref 17€/ talla M" },
+
+  { "cuadro": "55/0097", "rotulo": "set", "desc": "Conjunto Deportivo Esencial", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Beige", "tallas": ["S"] }], "origen": "ref 22€/ talla S" },
+
+  { "cuadro": "55/0101", "rotulo": "set", "desc": "Conjunto Deportivo de Camisola con Tops en Contraste y Shorts", "eur": 30, "bs": 33,
+    "colores": [{ "color": "Azul marino", "tallas": ["XS", "S", "M"] }], "origen": "Ref 33€/ talla XS S y M" },
+
+  { "cuadro": "55/0102", "rotulo": "set", "desc": "Conjunto de Yoga de 2 Piezas: Sujetador Halter y Shorts de Alta Compresión", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Morado", "tallas": ["S", "M"] }], "origen": "Ref 17€/ talla S y M" },
+
+  { "cuadro": "55/0105", "rotulo": "set", "desc": "Conjunto Sin Costuras Asimétrico con Efecto Realce de Glúteos", "eur": 20, "bs": 22,
+    "colores": [
+      { "color": "Gris", "tallas": ["S"] },
+      { "color": "Amarillo", "tallas": ["S", "M"] }],
+    "origen": "Ref 22€/ Gris S, amarillo S y M" },
+
+  { "cuadro": "55/0109", "rotulo": "shorts", "desc": "Shorts Deportivos Sin Costuras con Pretina Ancha y Efecto Realce", "eur": 5, "bs": 6,
+    "colores": [{ "color": "Por definir", "tallas": ["S", "M"] }], "origen": "ref 6€/ Talla S M",
+    "duda": "La foto enseña gris, lila y verde menta y el texto no dice cuál tienen." },
+
+  { "cuadro": "55/0113", "rotulo": "shorts running", "desc": "Shorts Deportivos Casuales con Bolsillos en Contraste", "eur": 15, "bs": 18,
+    "colores": [{ "color": "Negro y verde", "tallas": ["S"] }], "origen": "Ref 18€/ talla S" },
+
+  { "cuadro": "55/0117", "rotulo": "shorts", "desc": "Shorts Sin Costuras de Cintura Alta con Efecto Levantador", "eur": 8, "bs": 9,
+    "colores": [{ "color": "Turquesa", "tallas": ["S", "M"] }], "origen": "Ref 9€/ talla S y M" },
+
+  { "cuadro": "55/0118", "rotulo": "shorts tie dye", "desc": "Shorts Deportivos con Estampado de Mármol", "eur": 5, "bs": 6,
+    "colores": [{ "color": "Verde tie dye", "tallas": ["M"] }], "origen": "Ref 6€/ Talla M" },
+
+  { "cuadro": "55/0122", "rotulo": "shorts", "desc": "Shorts Deportivos Fruncidos con Efecto Realce", "eur": 10, "bs": 11,
+    "colores": [{ "color": "Azul marino", "tallas": ["S"] }], "origen": "Ref 11€/ talla S" },
+
+  { "cuadro": "55/0126", "rotulo": "shorts running", "desc": "Shorts de Trote 2 en 1 Antitransparencia", "eur": 15, "bs": 18,
+    "colores": [{ "color": "Verde neón", "tallas": ["S"] }], "origen": "Ref 18€/ talla S" },
+
+  { "cuadro": "55/0129", "rotulo": "shorts", "desc": "Shorts Sin Costuras de Alta Elasticidad con Pretina Ancha", "eur": 8, "bs": 10,
+    "colores": [{ "color": "Por definir", "tallas": ["S", "M"] }], "origen": "Ref 10€/ talla S y M",
+    "duda": "Foto de muestrario: gris, verde, azul, rosa y fucsia." },
+
+  { "cuadro": "55/0133", "rotulo": "shorts corte en V", "desc": "Shorts Deportivos Sin Costuras de Cintura Alta", "eur": 8, "bs": 9,
+    "colores": [{ "color": "Por definir", "tallas": ["S", "M"] }], "origen": "Ref 9€/ talla S y M",
+    "duda": "Foto de muestrario: rojo, azul marino, negro y blanco." },
+
+  { "cuadro": "55/0137", "rotulo": "shorts", "desc": "Shorts Cargo Estilo Y2K con Bolsillos y Efecto Moldeador", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Marrón", "tallas": ["S", "M"] }], "origen": "Ref 17€/ talla S y M" },
+
+  { "cuadro": "55/0141", "rotulo": "tops", "desc": "Sujetadores Deportivos Unicolor", "eur": 10, "bs": 11,
+    "colores": [
+      { "color": "Rojo", "tallas": ["S", "M"] },
+      { "color": "Negro", "tallas": ["S"] }],
+    "origen": "Ref 11€ / rojo S y M, negro S" },
+
+  { "cuadro": "55/0145", "rotulo": "top deportivo", "desc": "Sujetador Deportivo Tipo Camisola de Alto Impacto", "eur": 10, "bs": 11,
+    "colores": [{ "color": "Azul bebé", "tallas": ["S", "M"] }], "origen": "Ref 11€/ talla S y M" },
+
+  { "cuadro": "55/0149", "rotulo": "top deportivo", "desc": "Sujetador Deportivo en Punto Elástico con Escote en V y Tiras Cruzadas", "eur": 10, "bs": 12,
+    "colores": [{ "color": "Negro", "tallas": ["XS", "M"] }], "origen": "Ref 12€/ talla XS y M" },
+
+  { "cuadro": "55/0153", "rotulo": "top musera", "desc": "Top Corto Halter Acolchado con Espalda Abierta", "eur": 12, "bs": 13,
+    "colores": [{ "color": "Por definir", "tallas": ["S", "M"] }], "origen": "Ref 13€/ talla S y M",
+    "duda": "Foto de muestrario: rosa, azul, morado, negro y verde." },
+
+  { "cuadro": "55/0157", "rotulo": "top deportivo", "desc": "Sujetador Deportivo con Cierre Frontal y Espalda Cruzada", "eur": 12, "bs": 13,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 13€/ talla S y M" },
+
+  { "cuadro": "55/0161", "rotulo": "top deportivo", "desc": "Sujetador Deportivo Sin Costuras con Detalle Cruzado al Frente", "eur": 10, "bs": 11,
+    "colores": [{ "color": "Por definir", "tallas": ["S", "M"] }], "origen": "Ref 11€/ talla S y M",
+    "duda": "Foto de muestrario: negro, azul marino, azul, rosa y blanco." },
+
+  { "cuadro": "55/0163", "rotulo": "top deportivo", "desc": "Sujetador Deportivo con Detalle Retorcido Frontal", "eur": 10, "bs": 12,
+    "colores": [{ "color": "Vino", "tallas": ["XS", "S"] }], "origen": "Ref 12€/ talla XS y S" },
+
+  { "cuadro": "55/0169", "rotulo": "top deportivo", "desc": "Sujetador Deportivo Sin Costuras Unicolor con Tirantes Cruzados", "eur": 6, "bs": 7,
+    "colores": [{ "color": "Por definir", "tallas": ["S", "M"] }], "origen": "Ref 7€/ talla S y M",
+    "duda": "Foto de muestrario: vino, azul, marrón, negro, gris y blanco." },
+
+  { "cuadro": "55/0175", "rotulo": "camisa de compresión", "desc": "Camiseta Deportiva Sin Costuras de Compresión Suave", "eur": 12, "bs": 13,
+    "colores": [{ "color": "Por definir", "tallas": ["M"] }], "origen": "ref 13€/ talla M",
+    "duda": "Foto de muestrario: negro, marrón, rosa y blanco." },
+
+  { "cuadro": "55/0178", "rotulo": "top deportivo", "desc": "Camiseta Corta Tipo Halter Sensación Ultrasuave 2 en 1", "eur": 12, "bs": 13,
+    "colores": [{ "color": "Rojo", "tallas": ["S", "M"] }], "origen": "Ref 13€/ Talla S y M" },
+
+  { "cuadro": "55/0182", "rotulo": "top deportivo", "desc": "Top Tipo Camiseta Minimalista Ligero con Efecto Moldeador", "eur": 12, "bs": 14,
+    "colores": [
+      { "color": "Lila", "tallas": ["S"] },
+      { "color": "Vino", "tallas": ["S", "M"] }],
+    "origen": "Ref 14€/ talla S (lila) + Ref 14€/ talla S y M (vino, captura sin nombre)",
+    "nota": "El vino es la captura sin nombre de los cuadros 201 y 213, la que me señalaste. Se anida aquí porque comparte precio y Ref con el lila." },
+
+  { "cuadro": "55/0189", "rotulo": "franelas", "desc": "Camiseta Deportiva Ajustada", "eur": 8, "bs": 9,
+    "colores": [{ "color": "Lila", "tallas": ["S", "M"] }], "origen": "Ref 9€/ talla S y M" },
+
+  { "cuadro": "55/0193", "rotulo": "top", "desc": "Sujetador Deportivo Halter con Fruncido Frontal y Tirantes Cruzados", "eur": 10, "bs": 12,
+    "colores": [{ "color": "Blanco y negro", "tallas": ["M"] }], "origen": "Ref 12€/ talla M",
+    "nota": "La foto marca 2PCS: vienen los dos colores juntos." },
+
+  { "cuadro": "55/0198", "rotulo": "top", "desc": "Top Deportivo Escote Curvo Multipropósito", "eur": 8, "bs": 10,
+    "colores": [{ "color": "Rojo", "tallas": ["S", "M"] }], "origen": "Ref 10€/ talla S y M" },
+
+  { "cuadro": "55/0209", "rotulo": "suéter musera", "desc": "Top Corto Manga Larga con Nudo Frontal y Abertura para Pulgar", "eur": 18, "bs": 21,
+    "colores": [
+      { "color": "Negro", "tallas": ["L"] },
+      { "color": "Azul", "tallas": ["L"] }],
+    "origen": "Ref 21€/ negro y azul L y demás S y M",
+    "duda": "Dice que los demás colores van en S y M pero no los nombra, así que solo cargo el negro y el azul en L." }
+ ]
+}

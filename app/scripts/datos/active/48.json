@@ -1,0 +1,172 @@
+{
+ "video": "48.mp4",
+ "capturas": 48,
+ "nota": "Cuadra exacto con el nombre del archivo. Los seis primeros son los accesorios deportivos: en el vídeo salen ampliados y no se leen, los precios vienen de la captura de la lista de WhatsApp que me pasaste.",
+ "prendas": [
+  { "cuadro": "48/0003", "rotulo": "bandanas", "desc": "Bandana Elástica Minimalista para Yoga y Uso Diario", "eur": 1, "bs": 1.2,
+    "colores": [{ "color": "Por definir", "tallas": ["ÚNICA"] }], "origen": "Bandanas 1$ / 1,2€",
+    "nota": "La foto es un abanico de colores del proveedor. Sin talla: accesorio.",
+    "seccion": "Accesorios deportivos" },
+
+  { "cuadro": "48/0006", "rotulo": "calentadores", "desc": "Calentadores de Piernas Multicolor Efecto Estilizador", "eur": 5, "bs": 6,
+    "colores": [{ "color": "Multicolor", "tallas": ["ÚNICA"] }], "origen": "Calentadores precio especial 5$ / Ref 6€",
+    "seccion": "Accesorios deportivos" },
+
+  { "cuadro": "48/0008", "rotulo": "calentadores", "desc": "Calentadores de Piernas Multicolor Pasteles Efecto Estilizador", "eur": 5, "bs": 6,
+    "colores": [{ "color": "Multicolor pasteles", "tallas": ["ÚNICA"] }], "origen": "calentadores 5$ / Ref 6€",
+    "seccion": "Accesorios deportivos" },
+
+  { "cuadro": "48/0012", "rotulo": "fajas", "desc": "Cinturilla Moldeadora de Alta Compresión con Cierre Frontal", "eur": 12, "bs": 14,
+    "colores": [{ "color": "Negro", "tallas": ["ÚNICA"] }], "origen": "fajas precio especial 12$ / Ref 14€",
+    "seccion": "Accesorios deportivos" },
+
+  { "cuadro": "48/0021", "rotulo": "guantes", "desc": "Guantes de Fitness Transpirables de Malla Medio Dedos (Unisex)", "eur": 6, "bs": 7,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "guantes precio especial 6$ / Ref 7€/ talla S y M",
+    "seccion": "Accesorios deportivos" },
+
+  { "cuadro": "48/0025", "rotulo": "guantes", "desc": "Guantes de Pesas con Muñequeras de Soporte Integradas", "eur": 8, "bs": 9,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M", "L"] }], "origen": "guantes precio especial 8$ / Ref 9€/ talla S M y L",
+    "seccion": "Accesorios deportivos" },
+
+  { "cuadro": "48/0029", "rotulo": "vestido", "desc": "Vestido Deportivo Sin Costuras con Bolsillo y Cuello Cuadrado", "eur": 18, "bs": 20,
+    "colores": [{ "color": "Verde limón", "tallas": ["S"] }], "origen": "Ref 20€/ talla S" },
+
+  { "cuadro": "48/0033", "rotulo": "vestido", "desc": "Vestido 2 en 1 con Lazo Lateral", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Marrón", "tallas": ["M"] }], "origen": "Ref 17€/ talla M" },
+
+  { "cuadro": "48/0037", "rotulo": "vestido deportivo", "desc": "Vestido Polo de Tenis y Golf con Manga Corta y Bolsillos", "eur": 15, "bs": 16,
+    "colores": [{ "color": "Negro", "tallas": ["M"] }], "origen": "Ref 16€/ talla M" },
+
+  { "cuadro": "48/0041", "rotulo": "vestido", "desc": "Vestido Deportivo Sin Mangas, Espalda Descubierta con Bolsillos en el Bajo", "eur": 18, "bs": 20,
+    "colores": [{ "color": "Verde limón", "tallas": ["S"] }], "origen": "Ref 20€/ talla S" },
+
+  { "cuadro": "48/0047", "rotulo": "vestido", "desc": "Vestido Deportivo con Short Interior para Yoga y Tenis", "eur": 18, "bs": 20,
+    "colores": [{ "color": "Azul", "tallas": ["S"] }], "origen": "Ref 20€/ talla S" },
+
+  { "cuadro": "48/0052", "rotulo": "vestido", "desc": "Vestido Deportivo Escote Abierto a Rayas con Falda Plisada", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Blanco", "tallas": ["S"] }], "origen": "Ref 27€/ talla S" },
+
+  { "cuadro": "48/0055", "rotulo": "vestido", "desc": "Vestido Deportivo de 2 Piezas: Vestido y Short con Bolsillos", "eur": 12, "bs": 13,
+    "colores": [{ "color": "Por definir", "tallas": ["S"] }], "origen": "Ref 13€/ talla S",
+    "duda": "La foto enseña verde oscuro, fucsia y lila y el texto no dice cuál tienen." },
+
+  { "cuadro": "48/0059", "rotulo": "conjunto", "desc": "Conjunto Asimétrico Acanalado: Top One-Shoulder y Shorts", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Fucsia", "tallas": ["L"] }], "origen": "Ref 17€ / Fucsia L" },
+
+  { "cuadro": "48/0062", "rotulo": "set deportivo", "desc": "Conjunto de Top de Tirantes Acanalado y Shorts de Yoga", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Lila", "tallas": ["M"] }], "origen": "Ref 17€/ talla M" },
+
+  { "cuadro": "48/0067", "rotulo": "set deportivo", "desc": "Conjunto Deportivo con Top Fruncido en V y Minifalda con Cordón", "eur": 12, "bs": 13,
+    "colores": [{ "color": "Turquesa", "tallas": ["S"] }], "origen": "Ref 13€/ talla S" },
+
+  { "cuadro": "48/0071", "rotulo": "set", "desc": "Conjunto de Yoga de 2 Piezas: Top Cross-Back y Leggings de Cintura Alta", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Marrón", "tallas": ["S", "M"] }], "origen": "Ref 22€/ talla S y M" },
+
+  { "cuadro": "48/0075", "rotulo": "set deportivo", "desc": "Conjunto de 2 Piezas: Top Cuello Cuadrado y Shorts Biker", "eur": 15, "bs": 18,
+    "colores": [
+      { "color": "Verde", "tallas": ["M"] },
+      { "color": "Morado", "tallas": ["M"] },
+      { "color": "Negro", "tallas": ["S"] }],
+    "origen": "Ref 18€/ verde y morado M, negro S" },
+
+  { "cuadro": "48/0081", "rotulo": "set deportivo", "desc": "Conjunto One-Shoulder y Leggings 3/4 con Cintura Cruzada", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Negro y blanco", "tallas": ["S"] }], "origen": "Ref 22€/ talla S" },
+
+  { "cuadro": "48/0085", "rotulo": "set deportivo", "desc": "Conjunto Deportivo Sin Costuras de Top Cuello Redondo y Pantalón Largo", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Rojo", "tallas": ["S"] }], "origen": "Ref 22€/ rojo S" },
+
+  { "cuadro": "48/0087", "rotulo": "set", "desc": "Conjunto Black Edition: Top Espalda Abierta y Leggings", "eur": 25, "bs": 29,
+    "colores": [{ "color": "Negro", "tallas": ["S"] }], "origen": "Ref 29€/ talla S" },
+
+  { "cuadro": "48/0093", "rotulo": "set deportivo", "desc": "Conjunto Deportivo con Franjas Blancas", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Azul marino", "tallas": ["S"] }], "origen": "Ref 22€/ talla S" },
+
+  { "cuadro": "48/0097", "rotulo": "set deportivo", "desc": "Conjunto Deportivo de 2 Piezas Color-Block", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Vino", "tallas": ["S", "M"] }], "origen": "Ref 22€/ talla S y M" },
+
+  { "cuadro": "48/0101", "rotulo": "set", "desc": "Conjunto Unicolor de Top y Shorts de Cintura Alta con Tipografía", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Rojo", "tallas": ["S", "M"] }], "origen": "Ref 17€/ talla S y M" },
+
+  { "cuadro": "48/0104", "rotulo": "set", "desc": "Conjunto Deportivo de 2 Piezas Manga Larga con Efecto Push-Up y Butt-Lift", "eur": 30, "bs": 33,
+    "colores": [
+      { "color": "Negro", "tallas": ["M"] },
+      { "color": "Amarillo", "tallas": ["S"] }],
+    "origen": "Ref 33€/ negro M, amarillo S" },
+
+  { "cuadro": "48/0109", "rotulo": "set", "desc": "Conjunto Sculpt & Ruched: Top Manga Corta y Leggings Plisados con Control de Abdomen", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Marrón", "tallas": ["M"] }], "origen": "Ref 22€/ talla M" },
+
+  { "cuadro": "48/0113", "rotulo": "set", "desc": "Conjunto Deportivo Sin Costuras: Top Corto y Shorts", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Azul", "tallas": ["M"] }], "origen": "Ref 17€/ talla M" },
+
+  { "cuadro": "48/0119", "rotulo": "set deportivo", "desc": "Conjunto Minimalista de Sujetador Grueso y Leggings de Yoga", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Azul marino", "tallas": ["S"] }], "origen": "Ref 27€/ talla S" },
+
+  { "cuadro": "48/0121", "rotulo": "set", "desc": "Conjunto Unicolor Acanalado: Top y Shorts", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Rojo", "tallas": ["S", "M"] }], "origen": "Ref 17€/ talla S y M" },
+
+  { "cuadro": "48/0125", "rotulo": "set musera", "desc": "Conjunto de Chaqueta con Agujero para Pulgar y Pantalón Acampanado", "eur": 35, "bs": 37,
+    "colores": [
+      { "color": "Blanco", "tallas": ["S", "M"] },
+      { "color": "Negro", "tallas": ["M"] },
+      { "color": "Marrón", "tallas": ["M"] }],
+    "origen": "Ref 37€/ blanco S y M, negro y marrón M" },
+
+  { "cuadro": "48/0129", "rotulo": "set", "desc": "Conjunto Deportivo Unicolor Halter: Top y Pantalón", "eur": 20, "bs": 24,
+    "colores": [{ "color": "Rojo", "tallas": ["S"] }], "origen": "Ref 24€/ talla S" },
+
+  { "cuadro": "48/0133", "rotulo": "set", "desc": "Conjunto Deportivo Raglán: Top Manga Corta y Minifalda Plisada", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Marrón", "tallas": ["XS", "S", "M"] }], "origen": "Ref 27€/ talla XS S y M" },
+
+  { "cuadro": "48/0137", "rotulo": "set", "desc": "Conjunto Deportivo Unicolor Halter Sin Espalda: Top y Leggings", "eur": 30, "bs": 33,
+    "colores": [{ "color": "Rojo", "tallas": ["S"] }], "origen": "Ref 33€/ talla S" },
+
+  { "cuadro": "48/0141", "rotulo": "set", "desc": "Conjunto Peach Butt-Lift con Escote en V y Ribetes en Contraste", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Azul marino", "tallas": ["S"] }], "origen": "Ref 22€/ talla S" },
+
+  { "cuadro": "48/0145", "rotulo": "set", "desc": "Conjunto Deportivo de 2 Piezas Color-Block con Malla", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Negro y blanco", "tallas": ["S", "M"] }], "origen": "Ref 22€/ talla S y M" },
+
+  { "cuadro": "48/0149", "rotulo": "set", "desc": "Conjunto de Yoga con Cintura en V: Leggings y Top", "eur": 30, "bs": 33,
+    "colores": [{ "color": "Rosado", "tallas": ["M"] }], "origen": "Ref 33€/ talla M" },
+
+  { "cuadro": "48/0153", "rotulo": "set", "desc": "Conjunto Deportivo Sin Costuras Halter Azul Marino", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Azul marino y rojo", "tallas": ["S", "M"] }], "origen": "Ref 22€/ talla S y M" },
+
+  { "cuadro": "48/0157", "rotulo": "set", "desc": "Conjunto Ajustado Azul Marino: Top Corto y Leggings de Cintura Alta", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Azul marino", "tallas": ["S", "M"] }], "origen": "Ref 22€/ talla S y M" },
+
+  { "cuadro": "48/0161", "rotulo": "set", "desc": "Conjunto Deportivo Sin Costuras de Espalda Cruzada con Sujetador Ajustable", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Azul marino", "tallas": ["S", "M"] }], "origen": "Ref 22€/ talla S y M" },
+
+  { "cuadro": "48/0165", "rotulo": "set", "desc": "Conjunto Halter Cruzado al Pecho: Top y Shorts Elásticos", "eur": 18, "bs": 20,
+    "colores": [{ "color": "Lila", "tallas": ["XS"] }], "origen": "Ref 20€/ talla XS" },
+
+  { "cuadro": "48/0169", "rotulo": "set", "desc": "Conjunto Deportivo Halter con Detalles en Contraste", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Negro y rojo", "tallas": ["M"] }], "origen": "Ref 22€/ M" },
+
+  { "cuadro": "48/0173", "rotulo": "set", "desc": "Conjunto con Cierre Frontal: Top Manga Larga y Mallas", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Azul", "tallas": ["S", "M"] }], "origen": "Ref 27€/ talla S y M" },
+
+  { "cuadro": "48/0177", "rotulo": "set", "desc": "Conjunto Deportivo con Top Cross-Back y Leggings", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Azul rey", "tallas": ["S"] }], "origen": "Ref 22€/ talla S" },
+
+  { "cuadro": "48/0182", "rotulo": "set", "desc": "Conjunto Manga Larga con Abertura para Pulgar y Franjas a Contraste", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Negro y blanco", "tallas": ["M"] }], "origen": "Ref 27€/ talla M" },
+
+  { "cuadro": "48/0185", "rotulo": "set", "desc": "Conjunto Versátil Escultor de Silueta y Control de Abdomen", "eur": 25, "bs": 27,
+    "colores": [
+      { "color": "Blanco", "tallas": ["S"] },
+      { "color": "Amarillo", "tallas": ["M"] }],
+    "origen": "Ref 27€/ blanco S, amarillo M" },
+
+  { "cuadro": "48/0191", "rotulo": "set", "desc": "Conjunto Multideporte en Punto Elástico Sin Costuras", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 27€/ talla S y M" },
+
+  { "cuadro": "48/0195", "rotulo": "set", "desc": "Conjunto Deportivo Sin Costuras: Top y Pantalón de Bota Ancha", "eur": 20, "bs": 23,
+    "colores": [{ "color": "Azul marino y blanco", "tallas": ["S", "M"] }], "origen": "Ref 23€/ talla S y M" },
+
+  { "cuadro": "48/0201", "rotulo": "set", "desc": "Conjunto Unicolor para Exteriores: Top Espalda Abierta y Minifalda", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Azul bebé", "tallas": ["S", "M"] }], "origen": "Ref 22€/ talla S y M" }
+ ]
+}

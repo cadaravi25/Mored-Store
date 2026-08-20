@@ -1,0 +1,2112 @@
+[
+ {
+  "id": "7e3f7efb-7862-5145-a558-4e654d14de71",
+  "nombre": "Accesorios playero",
+  "descripcion": "Ref 6€",
+  "precio_usd": 5,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/0051b109-5762-53de-93c2-9f7bc1ad08ca.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/0051b109-5762-53de-93c2-9f7bc1ad08ca.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/b4946b43-6298-506d-81f6-0fcba9da0d67.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/57540288-638d-59d5-92af-5d4dafe94d4e.jpeg"
+  ]
+ },
+ {
+  "id": "e45b91d6-9f6e-56c4-b091-a5ebeba874c6",
+  "nombre": "Bañador 3 piezas",
+  "descripcion": "Ref 22€/ talla M",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e3a4b6ba-3571-5982-9f56-19c6bc94797a.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e3a4b6ba-3571-5982-9f56-19c6bc94797a.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/21b5ed6d-b4fd-571e-8643-d85be8205449.jpeg"
+  ]
+ },
+ {
+  "id": "4a77e1e4-5d2d-5e9c-b0e4-cb534b1d25d8",
+  "nombre": "Bañador 3 piezas 10",
+  "descripcion": "Ref 24€/ Rojo S",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/a683854f-8d04-599e-b88b-9cab40890c7e.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/a683854f-8d04-599e-b88b-9cab40890c7e.jpeg"
+  ]
+ },
+ {
+  "id": "c27a4fa3-42dc-5016-b63b-e6b554aaf892",
+  "nombre": "Bañador 3 piezas 11",
+  "descripcion": "Ref 29€/ talla XS y M",
+  "precio_usd": 25,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/2b2b5862-acb1-54ce-acf5-4e3e91822f2e.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/2b2b5862-acb1-54ce-acf5-4e3e91822f2e.jpeg"
+  ]
+ },
+ {
+  "id": "6c7bb163-7314-5597-a1d1-41e91f005915",
+  "nombre": "Bañador 3 piezas 13",
+  "descripcion": "Ref 29€/ talla S y M",
+  "precio_usd": 25,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/485b970f-399c-53ee-bd1b-87afdcb97c07.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/485b970f-399c-53ee-bd1b-87afdcb97c07.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/980afdbb-9907-5a42-912a-f7eb8a9fb78f.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/589474f9-0b7a-535e-a994-e9f2d7959ff6.jpeg"
+  ]
+ },
+ {
+  "id": "78b69337-5ce3-53fd-9100-2e54c452bc86",
+  "nombre": "Bañador 3 piezas 15",
+  "descripcion": "Ref 29€/ talla XS",
+  "precio_usd": 25,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/c0549e6b-371b-5366-b254-2dfc8015503f.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/c0549e6b-371b-5366-b254-2dfc8015503f.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/64ea3d5f-8d94-5890-ab49-c8e60adea70b.jpg"
+  ]
+ },
+ {
+  "id": "12db0baa-f966-54e3-8a9a-902394367487",
+  "nombre": "Bañador 3 piezas 18",
+  "descripcion": "Ref 24€/ talla XS",
+  "precio_usd": 20,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/3829fb7b-4cfd-5cb1-be46-c93c4f6ef5a7.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/3829fb7b-4cfd-5cb1-be46-c93c4f6ef5a7.jpeg"
+  ]
+ },
+ {
+  "id": "6e8a6c68-5830-5ae5-9e27-d312a2bdf1d3",
+  "nombre": "Bañador 3 piezas 2",
+  "descripcion": "Ref 22€/ talla S",
+  "precio_usd": 18,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/73db4310-e9ee-5277-ac9c-d044430d735f.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/73db4310-e9ee-5277-ac9c-d044430d735f.jpeg"
+  ]
+ },
+ {
+  "id": "b1af2854-a55f-5826-b3a6-66239064d417",
+  "nombre": "Bañador 3 piezas 3",
+  "descripcion": "Ref 22€/ talla M",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/f53673e4-9be9-5826-8d54-a4190759f822.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/f53673e4-9be9-5826-8d54-a4190759f822.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/7a25920f-f7e6-54f9-ac52-8d4b1b49cc15.jpeg"
+  ]
+ },
+ {
+  "id": "f11d05a8-6b45-52da-b7d2-79981a9e572e",
+  "nombre": "Bañador 3 piezas 4",
+  "descripcion": "Ref 24€/ verde S y M, naranja M y azul S",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/4e519994-2a0e-5a3f-8640-baf182a9644a.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/4e519994-2a0e-5a3f-8640-baf182a9644a.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/9bf63084-721b-5f4d-9dda-2a7c544c7137.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/8e19892b-6b69-5af5-b1ba-8a5f7e13c13c.jpeg"
+  ]
+ },
+ {
+  "id": "af357674-f0c3-5ecb-b2f6-970d12785aba",
+  "nombre": "Bañador 3 piezas 5",
+  "descripcion": "Ref 24€/ talla S y M",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/5bee65c0-9ccb-5b8d-b906-cc222aea1615.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/5bee65c0-9ccb-5b8d-b906-cc222aea1615.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/653283c7-dbec-5793-b328-060b95d711e1.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/17d4e0b9-ce9b-58c0-878e-ebf1d83db931.jpeg"
+  ]
+ },
+ {
+  "id": "c07d4804-08e2-53ba-b8df-1a73d7b8b2c5",
+  "nombre": "Bañador 3 piezas 6",
+  "descripcion": "Ref 23€/ talla S y M",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/eab53684-0882-5a8c-9493-ee201832f518.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/eab53684-0882-5a8c-9493-ee201832f518.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/b16f3241-3b70-57e7-9753-d5d88845465d.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/8b40577c-d80f-5473-9145-e70ef333f181.jpg"
+  ]
+ },
+ {
+  "id": "9cc02134-4f62-5960-bab4-7c4f3fa8d2f5",
+  "nombre": "Bañador 3 piezas 7",
+  "descripcion": "Ref 29€/ talla M",
+  "precio_usd": 25,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/fc81c4d3-c20b-5657-884c-9f6bee4abc58.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/fc81c4d3-c20b-5657-884c-9f6bee4abc58.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/1f5a2a60-532c-53d8-a383-a91609365209.jpeg"
+  ]
+ },
+ {
+  "id": "0f949b85-baf3-5c12-ac49-100af8788d2a",
+  "nombre": "Bañador 3 piezas 8",
+  "descripcion": "Ref 24€/ talla M",
+  "precio_usd": 20,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/f2e85e44-cc65-5bc9-b60e-ae27b1a8cdf0.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/f2e85e44-cc65-5bc9-b60e-ae27b1a8cdf0.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/483dcebf-d3c4-5dd5-afd2-ec51538ee1ba.jpeg"
+  ]
+ },
+ {
+  "id": "ec2a45ba-4bce-573d-8774-cd73fa1c6ab8",
+  "nombre": "Bañador 3 piezas 9",
+  "descripcion": "Ref 29€/ talla S y M",
+  "precio_usd": 25,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/409968fc-3591-547b-bed8-320ca8239bfd.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/409968fc-3591-547b-bed8-320ca8239bfd.jpeg"
+  ]
+ },
+ {
+  "id": "c0db4ae2-07e5-580f-83f0-dbf0463b6a53",
+  "nombre": "Bañador animal print",
+  "descripcion": "Ref 22€/ talla S y M",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/0af3b71c-1226-5598-9559-f3c0b74ed514.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/0af3b71c-1226-5598-9559-f3c0b74ed514.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/2eb64abb-d5d9-5484-8729-f3de44ae523b.jpeg"
+  ]
+ },
+ {
+  "id": "ae295af9-607a-5033-ae7d-1d2dd8078941",
+  "nombre": "Bañador basico",
+  "descripcion": "Ref 18€/ talla S",
+  "precio_usd": 15,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c049a449-3d80-53c1-8adc-414f4df60b79.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c049a449-3d80-53c1-8adc-414f4df60b79.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e5b2799b-7ddd-519f-8c4b-ef6b93ea34b1.jpeg"
+  ]
+ },
+ {
+  "id": "b3c65099-f9e2-545e-a43d-2958191a34ea",
+  "nombre": "Bañador basico 1",
+  "descripcion": "Ref 18€/ talla S",
+  "precio_usd": 15,
+  "stock": 3,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e49990e0-fb5a-5664-b5b3-56f274832781.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e49990e0-fb5a-5664-b5b3-56f274832781.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/a75647fd-d149-5b4d-a843-55f95ecd4c30.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/cf890da1-d9d5-5cde-bab4-dc21017e6550.jpeg"
+  ]
+ },
+ {
+  "id": "c3e4316b-4f3b-595c-ae91-833572db1c6b",
+  "nombre": "Bañador basico 10",
+  "descripcion": "Ref 18€/ talla S y M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/93541419-ba9b-53f8-b10d-570bee396367.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/93541419-ba9b-53f8-b10d-570bee396367.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/da327393-5b62-5923-aaa6-fa2868b150ef.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/4fc8a348-614e-5345-b5e0-7a30ba1137cf.jpeg"
+  ]
+ },
+ {
+  "id": "dfff3a95-7aeb-5b87-a602-10bbe20afdc1",
+  "nombre": "Bañador basico 11",
+  "descripcion": "Ref 18€/ talla S",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/0cfb85a1-12c0-5442-9a37-afe95c0054bf.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/0cfb85a1-12c0-5442-9a37-afe95c0054bf.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/07527aed-4d55-5893-a12d-cf206634f31f.jpeg"
+  ]
+ },
+ {
+  "id": "1b67e1c9-155e-542a-876c-f0bf9958c9d4",
+  "nombre": "bañador basico 12",
+  "descripcion": "Ref 18€/ talla S y M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/fecea7ae-401e-5300-9d5b-af667a99ec7e.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/fecea7ae-401e-5300-9d5b-af667a99ec7e.jpeg"
+  ]
+ },
+ {
+  "id": "f250d973-1088-5677-84c4-ab5823419da0",
+  "nombre": "Bañador basico 13",
+  "descripcion": "Ref 22€/ talla S",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/72fdb1c7-5137-53e9-9a70-f02f644e09af.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/72fdb1c7-5137-53e9-9a70-f02f644e09af.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/3e3bad4b-de35-5c6d-a974-d5b514c27a38.jpeg"
+  ]
+ },
+ {
+  "id": "12b41528-41cd-5d7c-9e1b-2c92340617ce",
+  "nombre": "Bañador basico 15",
+  "descripcion": "Ref 22€/ talla S y M",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/b17f0daa-a2d0-5271-813a-3532e1c85c57.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/b17f0daa-a2d0-5271-813a-3532e1c85c57.jpeg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/d03ffc72-37c2-59fc-8442-6de0e6f7f00c.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/552fd36a-2ea1-51a8-b9df-a5dff61ccc6f.jpg"
+  ]
+ },
+ {
+  "id": "5a2c5b41-9820-5942-bfc0-dfb318942b9d",
+  "nombre": "Bañador basico 16",
+  "descripcion": "Ref 18€/ talla M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/cb3a8843-8695-5690-addc-ebb921df0ccc.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/cb3a8843-8695-5690-addc-ebb921df0ccc.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/dfb7c211-e93b-558b-9e84-126738fcf6c7.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/f1e47d52-41dd-5f7e-adb0-9edac540b0f5.jpeg"
+  ]
+ },
+ {
+  "id": "c054234d-e9ec-52bb-8198-82376ee9e64f",
+  "nombre": "Bañador basico 18",
+  "descripcion": "Ref 22€/ talla S y M",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e984b6d9-8bd4-56a0-b880-18a4a7d3ffa2.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e984b6d9-8bd4-56a0-b880-18a4a7d3ffa2.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/7e4588eb-5974-5553-8fb1-7425375ab315.jpeg"
+  ]
+ },
+ {
+  "id": "f8a7e187-2a43-5ac4-9a29-a083ca8d349c",
+  "nombre": "Bañador basico 2",
+  "descripcion": "Ref 18€/ talla S y M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/a08c8b51-14fd-59a7-9db0-067bfdb2209f.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/a08c8b51-14fd-59a7-9db0-067bfdb2209f.jpeg"
+  ]
+ },
+ {
+  "id": "ff1bef9a-9bef-5737-8d5d-fd87ed276c2d",
+  "nombre": "Bañador básico 20",
+  "descripcion": "Ref 18€/ talla S, rojo XS",
+  "precio_usd": 15,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/106fb968-9613-5420-a784-6e946c9070c7.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/106fb968-9613-5420-a784-6e946c9070c7.jpeg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/45c6de87-2457-5a0a-be9d-6c72df2ee9ec.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/03f1245d-744e-5e28-963f-467996ecf410.jpg"
+  ]
+ },
+ {
+  "id": "a4dc37b1-64d5-5754-a8e2-953e8e378fe7",
+  "nombre": "Bañador basico 21",
+  "descripcion": "Ref 9€/ talla M",
+  "precio_usd": 8,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c1813183-37ec-5faf-9140-bc249a3fde7b.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c1813183-37ec-5faf-9140-bc249a3fde7b.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/8bc11539-264b-5e33-b290-e77b90fb057b.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/948329b9-6f30-55bf-8e4a-33560b1158c9.jpeg"
+  ]
+ },
+ {
+  "id": "2927964b-b65e-55f5-8379-042521cd1365",
+  "nombre": "Bañador basico 22",
+  "descripcion": "Ref 9€/ talla L",
+  "precio_usd": 8,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/6d2f9263-ea2e-5a0d-925e-108913e8afad.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/6d2f9263-ea2e-5a0d-925e-108913e8afad.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/28f04625-66cd-5311-81e4-e2f03ca9c1e3.jpeg"
+  ]
+ },
+ {
+  "id": "882f096e-9d06-58fc-a356-74d4f0ce91a9",
+  "nombre": "Bañador básico 22",
+  "descripcion": "Ref 18€/ talla S",
+  "precio_usd": 15,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c334a268-6ad2-58a7-a14e-44dd928cc3bb.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c334a268-6ad2-58a7-a14e-44dd928cc3bb.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/8f657fb9-e403-533e-805c-1bb214199ce6.jpeg"
+  ]
+ },
+ {
+  "id": "caa4c6de-6523-540f-9ecc-8a8672392069",
+  "nombre": "Bañador basico 28",
+  "descripcion": "Ref 9€/ talla L",
+  "precio_usd": 8,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/93eceed4-d28f-5cd3-b011-85fb593a1f4e.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/93eceed4-d28f-5cd3-b011-85fb593a1f4e.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e7342fb1-b971-5925-a4d2-5b813228b2d6.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c3d5b731-9ad3-5a20-b3c8-1bb46df740b2.jpeg"
+  ]
+ },
+ {
+  "id": "9d1697ac-baf7-5446-9dad-a19333bc8fcc",
+  "nombre": "Bañador basico 29",
+  "descripcion": "Ref 9€/ talla XS",
+  "precio_usd": 8,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/9a14c31e-df19-56fd-a2f3-cee711ef81e0.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/9a14c31e-df19-56fd-a2f3-cee711ef81e0.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/2ec5992e-caa3-57c3-9777-72ea7623a1f7.jpeg"
+  ]
+ },
+ {
+  "id": "3e3813ba-ade0-5a92-94e6-ac9eed71dfa8",
+  "nombre": "Bañador basico 3",
+  "descripcion": "Ref 18€/ talla M fucsia",
+  "precio_usd": 15,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c9784cb7-140d-593d-b4d1-48a04b7957c9.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c9784cb7-140d-593d-b4d1-48a04b7957c9.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/b65d0423-df1d-51ba-a2d7-ab58cb3571c2.jpeg"
+  ]
+ },
+ {
+  "id": "194657dd-40b1-5a5e-9629-bfcbd41aedfd",
+  "nombre": "Bañador basico 4",
+  "descripcion": "Ref 18€/ talla M",
+  "precio_usd": 15,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/5542878f-a5ad-531a-87f7-c78dd39ee53e.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/5542878f-a5ad-531a-87f7-c78dd39ee53e.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/9af8ef7b-0d4f-5642-bf28-368805c5be53.jpeg"
+  ]
+ },
+ {
+  "id": "eb17a6ab-7703-58ef-b173-5bd71e493563",
+  "nombre": "Bañador basico 6",
+  "descripcion": "Ref 14€/ talla S y M",
+  "precio_usd": 12,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/14d8d111-3165-5e0a-b52c-4f1c5da61ab6.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/14d8d111-3165-5e0a-b52c-4f1c5da61ab6.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/a2af058e-9b32-5f74-8b68-7cc4dcb963c8.jpeg"
+  ]
+ },
+ {
+  "id": "d1860936-f49c-5210-bbb8-2c57ba44de74",
+  "nombre": "Bañador basico 7",
+  "descripcion": "Ref 14€/ talla S",
+  "precio_usd": 12,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/956a8550-0a6d-57c3-850c-79ae6e034d5c.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/956a8550-0a6d-57c3-850c-79ae6e034d5c.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/ba897c3a-51f8-5f93-a2e9-b6f3613ba7bd.jpeg"
+  ]
+ },
+ {
+  "id": "d11699be-cd32-5b20-a83b-3f69480f9976",
+  "nombre": "Bañador basico 8",
+  "descripcion": "Ref 14€/ talla S y M",
+  "precio_usd": 12,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/d1657db4-e126-5418-b78f-07a251aad974.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/d1657db4-e126-5418-b78f-07a251aad974.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/f22f03fe-e07a-536a-bd9c-4fdd9a9f36a5.jpeg"
+  ]
+ },
+ {
+  "id": "73beb171-55e1-5d6c-8c93-422b64b46659",
+  "nombre": "Bañador basico 9",
+  "descripcion": "Ref 17€/ talla XS",
+  "precio_usd": 15,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/430b71be-fd3b-5c78-9e43-914df646045f.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/430b71be-fd3b-5c78-9e43-914df646045f.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/f4727a9c-208a-5295-a720-b067c20e7257.jpeg"
+  ]
+ },
+ {
+  "id": "82b8d2ec-be49-54be-a376-051ad504345d",
+  "nombre": "Bañador bicolor",
+  "descripcion": "Ref 18€/ talla M",
+  "precio_usd": 15,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/deaec71f-8134-518a-893e-bd7e3f1fbf85.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/deaec71f-8134-518a-893e-bd7e3f1fbf85.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/3e2604e7-a05a-5588-850a-cc8ce671ad15.jpeg"
+  ]
+ },
+ {
+  "id": "d71f3305-f295-5d0c-a1ac-bf434553594b",
+  "nombre": "Bañador bicolor 1",
+  "descripcion": "Ref 18€/ talla M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/0f6d5849-f881-5c81-bad5-c45a1c3233be.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/0f6d5849-f881-5c81-bad5-c45a1c3233be.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/1df6be1e-d189-535f-aa63-a210c6f594db.jpeg"
+  ]
+ },
+ {
+  "id": "de0e3983-e876-5cf7-9bd4-879f6527d47e",
+  "nombre": "Bañador bicolor 4",
+  "descripcion": "Ref 22€/ azul S, naranja S y M",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/9777b1a1-210e-5fc8-b28d-de9007def349.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/9777b1a1-210e-5fc8-b28d-de9007def349.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/80ebac82-02a0-5000-9d12-25ddf2d38d98.jpeg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/be3e86a3-c6d8-5ced-b7e0-d12f37a10be9.jpg"
+  ]
+ },
+ {
+  "id": "634b1b39-127c-56d5-8a35-71fa3c9208a3",
+  "nombre": "Bañador brasil",
+  "descripcion": "Ref 22€/ talla S",
+  "precio_usd": 18,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/3d935a8b-b469-5437-b44f-40b3d43552c1.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/3d935a8b-b469-5437-b44f-40b3d43552c1.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/5c888035-4c55-515f-b01a-deaf63bbcab5.jpeg"
+  ]
+ },
+ {
+  "id": "e7883628-afe5-5f20-9241-13b98cbe5ed8",
+  "nombre": "Bañador brasil 2",
+  "descripcion": "Ref 18€/ talla S",
+  "precio_usd": 15,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/1fa4f61f-f2f0-5a46-8a9b-3156f1e00919.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/1fa4f61f-f2f0-5a46-8a9b-3156f1e00919.jpeg"
+  ]
+ },
+ {
+  "id": "8632e8bb-e5f6-587a-8f1e-f53ec8384eea",
+  "nombre": "Bañador brasil basico",
+  "descripcion": "Ref 14€/ talla M",
+  "precio_usd": 12,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/aca5fd1e-a7ec-5064-9bee-9af4e290e78a.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/aca5fd1e-a7ec-5064-9bee-9af4e290e78a.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/1b2503c9-e39e-556d-94b7-4d17bc003954.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/a68136ec-547f-542e-8f93-f58af21fbf57.jpeg"
+  ]
+ },
+ {
+  "id": "dc7b18f0-b325-5dcf-8bab-42f2af06b9b7",
+  "nombre": "Bañador completo 3",
+  "descripcion": "Ref 18€/ terracota y azul S, rojo M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/b660e89c-7f2e-5ea2-b389-82074205ff3f.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/b660e89c-7f2e-5ea2-b389-82074205ff3f.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/07dd83ca-801b-5eb6-99dc-cde9a42769cc.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/b19125f5-8301-5838-9ed6-3427516a6331.jpeg"
+  ]
+ },
+ {
+  "id": "407c71c0-999e-5f71-a3a6-2012e4ef8207",
+  "nombre": "Bañador con accesorio",
+  "descripcion": "Ref 18€/ naranja M, marrón S y M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/58e9fa7a-91a3-590e-ae77-6fbc3025228b.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/58e9fa7a-91a3-590e-ae77-6fbc3025228b.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/51455b68-3371-59ff-b86a-3673d919daa8.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/06da4a4d-8902-5073-8fd3-9975be0ce6c5.jpeg"
+  ]
+ },
+ {
+  "id": "6490f3b6-7b7d-59a2-a583-43b1e688872c",
+  "nombre": "Bañador con accesorio 1",
+  "descripcion": "Ref 22€/ guayaba M, talla S amarillo y rojo",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c0140395-85db-5a48-a102-02d059c6b099.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c0140395-85db-5a48-a102-02d059c6b099.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/be0b3d2d-292d-579a-a884-955fba202c7d.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/644278ae-906a-5e9a-a6cc-174010a8dcfe.jpeg"
+  ]
+ },
+ {
+  "id": "ed5a1470-662f-5ee3-a6e4-966a14381add",
+  "nombre": "Bañador enterizo 6",
+  "descripcion": "Ref 18€/ rojo S y M, azul y Marrón M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c9050a8a-9a7b-5ba2-b6c9-5ae4f48d6aec.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c9050a8a-9a7b-5ba2-b6c9-5ae4f48d6aec.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/2fc3fd05-2d24-5aab-9a2a-a7a43d4f8f50.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/948bc347-e9e9-5db9-84ed-78d1894ab6cf.jpeg"
+  ]
+ },
+ {
+  "id": "3821d92f-8188-52ca-a166-7bee357979f9",
+  "nombre": "Bañador entero",
+  "descripcion": "Ref 18€/ talla S",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/74fdd231-8239-5aa1-997b-13e036fb9724.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/74fdd231-8239-5aa1-997b-13e036fb9724.jpeg"
+  ]
+ },
+ {
+  "id": "60863034-e833-5536-a56d-b34e0747a5b2",
+  "nombre": "Bañador entero 1",
+  "descripcion": "Ref 18€/ talla S",
+  "precio_usd": 15,
+  "stock": 0,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/205a9b34-dcec-56f8-9e61-2b40d3e1731f.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/205a9b34-dcec-56f8-9e61-2b40d3e1731f.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e2ab390a-894c-5d8c-9276-bac51e2793d3.jpeg"
+  ]
+ },
+ {
+  "id": "436d29d3-2605-584d-a01f-62747f57703e",
+  "nombre": "Bañador estamapdo",
+  "descripcion": "Ref 18€/ talla S y M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/ca3445cc-852f-5780-9f9e-2e5ff4ae4dc0.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/ca3445cc-852f-5780-9f9e-2e5ff4ae4dc0.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/a88ab27c-fc4d-5a41-813e-eb940227b07a.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/fabd3fa8-899d-5277-a84a-dcdbfe18356d.jpeg"
+  ]
+ },
+ {
+  "id": "1689f910-93cf-5018-8a9e-4bf635db80b2",
+  "nombre": "Bañador estampado",
+  "descripcion": "Ref 17€/ talla S",
+  "precio_usd": 15,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/b3732baa-0c78-506f-bad3-5b3e4d207b43.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/b3732baa-0c78-506f-bad3-5b3e4d207b43.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/671309b2-6c38-5c9b-90e3-ec7ec2d943b4.jpeg"
+  ]
+ },
+ {
+  "id": "6333a781-f53f-5f4f-884b-60205f041007",
+  "nombre": "Bañador musera",
+  "descripcion": "Ref 18€/ talla s",
+  "precio_usd": 15,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/7c2bbaa5-07cd-53d1-be42-f9914ebddabd.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/7c2bbaa5-07cd-53d1-be42-f9914ebddabd.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/5ab68b8b-d562-57d9-b992-2cd17f685414.jpeg"
+  ]
+ },
+ {
+  "id": "14944057-aac8-5ac0-a316-424c49343d07",
+  "nombre": "Bañadores básicos",
+  "descripcion": "Ref 18€/ talla S",
+  "precio_usd": 15,
+  "stock": 3,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/bd32413b-dceb-5edc-90ae-e13562a07d16.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/bd32413b-dceb-5edc-90ae-e13562a07d16.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/f3dc925d-1e9d-5166-b2bd-d115cd0a99b9.jpeg"
+  ]
+ },
+ {
+  "id": "82294e90-b9dc-53ea-8e34-de57ac2d7809",
+  "nombre": "Bikini amarillo con palmeras",
+  "descripcion": "Ref 21/ talla XS S y M",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/d7db5ace-bdf5-57be-abf3-8dcc2b292ba2.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/d7db5ace-bdf5-57be-abf3-8dcc2b292ba2.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/12a2093b-c072-5d96-ac57-a3ba5e3ce93f.jpg"
+  ]
+ },
+ {
+  "id": "447e020f-5fc6-510e-8596-cc5c7a8c4603",
+  "nombre": "Bikini amarillo floral",
+  "descripcion": "Ref 13€/ talla S",
+  "precio_usd": 12,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/c78855e4-3f37-55b7-9cee-60683db48a50.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/c78855e4-3f37-55b7-9cee-60683db48a50.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/47459cd1-6dd7-541e-b1c9-66b45c48deb2.jpg"
+  ]
+ },
+ {
+  "id": "152dff42-5542-5b95-976c-c3a2c2f00b03",
+  "nombre": "Bikini amarillo lunares",
+  "descripcion": "Ref 13€/ amarillo S y M, morado M",
+  "precio_usd": 12,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/68f3a358-1082-5c4c-82c0-82690d210448.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/68f3a358-1082-5c4c-82c0-82690d210448.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/084beda6-c63a-59c3-a555-2c17e4357680.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/caf8b73c-e58e-558e-ae86-af4aae1b1e7a.jpg"
+  ]
+ },
+ {
+  "id": "83dd68df-78f1-5fa4-8124-8369afcb573e",
+  "nombre": "Bikini amarillo triángulo",
+  "descripcion": "Ref 17€/ talla XS S y M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/88815f48-2e11-5d37-99cf-969f8a310d27.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/88815f48-2e11-5d37-99cf-969f8a310d27.jpg"
+  ]
+ },
+ {
+  "id": "7cce7ea9-3ea8-5a9f-aab7-1df3d26d8c7f",
+  "nombre": "Bikini azul lunares",
+  "descripcion": "Ref 14€/ talla S y M",
+  "precio_usd": 12,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/98a5530a-fcad-58ae-a9a0-e48aa7741b95.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/98a5530a-fcad-58ae-a9a0-e48aa7741b95.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/d3c9a189-8027-54be-b36a-ba8b77ab699c.jpg"
+  ]
+ },
+ {
+  "id": "a17744fe-a160-5c6e-a5e0-3365b2c61c51",
+  "nombre": "Bikini azul marino",
+  "descripcion": "Ref 20€/ talla XS S y M",
+  "precio_usd": 18,
+  "stock": 10,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/b6bbf0c9-15f4-5c10-bd81-123d928ffdc5.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/b6bbf0c9-15f4-5c10-bd81-123d928ffdc5.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/a506d30a-6ca5-58ce-aa7e-cf708e6c452f.jpg"
+  ]
+ },
+ {
+  "id": "2f5b2406-a874-5ca1-980c-d445e957ea84",
+  "nombre": "Bikini azul rayas",
+  "descripcion": "Ref 11€/ talla S",
+  "precio_usd": 10,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/aa39793d-9cb0-5133-8d22-b3a58fdeaf13.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/aa39793d-9cb0-5133-8d22-b3a58fdeaf13.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/d13bc4c4-23fa-54ee-ad0c-daab0810c271.jpg"
+  ]
+ },
+ {
+  "id": "e6955e2e-7934-5498-bfb2-5f8e5327e986",
+  "nombre": "Bikini azul rey",
+  "descripcion": "Ref 17€/ talla S y M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/45dfcb58-bf98-56b3-b860-84960437301e.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/45dfcb58-bf98-56b3-b860-84960437301e.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/1f8d306d-8354-5be6-89b1-8623d2e52e22.jpg"
+  ]
+ },
+ {
+  "id": "4567f1c2-aced-51b0-9e5d-07dc22b2e7a8",
+  "nombre": "Bikini azul y marron",
+  "descripcion": "Ref 20€/ azul S, marrón y rosado S y M",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/29a55921-3891-57e6-a118-ba0c95e51ec1.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/29a55921-3891-57e6-a118-ba0c95e51ec1.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/f2e488b8-f7d5-5ba3-af9a-8d5657116c65.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/a953fb58-7d1d-5b50-ace3-cca4d0348140.jpg"
+  ]
+ },
+ {
+  "id": "e22a7513-3cf3-5f87-82cd-c94ef5d2d09c",
+  "nombre": "Bikini beige y azul",
+  "descripcion": "Ref 17€/ talla S",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/aee22f09-214e-5bfc-b51e-85a03164d547.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/aee22f09-214e-5bfc-b51e-85a03164d547.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/532f5ab4-04ab-5e5f-85d9-307a4131b965.jpg"
+  ]
+ },
+ {
+  "id": "edc58940-6d17-50ef-8bdb-3b1390d52362",
+  "nombre": "Bikini bicolor",
+  "descripcion": "Ref 17€/ azul XS S y Marrom S y M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/241f7326-484b-5ae0-9ed8-aa4c1facdd4d.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/241f7326-484b-5ae0-9ed8-aa4c1facdd4d.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/8595e334-743c-562b-b493-46ceb30b46fa.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/1870e7f6-ef80-54da-ba01-8af183dc5c93.jpg"
+  ]
+ },
+ {
+  "id": "d3b8f772-8a7f-5965-8384-351f42359395",
+  "nombre": "Bikini blanco y negro",
+  "descripcion": "Ref 14€/ talla XS",
+  "precio_usd": 12,
+  "stock": 0,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/7c5311d4-6e79-5428-98f9-1b697fae5998.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/7c5311d4-6e79-5428-98f9-1b697fae5998.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/39edad8c-c916-55c1-a5dc-6d2b76c82bc5.jpg"
+  ]
+ },
+ {
+  "id": "81e0edb4-b512-59e6-bc0b-1bf8573896c8",
+  "nombre": "Bikini floral rosa",
+  "descripcion": "Ref 13€/ talla S",
+  "precio_usd": 12,
+  "stock": 0,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/cec95cbc-b4d4-5879-8975-491fbdbf619d.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/cec95cbc-b4d4-5879-8975-491fbdbf619d.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/6742394e-a4c7-5c73-956a-7e049bf443b4.jpg"
+  ]
+ },
+ {
+  "id": "7804fcab-c24f-59b3-aabc-b49c5b6ddc4f",
+  "nombre": "Bikini marron con pareo",
+  "descripcion": "Ref 23€/ talla S y M",
+  "precio_usd": 20,
+  "stock": 3,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/e4799643-9640-5cbc-a972-08b3a9646add.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/e4799643-9640-5cbc-a972-08b3a9646add.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/1a7f6a84-667e-5cf6-95a5-c806a8921fe4.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/df9f8984-eb8b-579c-b405-2741b9ed5f50.jpg"
+  ]
+ },
+ {
+  "id": "5faae1c9-e1cd-570f-a451-98a937098647",
+  "nombre": "Bikini naranja floral",
+  "descripcion": "Ref 14€/ talla XS",
+  "precio_usd": 12,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/8ae81b02-1bd1-54b6-b5c6-f528df2523cc.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/8ae81b02-1bd1-54b6-b5c6-f528df2523cc.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/982a827f-a87e-5338-9601-29aca547072a.jpg"
+  ]
+ },
+ {
+  "id": "bf856583-535b-54d8-abb5-fd45eeb56ed1",
+  "nombre": "Bikini rojo estampado animal",
+  "descripcion": "Ref 17€/ XS S y M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/af80e4a1-0aa1-52d9-baa9-5b68ed3306bc.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/af80e4a1-0aa1-52d9-baa9-5b68ed3306bc.jpg"
+  ]
+ },
+ {
+  "id": "b6a4956d-ecca-57f1-860c-8e2000aec6a4",
+  "nombre": "Bikini rojo y beige",
+  "descripcion": "Ref 21€ / talla S y M",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/f3a91451-12d6-539f-9e66-7903d985465c.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/f3a91451-12d6-539f-9e66-7903d985465c.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/f3753c80-e8bb-5b84-8f46-c51010b3bea7.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/7bdbc6d0-1a76-5089-ad09-381c661aea16.jpg"
+  ]
+ },
+ {
+  "id": "895e4586-40be-57a0-a08e-77f06f196c06",
+  "nombre": "Bikini rosa con fresas",
+  "descripcion": "Ref 17€/ talla XS S y M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/45acb00f-4651-5eae-b165-040500c4706f.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/45acb00f-4651-5eae-b165-040500c4706f.jpg"
+  ]
+ },
+ {
+  "id": "dbd2fa98-72f4-5097-a2c6-4063f341c10a",
+  "nombre": "Bikini rosa flores set",
+  "descripcion": "Ref 22€/ rosa XS S y M, morado S",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/6958f05e-e1fa-5b2a-8ad6-54a2c54065b8.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/6958f05e-e1fa-5b2a-8ad6-54a2c54065b8.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/db1a91de-92f4-56be-a099-fea89bfa9299.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/050e3481-3cd1-5eb9-ba79-d33ffecdfe5e.jpg"
+  ]
+ },
+ {
+  "id": "555e6dcd-c610-51de-9bb3-da731aa5d629",
+  "nombre": "Bikini rosa lunares",
+  "descripcion": "Ref 14€/ talla XS",
+  "precio_usd": 12,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/9ad9782f-9aac-51a8-911e-f5e0841dbfdb.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/9ad9782f-9aac-51a8-911e-f5e0841dbfdb.jpg"
+  ]
+ },
+ {
+  "id": "7dba20b3-7444-5f40-825d-0ae97071f6d0",
+  "nombre": "Bikini triangulo",
+  "descripcion": "Ref 17€/ talla S y M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/6f7ab911-f66a-55a7-b51b-7a42e5d37e6f.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/6f7ab911-f66a-55a7-b51b-7a42e5d37e6f.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/b313fcdb-9208-5073-8fd8-2d39fc9322e2.jpg"
+  ]
+ },
+ {
+  "id": "5392728a-356a-513f-b25c-2ac753483e44",
+  "nombre": "Bikini vino tinto",
+  "descripcion": "Ref 17€/ talla S",
+  "precio_usd": 15,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/407a23f0-5056-54a2-a9e0-1447189dcb9a.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/407a23f0-5056-54a2-a9e0-1447189dcb9a.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/d3e1e820-3cbb-508a-a170-f28b9a1e1f57.jpg"
+  ]
+ },
+ {
+  "id": "65530890-ee37-5e66-a818-a76cdbce9219",
+  "nombre": "Bikini vinotinto de amarre",
+  "descripcion": "Ref 17€/ talla XS S y M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/80b4531d-d861-5358-b6fc-1b88557d7e64.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/80b4531d-d861-5358-b6fc-1b88557d7e64.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/dce95f08-f49c-509b-943b-68f259c4faee.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/5f811623-d6f3-5688-9613-b0c11f12b921.jpg"
+  ]
+ },
+ {
+  "id": "59574149-8712-5664-b94c-53a57171c1ec",
+  "nombre": "Bolso beige tejido",
+  "descripcion": "Ref 17€ Bolso beige tejido con asas marrones, grande, tipo tote",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/df75285f-88ed-5271-9be6-dca514b2dd10.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/df75285f-88ed-5271-9be6-dca514b2dd10.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/a06b37dc-8168-5782-b245-5d62138a4b15.jpg"
+  ]
+ },
+ {
+  "id": "f10d7daa-d829-5e69-86d0-e54eb0211c17",
+  "nombre": "Bolso tejido beige con cadena",
+  "descripcion": "Ref 27€ Bolso tejido beige grande con asa redonda y cadena metalica",
+  "precio_usd": 25,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/43d9e17f-4cbf-5adf-8785-788476965c48.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/43d9e17f-4cbf-5adf-8785-788476965c48.jpg"
+  ]
+ },
+ {
+  "id": "ee91d58b-6913-5dff-8254-a903a9bad054",
+  "nombre": "Conjunto crochet azul claro",
+  "descripcion": "Ref 22€/ talla S y M",
+  "precio_usd": 20,
+  "stock": 0,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/fceb1270-680c-53c3-9284-b03d4e1ff548.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/fceb1270-680c-53c3-9284-b03d4e1ff548.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/cc648161-886b-5fda-82b3-8c36b7927ea2.jpg"
+  ]
+ },
+ {
+  "id": "43493f2f-7d78-58fd-9339-55cf23919e2e",
+  "nombre": "Diadema perlada con estrella",
+  "descripcion": "Ref 6€ Perlas blancas con estrella y conchas, ajuste para cabeza",
+  "precio_usd": 5,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/b2cf76c0-cb75-5174-92db-cdcd8d02e327.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/b2cf76c0-cb75-5174-92db-cdcd8d02e327.jpg"
+  ]
+ },
+ {
+  "id": "969e8180-d86f-5447-89f2-83c182d0c15c",
+  "nombre": "Falda playera",
+  "descripcion": "Ref 10€/ talla S y M",
+  "precio_usd": 8,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c9173fdb-36ab-5831-8f2c-d35f64f6a2b4.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c9173fdb-36ab-5831-8f2c-d35f64f6a2b4.jpeg"
+  ]
+ },
+ {
+  "id": "c2e4d4f5-00e2-521a-a524-bced4b1b5846",
+  "nombre": "Gancho de Flor tropical",
+  "descripcion": "Flor artificial multicolor de tela, tamaño pequeño, forma de hibisco",
+  "precio_usd": 1,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/dd3a6348-1655-5163-b2c7-79b0378d101c.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/dd3a6348-1655-5163-b2c7-79b0378d101c.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/e5217f91-2a84-5053-8498-c7d6728842e3.jpg"
+  ]
+ },
+ {
+  "id": "b4a37888-f792-58df-9256-6d9ceaf1b349",
+  "nombre": "HAWU bolso de paja beige",
+  "descripcion": "Ref 27€ Bolso tejido beige con asas circulares y adorno de estrellas",
+  "precio_usd": 25,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/cfe2a9cf-649e-529f-a944-489eaa5a805c.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/cfe2a9cf-649e-529f-a944-489eaa5a805c.jpg"
+  ]
+ },
+ {
+  "id": "9d1b1273-1a1e-5676-812f-bc92f4aab7bd",
+  "nombre": "Importante leer",
+  "descripcion": "No realizamos cambios ni devoluciones de trajes de baño, por ser ropa íntima\nAgradecemos tu comprensión.",
+  "precio_usd": 0,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/6dae1111-8ada-504c-8633-e5f12ab709db.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/6dae1111-8ada-504c-8633-e5f12ab709db.jpeg"
+  ]
+ },
+ {
+  "id": "0ebfebcf-4000-55f5-9807-98fd22d1eda6",
+  "nombre": "Lentes",
+  "descripcion": "Ref 6€",
+  "precio_usd": 5,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/1f49e89c-1610-5b9e-9451-2c3c07e328ae.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/1f49e89c-1610-5b9e-9451-2c3c07e328ae.jpeg"
+  ]
+ },
+ {
+  "id": "30806493-2213-59ef-a63f-0d48dd0331c5",
+  "nombre": "Lentes 1",
+  "descripcion": "Ref 6€",
+  "precio_usd": 5,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/4cdc9e2e-9d35-503c-90ce-f8de8cc49aa6.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/4cdc9e2e-9d35-503c-90ce-f8de8cc49aa6.jpeg"
+  ]
+ },
+ {
+  "id": "e8df8796-2805-5219-95bb-dac3cc9be66b",
+  "nombre": "Lentes 3",
+  "descripcion": "Ref 6€",
+  "precio_usd": 5,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/43249179-5b8a-5ac1-a237-80ac27923b5b.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/43249179-5b8a-5ac1-a237-80ac27923b5b.jpg"
+  ]
+ },
+ {
+  "id": "035b9f7c-094f-554a-942d-ecb146e1512b",
+  "nombre": "Lentes 4",
+  "descripcion": "6€",
+  "precio_usd": 5,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/f5a014bc-68d2-5814-ae51-8f3d210f1d36.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/f5a014bc-68d2-5814-ae51-8f3d210f1d36.jpg"
+  ]
+ },
+ {
+  "id": "eca1047b-eef6-559a-aa84-d784dc3542ac",
+  "nombre": "Lentes deportivos multicolor",
+  "descripcion": "Ref 6€",
+  "precio_usd": 5,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/f687fb42-de45-530c-9ae9-bdcf7dc1c48c.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/f687fb42-de45-530c-9ae9-bdcf7dc1c48c.jpg"
+  ]
+ },
+ {
+  "id": "d0a5bff3-f483-5898-9433-a0819e1f1584",
+  "nombre": "Lentes oscuros carey",
+  "descripcion": "Ref 9€",
+  "precio_usd": 8,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/26a6518d-2f28-5285-bfe3-2d849b0a7925.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/26a6518d-2f28-5285-bfe3-2d849b0a7925.jpg"
+  ]
+ },
+ {
+  "id": "45bfdd6b-c831-5a86-9fb9-55093d75400d",
+  "nombre": "Lentes oversized transparentes",
+  "descripcion": "Ref 11€",
+  "precio_usd": 10,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/9a1acc5e-63e2-50ca-b8fd-d590f3c8946c.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/9a1acc5e-63e2-50ca-b8fd-d590f3c8946c.jpg"
+  ]
+ },
+ {
+  "id": "df428200-f199-5a59-9821-861ab40b95fc",
+  "nombre": "Malla playera",
+  "descripcion": "Ref 11,5€/ talla XS",
+  "precio_usd": 10,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/96782c77-094b-54ba-9e80-93268bf8f533.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/96782c77-094b-54ba-9e80-93268bf8f533.jpeg"
+  ]
+ },
+ {
+  "id": "9050dc8b-17a0-5432-8005-11283578f0f5",
+  "nombre": "Pañoletas",
+  "descripcion": "Ref 6€",
+  "precio_usd": 5,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/64a9ac4f-5078-5eac-b341-d1c66a2d199f.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/64a9ac4f-5078-5eac-b341-d1c66a2d199f.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/2ebf93c9-2a9e-519c-a4af-e10a8530cb0b.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/d88c098e-7bfe-5fea-b2f5-1b440c5daa98.jpg"
+  ]
+ },
+ {
+  "id": "1931817d-3df8-5a9b-9a25-18440f29f9b6",
+  "nombre": "Pareo",
+  "descripcion": "Ref 18€/ talla única",
+  "precio_usd": 15,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/d8a9ed84-bc9e-50fc-b6d2-f11cfca79925.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/d8a9ed84-bc9e-50fc-b6d2-f11cfca79925.jpeg"
+  ]
+ },
+ {
+  "id": "6568f9a8-9e54-5e64-99fb-6c683a9c24dc",
+  "nombre": "Pareo 1",
+  "descripcion": "Ref 12€/ talla S y M",
+  "precio_usd": 10,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/073e31f8-e239-5b61-a962-92f9cd8874bc.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/073e31f8-e239-5b61-a962-92f9cd8874bc.jpeg"
+  ]
+ },
+ {
+  "id": "82e69bcf-d731-5016-8615-a90f0804f273",
+  "nombre": "Pareo beige de malla",
+  "descripcion": "Ref 12€/ talla M",
+  "precio_usd": 10,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/154975b4-313f-5bb9-9f48-42da0d487fcc.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/154975b4-313f-5bb9-9f48-42da0d487fcc.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/201f19ef-e253-5065-82b3-2367f9caf21d.jpg"
+  ]
+ },
+ {
+  "id": "c91e0dd2-1f82-5b2d-953d-3b49ad87ead3",
+  "nombre": "Pulsera dorada estrella de mar",
+  "descripcion": "Ref 6€ Metal dorado, ajustable, diseño de estrellas de mar",
+  "precio_usd": 5,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/f0c32286-dc44-5a45-8d73-f64c892896e6.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/f0c32286-dc44-5a45-8d73-f64c892896e6.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/1663eb23-a0d1-5afa-a02c-53832b47f37a.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/a290a76c-449b-5600-9bcf-7b9d8f0bbce6.jpg"
+  ]
+ },
+ {
+  "id": "98afde7b-7281-5b0f-914a-8fc9120f601c",
+  "nombre": "Set blanco playa top y falda",
+  "descripcion": "Ref 23€/ talla S",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/d47b1a38-3dcf-5f8f-83ef-d0d48c09b01a.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/d47b1a38-3dcf-5f8f-83ef-d0d48c09b01a.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/4419c265-4d1b-5800-ba7d-a3c61f34fb4c.jpg"
+  ]
+ },
+ {
+  "id": "c9e51122-ae9d-5be8-9e07-b66679cbaec0",
+  "nombre": "Set playero 1",
+  "descripcion": "Ref 22€/ talla M",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/5a7a437f-8b74-5163-b389-53af774685d6.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/5a7a437f-8b74-5163-b389-53af774685d6.jpeg"
+  ]
+ },
+ {
+  "id": "1fd963e0-ec5f-5235-98b1-15d80d774f41",
+  "nombre": "Set playero 2",
+  "descripcion": "Ref 22€/ talla M",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/df250187-858f-58f8-a232-b7f02f865cf6.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/df250187-858f-58f8-a232-b7f02f865cf6.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/9e9bd037-207e-54cc-8d77-b9df1e10d16f.jpeg"
+  ]
+ },
+ {
+  "id": "458bbfb2-89e9-5c92-950e-75d0582ac8bd",
+  "nombre": "Set playero 5",
+  "descripcion": "Ref 22€/ talla S",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/0113c103-69eb-5225-9a38-376bb1307869.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/0113c103-69eb-5225-9a38-376bb1307869.jpeg"
+  ]
+ },
+ {
+  "id": "0328b2d3-a9b8-5bfb-9f54-43af5e03f780",
+  "nombre": "Set playero 6",
+  "descripcion": "Ref 22€/ talla M",
+  "precio_usd": 25,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/2358372c-6750-58ac-b3f4-42c3d715fb87.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/2358372c-6750-58ac-b3f4-42c3d715fb87.jpeg"
+  ]
+ },
+ {
+  "id": "b18b8573-a089-57d7-b3f1-ba0d12ea69ad",
+  "nombre": "Set playero 8",
+  "descripcion": "Ref 24€/ talla M",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e02d4432-a25d-5482-8c6b-cfbd186dab42.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e02d4432-a25d-5482-8c6b-cfbd186dab42.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/31e91cd4-2051-5028-8428-9c7b4c845fb0.jpeg"
+  ]
+ },
+ {
+  "id": "325e5717-be90-52f7-bdcc-a04bb93fe499",
+  "nombre": "Set playero 9",
+  "descripcion": "Ref 24€/ talla XS",
+  "precio_usd": 20,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/7a0499fb-7b97-5ef5-ab8e-ca879aefd20c.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/7a0499fb-7b97-5ef5-ab8e-ca879aefd20c.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/33f9f77b-7830-5b49-a2f2-0a0dab7c47c2.jpeg"
+  ]
+ },
+ {
+  "id": "b02fa869-0b13-5caa-87c6-8893a69621be",
+  "nombre": "Set verde bikini y falda",
+  "descripcion": "Ref 27€/ talla S y M",
+  "precio_usd": 25,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/f42c1240-99c4-55de-a158-35cb69fa9512.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/f42c1240-99c4-55de-a158-35cb69fa9512.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/31292cc1-8ef8-59ba-8b42-56a006e12f16.jpg"
+  ]
+ },
+ {
+  "id": "99ba1c59-74bb-56e9-ae43-465fa4a82cd5",
+  "nombre": "Sombrero",
+  "descripcion": "Ref 12€",
+  "precio_usd": 10,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/0c3a198e-241e-52c4-ae29-507a4126be22.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/0c3a198e-241e-52c4-ae29-507a4126be22.jpeg"
+  ]
+ },
+ {
+  "id": "5ea007d7-f2c6-598e-b17f-037f9d931908",
+  "nombre": "Sombrero ajustable",
+  "descripcion": "Ref 11€",
+  "precio_usd": 10,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/112a0663-e99b-5ebb-97a3-af41eab1fcb5.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/112a0663-e99b-5ebb-97a3-af41eab1fcb5.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/2d73959f-388b-546b-8bad-b46243cf7156.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/090a5960-9210-5e17-95b6-666572f502f5.jpg"
+  ]
+ },
+ {
+  "id": "4dc1e4bd-793b-538c-8d03-5bf22ee4ecb4",
+  "nombre": "Sombrero beige con cordon",
+  "descripcion": "Ref 6€",
+  "precio_usd": 5,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/bae90870-0581-5bba-a096-adc5d395f9d8.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/bae90870-0581-5bba-a096-adc5d395f9d8.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/0f57d98b-c2bf-505c-8d44-efaf13359ad4.jpg"
+  ]
+ },
+ {
+  "id": "61d7c9ce-0e9c-53fe-9b2d-a5ba99dc81a4",
+  "nombre": "Sombrero de playa",
+  "descripcion": "Ref 20€",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/8e7cff74-28b8-5395-a215-2ae99f9f5e54.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/8e7cff74-28b8-5395-a215-2ae99f9f5e54.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/112b7a5f-9bf5-5c36-86d5-e9dea727374e.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/730bec26-0df4-521d-8fe8-9242a19c981f.jpg"
+  ]
+ },
+ {
+  "id": "b07825ed-371b-585c-b08d-d672e6fd15a2",
+  "nombre": "Sombrero vaquero",
+  "descripcion": "Ref 22€",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/6ba2ee83-0824-5301-9e23-e5957ff1f05d.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/6ba2ee83-0824-5301-9e23-e5957ff1f05d.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/2aa3880c-82cf-5713-ae83-6a664d3a38c2.jpeg"
+  ]
+ },
+ {
+  "id": "7f6f8a7d-c9b0-5944-a5b0-5061ddd280dd",
+  "nombre": "Top playero",
+  "descripcion": "Ref 12€/ talla S y M",
+  "precio_usd": 10,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/2fe28139-91a4-5fc9-83ac-4a68de006ac8.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/2fe28139-91a4-5fc9-83ac-4a68de006ac8.jpeg"
+  ]
+ },
+ {
+  "id": "a540e0c5-08eb-52e9-83ef-efb3fdc5526f",
+  "nombre": "Top playero 3",
+  "descripcion": "Ref 10€/ talla Única",
+  "precio_usd": 8,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/70c06868-6ea6-57fc-804f-103a6ed2c95e.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/70c06868-6ea6-57fc-804f-103a6ed2c95e.jpeg"
+  ]
+ },
+ {
+  "id": "d821dc40-a42d-5637-8a1a-85a4263914cf",
+  "nombre": "Traje de baño 4 piezas",
+  "descripcion": "Ref 28€/ talla S y M",
+  "precio_usd": 25,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/90e42978-95f1-535b-80b7-c0082c865528.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/90e42978-95f1-535b-80b7-c0082c865528.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/24017b4e-980b-534e-892b-bbb063f0c001.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/b4d77ad4-d709-56c0-b1e5-c29ef5ffb171.jpg"
+  ]
+ },
+ {
+  "id": "c17f570d-8754-516a-818d-88148ff487a3",
+  "nombre": "Traje de baño amarillo bikini",
+  "descripcion": "Ref 20€/ talla S y M",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/fb64ac74-f772-5962-be48-a088aa5e62b4.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/fb64ac74-f772-5962-be48-a088aa5e62b4.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/9fc80dff-faf5-568a-9a87-4fc0a0ae190c.jpg"
+  ]
+ },
+ {
+  "id": "f577b4a3-af9c-5a41-8f81-03f8a1468c9c",
+  "nombre": "Traje de bano azul 3 piezas",
+  "descripcion": "Ref 29€/ talla S y M",
+  "precio_usd": 25,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/6cd9d1c2-c33e-5cda-ba99-15d8215a9e45.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/6cd9d1c2-c33e-5cda-ba99-15d8215a9e45.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/ccd91181-6315-54b7-a271-79b7ac73bbae.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/78637bf7-5452-55df-9ce6-f04d324a9231.jpg"
+  ]
+ },
+ {
+  "id": "2dc65edd-fda4-50bb-860c-27e844f1ab44",
+  "nombre": "Traje de baño azul con pareo",
+  "descripcion": "Ref 28€/ XS",
+  "precio_usd": 25,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/ac2fdb6c-8d2d-5c03-8535-83a1e0eda781.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/ac2fdb6c-8d2d-5c03-8535-83a1e0eda781.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/6870a1bd-2ddf-5cb1-a1d3-193392d7e73a.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/06ee6e11-febf-5c23-86da-3a623746a640.jpg"
+  ]
+ },
+ {
+  "id": "b5254b2b-f22d-5b96-a209-d7c3ba9e253b",
+  "nombre": "Traje de baño blanco triangular",
+  "descripcion": "Ref 17€/ talla XS S y M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/54bc3e51-15c8-528f-90d3-decfa76acb18.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/54bc3e51-15c8-528f-90d3-decfa76acb18.jpg"
+  ]
+ },
+ {
+  "id": "2a8b74c6-1bf4-51a3-9181-e4140d55c29c",
+  "nombre": "Traje de baño morado con aro",
+  "descripcion": "Ref 23€/ talla XS S y M",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/75d11355-6fca-5fc5-add5-1346fed2a51c.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/75d11355-6fca-5fc5-add5-1346fed2a51c.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/8e6b90ba-d487-58be-9b76-2e3c1dccf7a2.jpg"
+  ]
+ },
+ {
+  "id": "5b8ab893-5ffb-55a7-85f9-215bae2df157",
+  "nombre": "Traje de baño negro con falda",
+  "descripcion": "Ref 23€/ talla S y M",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/91d60bd7-d83f-52ff-ae8e-7a0fe123a1f5.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/91d60bd7-d83f-52ff-ae8e-7a0fe123a1f5.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/7e12fbed-4c57-56cf-90d2-0bb6f69db8d9.jpg"
+  ]
+ },
+ {
+  "id": "9873c936-0a49-5e34-af45-65bbc0d84255",
+  "nombre": "Traje de baño negro de dos piezas",
+  "descripcion": "Ref 17€/ talla S y M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/47913855-6749-542c-bb7a-9826d1d8f8b9.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/47913855-6749-542c-bb7a-9826d1d8f8b9.jpg"
+  ]
+ },
+ {
+  "id": "32717481-f8a4-5b00-81f8-3817aa7791f1",
+  "nombre": "Traje de bano negro y blanco",
+  "descripcion": "Ref 14€/ talla S",
+  "precio_usd": 12,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/4dbf44a6-9b51-537d-b4fe-24ce347678bc.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/4dbf44a6-9b51-537d-b4fe-24ce347678bc.jpg"
+  ]
+ },
+ {
+  "id": "a50dbcf8-baa1-5dd7-ab84-63dcde493ecb",
+  "nombre": "Trikini 2",
+  "descripcion": "Ref 14€/ talla S y M",
+  "precio_usd": 12,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/d5a41079-e27f-5e47-8397-9b99db9c88f2.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/d5a41079-e27f-5e47-8397-9b99db9c88f2.jpeg"
+  ]
+ },
+ {
+  "id": "f20bcf5e-41cf-5441-b3f4-e7eb641adbc0",
+  "nombre": "Trikinis 1",
+  "descripcion": "Ref 14€/ rojo S y fucsia XS",
+  "precio_usd": 12,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/246ff1cf-5cba-5b68-9746-965c400ae3dd.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/246ff1cf-5cba-5b68-9746-965c400ae3dd.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/58f0adbe-40b0-53c5-98a0-f1536572a854.jpeg"
+  ]
+ },
+ {
+  "id": "c1498b3a-2d1a-5479-8f6f-e8bc0def2f60",
+  "nombre": "Vestido",
+  "descripcion": "Ref 29€/ talla S",
+  "precio_usd": 25,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/4dd735cf-82da-5c00-8763-48a5eea7984f.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/4dd735cf-82da-5c00-8763-48a5eea7984f.jpeg"
+  ]
+ },
+ {
+  "id": "ac8a45d2-aa4d-5678-80b5-620c47249edd",
+  "nombre": "Vestido 2",
+  "descripcion": "Ref 29€/ Talla M",
+  "precio_usd": 25,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/7c6267cf-e69a-5764-9f1b-2db1b4deff4e.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/7c6267cf-e69a-5764-9f1b-2db1b4deff4e.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/5f428f6c-71a6-5852-8169-23b783c22363.jpeg"
+  ]
+ },
+ {
+  "id": "c0c15061-29af-54ed-a192-c2c7a8af110a",
+  "nombre": "Vestido 4",
+  "descripcion": "Ref 29€/ talla M",
+  "precio_usd": 25,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e432a27f-c835-5a0b-baad-e96628ced25f.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e432a27f-c835-5a0b-baad-e96628ced25f.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/bece7216-1842-5b01-80c3-bf8e3cb6d18e.jpeg"
+  ]
+ },
+ {
+  "id": "7e75670e-0775-5193-a63c-0da90a3b3fcc",
+  "nombre": "Vestido dorado halter",
+  "descripcion": "Ref 20€/ talla S y M",
+  "precio_usd": 18,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/9348783c-ca85-59d1-8221-f473e7035f29.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/9348783c-ca85-59d1-8221-f473e7035f29.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/912c1fe9-03ce-55da-a7f8-fcfb7a060586.jpg"
+  ]
+ },
+ {
+  "id": "6dc4cf27-ead1-5bbb-86aa-95e6238de79c",
+  "nombre": "Vestido escote profundo",
+  "descripcion": "Ref 29€/ Amarillo XS, negro y vinotinto XS S y M",
+  "precio_usd": 25,
+  "stock": 3,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/d9fba1e8-c310-51e2-aa88-154e322238f4.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/d9fba1e8-c310-51e2-aa88-154e322238f4.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/d0b8c3cf-5053-5f52-98c2-40ca4599a001.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/6b1c8623-3275-5fcc-9fe5-8b1452feb8a7.jpg"
+  ]
+ },
+ {
+  "id": "2eb55f0e-ab31-533e-913d-ebc9360c7ea3",
+  "nombre": "Vestido floral blanco y rosa",
+  "descripcion": "Ref 17€ / talla S",
+  "precio_usd": 15,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/1c722319-608e-580c-955a-68c8cbb134ee.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/1c722319-608e-580c-955a-68c8cbb134ee.jpg"
+  ]
+ },
+ {
+  "id": "9d40f233-9787-5134-84ac-e22efb045120",
+  "nombre": "Vestido negro strapless",
+  "descripcion": "Ref 23€/ talla S y M",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/c547e03d-7415-50ca-9a4a-67295500026f.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/c547e03d-7415-50ca-9a4a-67295500026f.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/ba173581-b1a1-5df6-92d0-9ee6b7d47f1f.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/56f6e124-d0d0-52e9-8185-5ea52b822ca5.jpg"
+  ]
+ },
+ {
+  "id": "1326c331-ff57-51b7-99c8-76a6ea4a0555",
+  "nombre": "Vestido playero 1",
+  "descripcion": "Ref 24€/ talla XS S y M",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/54bf15f1-4021-578e-9282-2d4e3008cb96.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/54bf15f1-4021-578e-9282-2d4e3008cb96.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e59bc7d7-1eed-5537-84d7-8b8c463a16f9.jpeg"
+  ]
+ },
+ {
+  "id": "a6c5ecc2-142e-5b52-bb19-af899d88371b",
+  "nombre": "Vestido playero 18",
+  "descripcion": "Ref 22€/ talla S",
+  "precio_usd": 20,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/79376a9c-ba65-5b54-b808-b89aac17b8c7.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/79376a9c-ba65-5b54-b808-b89aac17b8c7.jpeg"
+  ]
+ },
+ {
+  "id": "16741192-a69d-5f35-8527-ea19aa8fd9d9",
+  "nombre": "Vestido playero 4",
+  "descripcion": "Ref 18€/ talla S",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/1a16ce4d-ddda-5d40-acd1-7eb88f0f6e73.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/1a16ce4d-ddda-5d40-acd1-7eb88f0f6e73.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e05c7986-564c-5638-9b38-3fbef9947d9a.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/02bfc12b-d3c2-5ba8-ac95-02c1c4fc2141.jpeg"
+  ]
+ },
+ {
+  "id": "da32a7b8-858f-598a-b53f-6816cba7477c",
+  "nombre": "Vestido playero 5",
+  "descripcion": "Ref 18€/ talla M",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e03a9bcb-299e-5b94-92a9-ee9a834d13c8.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/e03a9bcb-299e-5b94-92a9-ee9a834d13c8.jpeg"
+  ]
+ },
+ {
+  "id": "6d6e493b-e6e1-544a-9516-144ea9d4758b",
+  "nombre": "Vestido playero 6",
+  "descripcion": "Ref 24€/ talla S",
+  "precio_usd": 20,
+  "stock": 1,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/087317a7-300a-5d1c-a33c-3f52743424d4.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/087317a7-300a-5d1c-a33c-3f52743424d4.jpeg"
+  ]
+ },
+ {
+  "id": "c7690c6d-11b5-5986-ba4e-2058a92c1977",
+  "nombre": "Vestido playero 7",
+  "descripcion": "Ref 18€/ azul M y verde S",
+  "precio_usd": 15,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/806671be-7b3c-5d4d-ab15-be75fbf3490d.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/806671be-7b3c-5d4d-ab15-be75fbf3490d.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/c39659b1-05e7-5de0-a204-e7aca723951b.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/19666880-b6ba-556e-be91-035c54a3a592.jpeg"
+  ]
+ },
+ {
+  "id": "cdd834cf-be0a-56fe-bcae-031ec367723a",
+  "nombre": "Vestido playero 8",
+  "descripcion": "Ref 24€/ talla S y M",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/858109bc-4f56-5421-adbe-208db9f082f8.jpeg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/858109bc-4f56-5421-adbe-208db9f082f8.jpeg",
+   "https://us-east-1-prod-treinta-assets-bucket.s3.amazonaws.com/34750895-32f2-59d2-b2e1-9141e5d68f20.jpeg"
+  ]
+ },
+ {
+  "id": "788c2d8b-1b9d-5791-906b-6525e1a62193",
+  "nombre": "Vestido rosa estampado",
+  "descripcion": "Ref 23€ talla S y M",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/e56628fd-4710-5570-9cd8-506877d43897.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/e56628fd-4710-5570-9cd8-506877d43897.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/bdaf3e10-42c5-5632-9977-62eb86b987a8.jpg"
+  ]
+ },
+ {
+  "id": "abd5f0e2-48c4-56e0-8715-20d6f50cafc3",
+  "nombre": "Vestido strapless beige",
+  "descripcion": "Ref 22€/ talla S y M",
+  "precio_usd": 20,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/857ec43d-21c8-56fc-96e9-3259015417b9.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/857ec43d-21c8-56fc-96e9-3259015417b9.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/e41f8816-7eea-5b82-a4cd-d344f2bb7c82.jpg"
+  ]
+ },
+ {
+  "id": "00350b43-a1f8-551c-bfd7-89b6e9baafda",
+  "nombre": "Vestido tubo floral amarillo",
+  "descripcion": "Ref 14€/ amarillo S, blanco XS S y M",
+  "precio_usd": 12,
+  "stock": 2,
+  "visible": true,
+  "foto_url": "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/df038911-f000-50a2-a43b-638d2dd47b6d.jpg",
+  "categoria": null,
+  "variantes": null,
+  "fotos": [
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/df038911-f000-50a2-a43b-638d2dd47b6d.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/bbfaa4d5-e938-59b8-b923-ba3f9b656d07.jpg",
+   "https://cdn.treinta.co/new-products/products/36313862-3934-5861-b531-663737386366/b0d1e2c6-139a-51d1-9910-fe6a291fb2be.jpg"
+  ]
+ }
+]

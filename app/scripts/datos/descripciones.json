@@ -1,0 +1,301 @@
+[
+ {
+  "ref": "Ref 22€/ talla M",
+  "foto": "conjunto naranja estampado marmol con falda",
+  "desc": "Swim Conjunto de bikini de 3 piezas con sujetador con aros, estampado de mármol y falda para la playa",
+  "nombre": "Bañador 3 piezas",
+  "deducido": true,
+  "porque": "naranja: los otros con esa Ref son rosado, celeste y marrón"
+ },
+ {
+  "ref": "Ref 24€/ Rojo S",
+  "foto": "rojo con camisa larga y abertura",
+  "desc": "conjunto de bikini de tres piezas unicolor, sexy, con cordones, camisa larga y abertura",
+  "nombre": "Bañador 3 piezas 10",
+  "deducido": true,
+  "porque": "única con Ref 24€/ Rojo S"
+ },
+ {
+  "ref": "Ref 29€/ talla XS y M",
+  "foto": "degradado arcoiris con falda larga",
+  "desc": "Conjunto de bikini de 3 piezas con degradado: Top triangular + Parte inferior con lazos + Falda midi ajustado",
+  "nombre": "Bañador 3 piezas 11",
+  "deducido": true,
+  "porque": "única con Ref 29€/ talla XS y M"
+ },
+ {
+  "ref": "Ref 29€/ talla S y M",
+  "foto": "rojo con falda larga transparente y clutch",
+  "desc": "Conjunto de bikini de 3 piezas: traje de baño vestido largo con tirantes calados y anudado",
+  "nombre": "Bañador 3 piezas 13",
+  "deducido": true,
+  "porque": "rojo: el otro con esa Ref es azul"
+ },
+ {
+  "ref": "Ref 29€/ talla XS",
+  "foto": "azul degradado con pareo largo blanco-azul",
+  "desc": "Traje de baño de 3 piezas: falda de malla de playa con estampado degradado, cuerda trenzada, ajustado para verano",
+  "nombre": "Bañador 3 piezas 15",
+  "deducido": true,
+  "porque": "única con Ref 29€/ talla XS"
+ },
+ {
+  "ref": "Ref 24€/ talla XS",
+  "foto": "verde menta con falda anudada",
+  "desc": "Conjunto de bikini de playa halter con sostén push-up y con falda",
+  "nombre": "Bañador 3 piezas 18",
+  "deducido": true,
+  "porque": "menta: el otro con esa Ref es amarillo"
+ },
+ {
+  "ref": "Ref 22€/ talla S",
+  "foto": "celeste con aros y falda, foto de producto sobre fondo blanco",
+  "desc": "Conjunto de Bikini de 3 Piezas unicolor Traje de Baño Con Aros y Falda Cubre-Bañador",
+  "nombre": "Bañador 3 piezas 2",
+  "deducido": true,
+  "porque": "celeste: los otros con esa Ref son multicolor y negro"
+ },
+ {
+  "nombre": "Bañador 3 piezas 3",
+  "ref": "Ref 22€/ talla M",
+  "desc": "Conjunto de 3 piezas: Bikini Bandeau con falda, Elegante y Sexy"
+ },
+ {
+  "nombre": "Bañador 3 piezas 5",
+  "ref": "Ref 24€/ talla S y M",
+  "desc": "Swim Basics Set de 3 piezas Bikini de unicolor para vacaciones"
+ },
+ {
+  "nombre": "Bañador 3 piezas 4",
+  "ref": "Ref 24€/ verde S y M",
+  "desc": "Swim 3 piezas/Set Bikini sexy, color verde neón, con falda de verano para la playa"
+ },
+ {
+  "nombre": "Bañador 3 piezas 6",
+  "ref": "Ref 23€/ talla S y M",
+  "desc": "Conjunto de bikini de 3 piezas, diseño de tirantes anchos con aros para un soporte cómodo, perfecto para vacaciones"
+ },
+ {
+  "nombre": "Bañador 3 piezas 7",
+  "ref": "Ref 29€/ talla M",
+  "desc": "Conjunto de bikini de playa de verano, top de bikini sin espalda con tirantes desmontables y decoración de flores metálicas, falda transparente con estampado floral y abertura alta para vacaciones"
+ },
+ {
+  "nombre": "Bañador 3 piezas 8",
+  "ref": "Ref 24€/ talla M",
+  "desc": "Conjunto de bikini elegante y sexy de mujer con falda, decorado con hebilla de metal, en color negro"
+ },
+ {
+  "nombre": "Bañador 3 piezas 9",
+  "ref": "Ref 29€/ talla S y M",
+  "desc": "Traje de baño de tres piezas y falda de playa de malla"
+ },
+ {
+  "nombre": "Bañador basico 1",
+  "ref": "Ref 18€/ talla S",
+  "desc": "Bikini brasileño de dos piezas con tirantes estampados multicolor"
+ },
+ {
+  "nombre": "Bañador basico",
+  "ref": "Ref 18€/ talla S",
+  "desc": "Conjunto de bikini bandeau negro con decoración de estrella de mar 3D dorada, tirante halter desmontable"
+ },
+ {
+  "nombre": "Bañador animal print",
+  "ref": "Ref 22€/ talla S y M",
+  "desc": "Swim Basics 2 piezas Conjunto de bikini sexy con estampado de leopardo para mujer"
+ },
+ {
+  "nombre": "Bañador basico 10",
+  "ref": "Ref 18€/ talla S y M",
+  "desc": "Conjunto de bikini de triángulo con cadena de playa"
+ },
+ {
+  "nombre": "Bañador basico 11",
+  "ref": "Ref 18€/ talla S",
+  "desc": "Conjunto de bikini acanalado, sujetador con aros y bottom de corte alto"
+ },
+ {
+  "nombre": "Bañador basico 13",
+  "deducido": true,
+  "foto": "bikini blanco con lazos, sombrero y coco",
+  "desc": "Conjunto de bikini de unicolor para playa con aros y detalle de cordones"
+ },
+ {
+  "nombre": "bañador basico 12",
+  "deducido": true,
+  "foto": "estampado de patilla sobre celeste, vivos rojos",
+  "desc": "Conjunto de Bikini Triangulo de 2 Piezas con Estampado de patilla y Lazos Laterales"
+ },
+ {
+  "nombre": "Bañador basico 15",
+  "ref": "Ref 22€/ talla S y M",
+  "desc": "Bikini con acolchado, decoración de tortuga marina en color amarillo y cintura alta"
+ },
+ {
+  "nombre": "Bañador basico 16",
+  "ref": "Ref 18€/ talla M",
+  "desc": "Bikini con tirantes anchos, decoración de estrella de mar"
+ },
+ {
+  "nombre": "Bañador basico 2",
+  "deducido": true,
+  "foto": "bikini rojo/coral tipo tanga con colgante",
+  "desc": "Conjunto de bikini con colgante metálico unicolor sexy tipo tanga"
+ },
+ {
+  "nombre": "Bañador basico 18",
+  "deducido": true,
+  "foto": "bikini verde salvia tejido/macramé",
+  "desc": "Conjunto de bikini estilo brasileño de 2 piezas con parte superior triangular con decoración de tirantes cruzados, corte alto, estilo bohemio"
+ },
+ {
+  "nombre": "Bañador básico 20",
+  "ref": "",
+  "desc": "Conjunto de bikini con tirantes finos y con decoración metálica en unicolor"
+ },
+ {
+  "nombre": "Bañador basico 21",
+  "deducido": true,
+  "foto": "bikini con aros, estampado floral amarillo sobre maniquí",
+  "desc": "Bikini con aros y estampado floral"
+ },
+ {
+  "nombre": "Bañador básico 22",
+  "deducido": true,
+  "foto": "bikini rojo con vivos blancos, bandeau",
+  "desc": "Bikini con tirantes finos, sexy para mujer, estilo europeo"
+ },
+ {
+  "nombre": "Bañadores básicos",
+  "deducido": true,
+  "foto": "bikini fucsia/naranja estampado sobre maniquí",
+  "desc": "Conjunto de bikini con nudo lateral y estampado aleatorio"
+ },
+ {
+  "nombre": "Bañador basico 28",
+  "ref": "Ref 9€/ talla L",
+  "desc": "Bikini de 2 piezas con estampado de teñido anudado, tirantes finos, forro y tanga con lazos laterales"
+ },
+ {
+  "nombre": "Bañador basico 29",
+  "ref": "Ref 9€/ talla XS",
+  "desc": "Bikini metálico, parte superior triangular con lazos laterales"
+ },
+ {
+  "nombre": "Bañador basico 4",
+  "ref": "Ref 18€/ talla M",
+  "desc": "Bikini de copa suave de unicolor con correas anchas y hebilla en la espalda"
+ },
+ {
+  "nombre": "Bañador basico 3",
+  "ref": "Ref 18€/ talla M fucsia",
+  "desc": "Bikini de dos piezas con estampado de frutas y océano, con tirantes ajustables"
+ },
+ {
+  "nombre": "Bañador basico 9",
+  "ref": "",
+  "desc": "Set de 2 piezas Bikini con estampado aleatorio y decoración de estrella de mar con tirantes finos"
+ },
+ {
+  "nombre": "Bañador basico 7",
+  "ref": "Ref 14€/ talla S",
+  "desc": "Bikini unicolor con tirantes de espagueti y espalda descubierta"
+ },
+ {
+  "nombre": "Bañador basico 6",
+  "ref": "Ref 14€/ talla S y M",
+  "desc": "Conjunto de bikini sexy, estilo europeo"
+ },
+ {
+  "nombre": "Bañador basico 8",
+  "ref": "Ref 14€/ talla S y M",
+  "desc": "Set de bikini de 2 piezas, tirantes desmontables y tanga ajustable"
+ },
+ {
+  "nombre": "Bañador bicolor",
+  "ref": "Ref 18€/ talla M",
+  "desc": "Conjunto de dos piezas de triángulo sexy"
+ },
+ {
+  "nombre": "Bañador bicolor 1",
+  "ref": "Ref 18€/ talla M",
+  "desc": "Bikini de verano con detalle, triangular y micro con escote"
+ },
+ {
+  "nombre": "Bañador brasil",
+  "deducido": true,
+  "foto": "bikini rosado con letras BRASIL",
+  "desc": "Conjunto de bikini con estampado de letras de Brasil"
+ },
+ {
+  "nombre": "?",
+  "foto": "bikini azul degradado con estrellas de mar y cuerda",
+  "desc": "Set de 2 piezas bikini con estampado degradado y decoración de cuerda, con estrella de mar"
+ },
+ {
+  "nombre": "Bañador brasil 2",
+  "ref": "Ref 18€/ talla S",
+  "desc": "Conjunto de bikini elegante de verano con tirantes finos"
+ },
+ {
+  "nombre": "Bañador brasil basico",
+  "ref": "Ref 14€/ talla M",
+  "desc": "Conjunto de traje de baño: top con espalda descubierta y tiras, y bottom de bikini tipo tanga para vacaciones en la playa"
+ },
+ {
+  "nombre": "Bañador con accesorio",
+  "ref": "Ref 18€/ naranja M, marrón S y M",
+  "desc": "Traje de baño de unicolor con cuello"
+ },
+ {
+  "nombre": "Bañador completo 3",
+  "ref": "Ref 18€/ terracota y azul S, rojo M",
+  "desc": "Traje de baño de una pieza con escote en V profundo, recorte sexy y espalda descubierta"
+ },
+ {
+  "nombre": "Bañador con accesorio 1",
+  "ref": "Ref 22€/ guayaba M, talla S amarillo y rojo",
+  "desc": "Bikini de mujer con tirantes finos y acentos de círculos metálicos en unicolor brillante"
+ },
+ {
+  "nombre": "Bañador enterizo 6",
+  "ref": "Ref 18€/ rojo S y M, azul y Marrón M",
+  "desc": "Traje de baño de una pieza, escote en V profundo, tirantes de espagueti, espalda descubierta, calado, tanga, adecuado para la playa"
+ },
+ {
+  "nombre": "Bañador entero 1",
+  "ref": "Ref 18€/ talla S",
+  "desc": "Bañador de una pieza con estampado de leopardo"
+ },
+ {
+  "nombre": "Bañador entero",
+  "ref": "Ref 18€/ talla S",
+  "desc": "Bañador de una pieza elegante de punto calado con perlas"
+ },
+ {
+  "nombre": "Bañador estamapdo",
+  "ref": "Ref 18€/ talla S y M",
+  "desc": "Conjunto de bikini sexy a rayas con efecto dopamina: top con tiras ajustables + tanga de tiro bajo"
+ },
+ {
+  "nombre": "Bañador estampado",
+  "ref": "Ref 17€/ talla S",
+  "desc": "Conjunto de bikini de dos piezas con estampado tropical con copa mini"
+ },
+ {
+  "nombre": "Bañadores básicos",
+  "ref": "Ref 18€/ talla S",
+  "desc": "Bikini sexy con estampado, tirantes de espagueti y nudo frontal de estilo casual"
+ },
+ {
+  "nombre": "Bañador musera",
+  "ref": "Ref 18€/ talla s",
+  "desc": "Bikini de dos piezas de top con aros, estampado de paisley y bottom tipo cheeky con detalle de nudo lateral"
+ },
+ {
+  "nombre": "Bikini amarillo con palmeras",
+  "ref": "Ref 21/ talla XS S y M",
+  "desc": "Bikini vintage con decoración oceánica"
+ }
+]

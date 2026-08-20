@@ -1,0 +1,127 @@
+{
+ "video": "36.mp4",
+ "capturas": 35,
+ "nota": "Todo el vídeo son enterizos. Repasé el nombre de los 170 fotogramas uno por uno: hay 34 nombres distintos. El del leopardo sale dos veces (151 y 157), así que 35 capturas y 34 fichas. Tú contaste 36.",
+ "prendas": [
+  { "cuadro": "36/0004", "rotulo": "enterizo", "desc": "Enterizo: Largo Manga Corta Silueta Ajustada", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Turquesa", "tallas": ["S", "M"] }], "origen": "Ref 22€ / Talla S y M" },
+
+  { "cuadro": "36/0005", "rotulo": "enterizo", "desc": "Enterizo: Deportivo Innovista Moldeado Sin Costuras", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Fucsia", "tallas": ["S"] }], "origen": "Ref 22€ / talla S" },
+
+  { "cuadro": "36/0015", "rotulo": "enterizo", "desc": "Enterizo: Ajustado con Diseño Cruzado, Manga Larga y Espalda Descubierta", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Vino", "tallas": ["M"] }], "origen": "Ref 27€/ talla M" },
+
+  { "cuadro": "36/0030", "rotulo": "enterizo musera de bordes", "desc": "Enterizo: Deportivo de Manga Larga con Detalles de Costuras y Espalda Diseñada", "eur": 30, "bs": 35,
+    "colores": [{ "color": "Morado", "tallas": ["XS"] }], "origen": "Ref 35€/ Morado XS, demás colores S y M",
+    "duda": "Dice 'demás colores S y M' sin decir cuáles. Solo cargo el morado en XS: el resto habría que inventarlo." },
+
+  { "cuadro": "36/0034", "rotulo": "enterizo", "desc": "Enterizo: Ajustado Sin Mangas con Cierre Frontal", "eur": 30, "bs": 35,
+    "colores": [{ "color": "Azul marino", "tallas": ["XS"] }], "origen": "Ref 35€/ talla XS" },
+
+  { "cuadro": "36/0039", "rotulo": "enterizo", "desc": "Enterizo Deportivo Sin Costuras de Alta Elasticidad y Textura", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Azul bebé", "tallas": ["S", "M"] }], "origen": "Ref 22€/ talla S y M" },
+
+  { "cuadro": "36/0047", "rotulo": "enterizo", "desc": "Enterizo Sin Mangas Largo con Espalda Descubierta Cruzada", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Marrón", "tallas": ["S", "M"] }], "origen": "Ref 22€/ talla S y M" },
+
+  { "cuadro": "36/0053", "rotulo": "enterizo", "desc": "Enterizo Largo Sin Mangas con Cuello Cuadrado", "eur": 20, "bs": 23,
+    "colores": [{ "color": "Rojo", "tallas": ["M"] }], "origen": "Ref 23€/ talla M",
+    "nota": "Sale un único instante en todo el vídeo. Apareció al repasar los nombres fotograma a fotograma." },
+
+  { "cuadro": "36/0059", "rotulo": "enterizo", "desc": "Enterizo Deportivo Manga Larga Sin Costuras con Contraste y Ribete Acanalado", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Rojo", "tallas": ["S", "M"] }], "origen": "Ref 27€/ talla S y M" },
+
+  { "cuadro": "36/0066", "rotulo": "enterizo", "desc": "Enterizo Moldeador Sin Costuras con Diseño Tipográfico y Espalda Abierta", "eur": 20, "bs": 24,
+    "colores": [{ "color": "Vino", "tallas": ["S", "M"] }], "origen": "Ref 24€/ talla S y M" },
+
+  { "cuadro": "36/0069", "rotulo": "enterizo", "desc": "Enterizo de Control de Abdomen con Espalda Racerback y Cuello Cuadrado", "eur": 15, "bs": 17,
+    "colores": [
+      { "color": "Rojo", "tallas": ["S"] },
+      { "color": "Azul", "tallas": ["S"] },
+      { "color": "Negro", "tallas": ["M"] }],
+    "origen": "Ref 17€/ rojo y azul S, negro M" },
+
+  { "cuadro": "36/0073", "rotulo": "enterizo", "desc": "Enterizo con Espalda Cruzada, Escote Calado y Control de Abdomen", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 22€/ talla S y M" },
+
+  { "cuadro": "36/0077", "rotulo": "enterizo", "desc": "Enterizo Deportivo Ajustado con Espalda Descubierta", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 17€/ talla S y M" },
+
+  { "cuadro": "36/0082", "rotulo": "enterizo", "desc": "Enterizo Sin Costuras con Tirantes Cruzados", "eur": 15, "bs": 18,
+    "colores": [
+      { "color": "Negro", "tallas": ["S", "M"] },
+      { "color": "Azul", "tallas": ["M"] }],
+    "origen": "Ref 18€/ negro S y M, azul M" },
+
+  { "cuadro": "36/0084", "rotulo": "enterizos bota ancha", "desc": "Enterizo Deportivo Sin Costuras con Efecto Legging y Costuras Estructurales", "eur": 18, "bs": 20,
+    "colores": [{ "color": "Por definir", "tallas": ["S"] }], "origen": "Ref 20€/ talla S",
+    "duda": "La foto enseña uno rojo y uno negro y el texto no dice cuál tienen." },
+
+  { "cuadro": "36/0089", "rotulo": "enterizo", "desc": "Enterizo Corto con Cremallera Frontal", "eur": 15, "bs": 18,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 18€/ talla S y M" },
+
+  { "cuadro": "36/0091", "rotulo": "enterizo", "desc": "Enterizo Ajustado de Manga Corta con Detalles de Costura y Cremallera Frontal", "eur": 35, "bs": 37,
+    "colores": [{ "color": "Azul bebé", "tallas": ["S"] }], "origen": "Ref 37€/ talla S" },
+
+  { "cuadro": "36/0095", "rotulo": "enterizo", "desc": "Enterizo Sin Costuras con Espalda Descubierta", "eur": 20, "bs": 24,
+    "colores": [{ "color": "Fucsia", "tallas": ["S"] }], "origen": "Ref 24€/ talla S" },
+
+  { "cuadro": "36/0100", "rotulo": "enterizo", "desc": "Enterizo Unicolor de Tirantes Espagueti con Espalda Cruzada", "eur": 15, "bs": 18,
+    "colores": [
+      { "color": "Morado", "tallas": ["M"] },
+      { "color": "Negro", "tallas": ["S"] },
+      { "color": "Azul", "tallas": ["S"] }],
+    "origen": "Ref 18€/ morado M, negro y azul S" },
+
+  { "cuadro": "36/0103", "rotulo": "enterizo", "desc": "Enterizo Moldear con Almohadillas y Efecto Push-Up de Glúteos", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Rojo", "tallas": ["S", "M"] }], "origen": "Ref 27€/ talla S y M" },
+
+  { "cuadro": "36/0107", "rotulo": "enterizo", "desc": "Enterizo Largo Ajustado Sin Mangas", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 22€/ talla S y M" },
+
+  { "cuadro": "36/0111", "rotulo": "enterizo", "desc": "Enterizo Deportivo Sin Mangas con Estampado Tipográfico y Ribete en Contraste", "eur": 20, "bs": 24,
+    "colores": [{ "color": "Marrón", "tallas": ["S"] }], "origen": "Ref 24€/ talla S" },
+
+  { "cuadro": "36/0114", "rotulo": "enterizo", "desc": "Enterizo Deportivo Sin Costuras de Manga Larga con Cierre Frontal y Espalda Descubierta", "eur": 25, "bs": 29,
+    "colores": [{ "color": "Negro y verde", "tallas": ["S", "M"] }], "origen": "Ref 29€/ Talla S y M" },
+
+  { "cuadro": "36/0119", "rotulo": "enterizo dupe dfyne", "desc": "Enterizo Deportivo Unicolor Escote Halter en V con Tirantes Ajustables", "eur": 35, "bs": 37,
+    "colores": [{ "color": "Azul marino", "tallas": ["M"] }], "origen": "Ref 37€/ talla M" },
+
+  { "cuadro": "36/0124", "rotulo": "enterizo bota ancha", "desc": "Enterizo Largo Sin Costuras con Espalda en V Profunda", "eur": 25, "bs": 29,
+    "colores": [{ "color": "Azul marino", "tallas": ["S", "M"] }], "origen": "Ref 29€/ talla S y M" },
+
+  { "cuadro": "36/0128", "rotulo": "enterizo dupe dfyne", "desc": "Enterizo Deportivo Escote Halter en V con Pliegues Frontales y Espalda Descubierta", "eur": 28, "bs": 30,
+    "colores": [{ "color": "Rosado", "tallas": ["M"] }], "origen": "Ref 30€/ talla M" },
+
+  { "cuadro": "36/0132", "rotulo": "enterizo", "desc": "Enterizo Deportivo con Control de Abdomen y Espalda Cruzada", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Rojo", "tallas": ["S"] }], "origen": "Ref 22€/ talla S" },
+
+  { "cuadro": "36/0137", "rotulo": "enterizo", "desc": "Enterizo Sin Mangas Escote en V con Cremallera, Cordón Ajustable y Espalda Descubierta", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Azul petróleo", "tallas": ["M"] }], "origen": "Ref 27€/ talla M" },
+
+  { "cuadro": "36/0140", "rotulo": "enterizo", "desc": "Enterizo Deportivo Sin Costuras de Alta Elasticidad con Tirantes Espalda", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Negro y blanco", "tallas": ["S", "M"] }], "origen": "Ref 17€/ talla S y M" },
+
+  { "cuadro": "36/0143", "rotulo": "enterizo", "desc": "Enterizo de Malla Transpirable con Espalda Descubierta", "eur": 20, "bs": 22,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 22€/ talla S y M" },
+
+  { "cuadro": "36/0147", "rotulo": "enterizo", "desc": "Enterizo Corto Sin Costuras con Efecto Push-Up de Glúteos y Tiras Cruzadas", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Vino", "tallas": ["S", "M"] }], "origen": "Ref 17€/ talla S y M" },
+
+  { "cuadro": "36/0151", "rotulo": "enterizo", "desc": "Enterizo Corto Manga Corta Sin Costuras con Estampado de Leopardo", "eur": 15, "bs": 17,
+    "colores": [
+      { "color": "Marrón", "tallas": ["S"] },
+      { "color": "Azul", "tallas": ["M"] },
+      { "color": "Gris", "tallas": ["S", "M"] }],
+    "origen": "Ref 17€/ marrón S, demás colores M (foto azul) + Ref 17€/ talla S y M (foto gris)",
+    "duda": "Dos capturas del mismo modelo. El azul lo saco de la foto de la primera, el gris de la segunda." },
+
+  { "cuadro": "36/0159", "rotulo": "enterizo", "desc": "Enterizo Deportivo con Short Sin Espalda", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 17€/ talla S y M" },
+
+  { "cuadro": "36/0167", "rotulo": "enterizo", "desc": "Enterizo Deportivo Transpirable Escote en V y Espalda Descubierta", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Negro y blanco", "tallas": ["S", "M"] }], "origen": "ref 17€/ talla S y M" }
+ ]
+}

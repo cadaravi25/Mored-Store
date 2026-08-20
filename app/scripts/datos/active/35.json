@@ -1,0 +1,131 @@
+{
+ "video": "35.mp4",
+ "capturas": 35,
+ "nota": "Las capturas 169 y 173 son la misma prenda con más colores, así que salen 34 fichas.",
+ "prendas": [
+  { "cuadro": "35/0004", "rotulo": "top", "desc": "Set: Top Largo de Tirantes Halter con Ajuste", "eur": 14, "bs": 15,
+    "colores": [{ "color": "Negro", "tallas": ["M"] }, { "color": "Amarillo", "tallas": ["M"] }, { "color": "Rosado", "tallas": ["M"] }],
+    "origen": "Ref 15€/ negro amarillo y rosado M" },
+
+  { "cuadro": "35/0017", "rotulo": "top", "desc": "Camiseta Larga de Tirantes para Gimnasio", "eur": 14, "bs": 15,
+    "colores": [{ "color": "Azul", "tallas": ["M"] }], "origen": "Ref 15€/ talla M" },
+
+  { "cuadro": "35/0025", "rotulo": "suéter musera", "desc": "Set: Top Corto de Manga Larga con Espalda Cruzada", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Gris", "tallas": ["S", "M"] }], "origen": "Ref 17€ / Talla S y M" },
+
+  { "cuadro": "35/0030", "rotulo": "top musera", "desc": "Set: Top Corto Manga Larga Ajustado con Estampado Sport", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Negro", "tallas": ["S"] }], "origen": "ref 17€/ talla S" },
+
+  { "cuadro": "35/0035", "rotulo": "suéter", "desc": "Set: Camiseta Deportiva Manga Larga con Escote Corazón y Cintura Entallada", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Blanco", "tallas": ["M"] }], "origen": "Ref 17€/ talla M" },
+
+  { "cuadro": "35/0041", "rotulo": "suéter", "desc": "Set: Camiseta Manga Larga Off-Shoulder con Top de Tirantes Integrado", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Blanco", "tallas": ["S"] }], "origen": "Ref 17€/ talla S" },
+
+  { "cuadro": "35/0045", "rotulo": "suéter", "desc": "Set: Top Corto Deportivo MSGD Manga Larga Ajustado", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Negro", "tallas": ["M"] }], "origen": "ref 17€/ talla M" },
+
+  { "cuadro": "35/0049", "rotulo": "sudadera musera", "desc": "Set: Camiseta Holgada de Manga Larga con Hombro Caído", "eur": 12, "bs": 13,
+    "colores": [{ "color": "Gris", "tallas": ["S", "M"] }], "origen": "Ref 13€/ talla S y M" },
+
+  { "cuadro": "35/0056", "rotulo": "jacket", "desc": "Chaqueta Deportiva Ajustada con Cuello Alto y Cierre Frontal", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Lila", "tallas": ["M"] }], "origen": "Ref 17€/ talla M" },
+
+  { "cuadro": "35/0061", "rotulo": "chaqueta", "desc": "Chaqueta Holgada Blanca con Media Cremallera y Detalle a Rayas", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Azul marino", "tallas": ["S", "M"] }], "origen": "Ref 17€/ talla S y M",
+    "duda": "El nombre de SHEIN dice Blanca pero la foto es azul marino con raya blanca." },
+
+  { "cuadro": "35/0065", "rotulo": "jacket", "desc": "Chaqueta Deportiva Moldeadora con Efecto Cintura Definida", "eur": 18, "bs": 20,
+    "colores": [{ "color": "Rosado", "tallas": ["S", "M"] }], "origen": "Ref 20€/ talla S y M" },
+
+  { "cuadro": "35/0069", "rotulo": "jacket", "desc": "Chaqueta con Cierre Ajustado para Running y Yoga", "eur": 18, "bs": 20,
+    "colores": [{ "color": "Vino", "tallas": ["S", "M"] }], "origen": "Ref 20€/ talla S y M" },
+
+  { "cuadro": "35/0074", "rotulo": "jacket", "desc": "Chaqueta Deportiva Entallada", "eur": 18, "bs": 20,
+    "colores": [{ "color": "Por definir", "tallas": ["S", "M", "L"] }], "origen": "Ref 20€/ talla S M y L",
+    "duda": "La foto es un muestrario del proveedor (amarillo, rosado, gris, negro, fucsia) y el texto no dice cuál tienen." },
+
+  { "cuadro": "35/0080", "rotulo": "jacket", "desc": "Chaqueta Deportiva Unicolor con Cierre y Abertura para Pulgar", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Blanco", "tallas": ["S", "M"] }], "origen": "Ref 17€ / talla S y M" },
+
+  { "cuadro": "35/0084", "rotulo": "jacket", "desc": "Chaqueta Deportiva Estilizada de Cuello Alto Pequeño con Puños para Pulgar", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 17€/ talla S y M",
+    "nota": "Rescatada cuadro a cuadro: en el barrido solo salía movida." },
+
+  { "cuadro": "35/0089", "rotulo": "faldas deportivas", "desc": "Falda Pantalón de Tenis Elegante y de Tendencia", "eur": 10, "bs": 12,
+    "colores": [{ "color": "Rojo", "tallas": ["S", "M"] }], "origen": "Ref 12€/ talla S y M" },
+
+  { "cuadro": "35/0093", "rotulo": "falda deportiva", "desc": "Falda Deportiva Plisada Unicolor", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 17€/ talla S y M" },
+
+  { "cuadro": "35/0107", "rotulo": "faldas plisadas", "desc": "Falda de Tenis Plisada de Cintura Alta con Short Interior", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Negro", "tallas": ["XS", "S", "M", "L"] }], "origen": "Ref 17€/ talla XS S M y L" },
+
+  { "cuadro": "35/0117", "rotulo": "licra", "desc": "Leggings Sin Costuras de Cintura Alta con Realce de Glúteos", "eur": 18, "bs": 21,
+    "colores": [{ "color": "Por definir", "tallas": ["S", "M"] }], "origen": "Ref 21€/ talla S y M",
+    "duda": "La foto enseña tres licras (azul, vino y azul marino) y el texto no dice cuál es." },
+
+  { "cuadro": "35/0119", "rotulo": "leggins flare", "desc": "Leggings de Pierna Acampanada Sin Costuras de Cintura Alta", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Azul bebé", "tallas": ["S"] }], "origen": "Ref 27€/ talla S" },
+
+  { "cuadro": "35/0125", "rotulo": "leggins", "desc": "Leggings Acampanados de Tiro Alto con Bolsillos Ocultos", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Negro", "tallas": ["M"] }], "origen": "Ref 17€/ talla M",
+    "nota": "Rescatada cuadro a cuadro." },
+
+  { "cuadro": "35/0129", "rotulo": "licra con bolsillo", "desc": "Leggings Acampanados con Bolsillos y Realce Posterior", "eur": 18, "bs": 20,
+    "colores": [{ "color": "Negro", "tallas": ["S", "M"] }], "origen": "Ref 20€/ talla S y M" },
+
+  { "cuadro": "35/0134", "rotulo": "licra", "desc": "Leggings Acampanados de Pretina Elástica con Efecto Moldeador", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Gris y negro", "tallas": ["M"] }], "origen": "Ref 17€ / Talla M" },
+
+  { "cuadro": "35/0137", "rotulo": "leggins", "desc": "Leggings Acanalados Acampanados Multideporte", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Morado", "tallas": ["S", "M"] }], "origen": "Ref 17€/ talla S y M" },
+
+  { "cuadro": "35/0141", "rotulo": "licra dupe dfyne", "desc": "Leggings con Fruncido Realzador de Glúteos", "eur": 18, "bs": 20,
+    "colores": [
+      { "color": "Vino", "tallas": ["S", "M"] },
+      { "color": "Lila", "tallas": ["S", "M"] },
+      { "color": "Morado", "tallas": ["M"] },
+      { "color": "Rosado", "tallas": ["M"] },
+      { "color": "Azul bebé", "tallas": ["M"] }],
+    "origen": "Ref 20€ / talla S vino y lila, talla M morado lila rosado vino y azul bebe" },
+
+  { "cuadro": "35/0146", "rotulo": "leggins", "desc": "Leggings Deportivos con Pretina Ancha de Alta Compresión", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Vino", "tallas": ["S", "M"] }], "origen": "Ref 17€/ talla S y M" },
+
+  { "cuadro": "35/0150", "rotulo": "leggins", "desc": "Leggings Ajustados Acampanados de Cintura Alta", "eur": 18, "bs": 20,
+    "colores": [{ "color": "Azul marino", "tallas": ["S"] }], "origen": "Ref 20€/ talla S" },
+
+  { "cuadro": "35/0155", "rotulo": "leggins", "desc": "Leggings Acanalados Acampanados con Control de Abdomen y Corte en V", "eur": 15, "bs": 15,
+    "colores": [{ "color": "Gris", "tallas": ["S", "M"] }], "origen": "Ref / talla S y M",
+    "duda": "No trae Ref: puse el mismo número en los dos precios." },
+
+  { "cuadro": "35/0159", "rotulo": "leggins", "desc": "Leggings Sin Costuras Control de Abdomen y Realce Integrado", "eur": 25, "bs": 27,
+    "colores": [{ "color": "Azul bebé", "tallas": ["M"] }], "origen": "Ref 27€/ talla M" },
+
+  { "cuadro": "35/0164", "rotulo": "licras", "desc": "Leggings Acanalados Sin Costuras de Alta Elasticidad", "eur": 15, "bs": 17,
+    "colores": [
+      { "color": "Azul", "tallas": ["S"] },
+      { "color": "Vino", "tallas": ["S"] },
+      { "color": "Marrón", "tallas": ["M"] }],
+    "origen": "Ref 17€/ azul y vino talla S, marrón talla M" },
+
+  { "cuadro": "35/0169", "rotulo": "leggins", "desc": "Leggings Minimalistas con Corte en V y Detalle Arruchado", "eur": 15, "bs": 17,
+    "colores": [
+      { "color": "Gris", "tallas": ["S", "M"] },
+      { "color": "Morado", "tallas": ["S"] },
+      { "color": "Rosado", "tallas": ["M"] }],
+    "origen": "Ref 17€/ talla S y M, negro agotado + Ref 17€/ morado y gris S, rosado M",
+    "nota": "Dos capturas del mismo modelo (169 y 173). El negro está agotado, así que no se crea." },
+
+  { "cuadro": "35/0177", "rotulo": "leggins", "desc": "Leggings con Bolsillos y Realce Posterior", "eur": 15, "bs": 17,
+    "colores": [{ "color": "Negro", "tallas": ["M"] }], "origen": "ref 17€/ talla M" },
+
+  { "cuadro": "35/0181", "rotulo": "oversize", "desc": "Set: Camiseta Deportiva Manga Corta con Estampado Numérico", "eur": 8, "bs": 9,
+    "colores": [{ "color": "Por definir", "tallas": ["XS", "S", "M"] }], "origen": "Ref 9€/ talla XS S y M",
+    "duda": "La foto enseña varias franelas distintas y el texto no dice cuál." },
+
+  { "cuadro": "35/0188", "rotulo": "oversize", "desc": "Set: Camiseta Holgada Manga Corta con Escote en V y Estampado Digital", "eur": 10, "bs": 11,
+    "colores": [{ "color": "Crema", "tallas": ["S"] }], "origen": "Ref 11€/ talla S" }
+ ]
+}
