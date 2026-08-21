@@ -3,36 +3,67 @@
  *
  *   node scripts/fotos_enterizos.mjs --ensayo <carpeta>
  *   node scripts/fotos_enterizos.mjs <carpeta>
+ *   node scripts/fotos_enterizos.mjs --hoja=<destino> --ensayo <carpeta>
  *
  * DE DÓNDE SALE EL EMPAREJAMIENTO
  *
- * Cada carpeta de Carlos es una prenda y dentro están sus colores, a veces con
- * dos fotos del mismo (frente y espalda). Qué carpeta es qué prenda lo dijo él
- * mirándolas: intentarlo por parecido contra los recortes de 276 píxeles del
- * vídeo daba empates entre enterizos negros y ya se coló un error así.
+ * Cada carpeta es una prenda y dentro están sus colores, casi siempre con dos
+ * fotos de cada uno: el frente y la espalda. Qué carpeta es qué prenda lo dijo
+ * Carlos mirándolas una por una. Intentarlo por parecido contra los recortes
+ * de 276 píxeles del vídeo no sirve: con media colección de enterizos negros
+ * las puntuaciones empataban y un mismo recorte ganaba cuatro veces.
  *
- * QUÉ COLOR ES CADA FOTO
+ * CADA FOTO BUSCA SU COLOR, NO AL REVÉS
  *
- * Eso sí se calcula, con el color dominante de la prenda en la foto. Pero solo
- * se usa para repartir entre los colores QUE YA EXISTEN en el inventario. Si
- * una carpeta trae colores que la prenda no tiene registrados, no se inventan:
- * se listan al final para preguntar si de verdad los tienen.
+ * TODAS las fotos de la carpeta entran. Se mira el color dominante de la
+ * prenda en cada una, descartando piel y fondo, y se pega al color del
+ * inventario más cercano en Lab. No por nombre: un rojo leído como "Burdeos"
+ * es el mismo rojo.
+ *
+ * De las que caen en un mismo color, la primera es la principal y las demás
+ * quedan de galería. Así la ficha enseña frente y espalda, que es lo que se
+ * espera al mirar ropa.
+ *
+ * SI NINGUNA SE PARECE, NO SE PONE NINGUNA
+ *
+ * Las carpetas traen colores que la prenda todavía no tiene registrados. Sin
+ * un corte, el reparto acababa poniéndole al rojo una foto verde oliva.
+ * Quedarse sin foto se ve y se arregla; una foto equivocada en la tienda no se
+ * ve y se vende. Las que sobran se listan al final.
+ *
+ * SE PUEDE VOLVER A CORRER
+ *
+ * El nombre en el depósito lleva un resumen del archivo, así que la misma foto
+ * siempre cae en la misma ruta y volver a correr esto no deja copias sueltas
+ * ni duplica la galería.
  */
 
 import { readFileSync, readdirSync, statSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { join, basename } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import sharp from "sharp";
 import { colorDominante, masCercano, aLab } from "./color_de_foto.mjs";
-import { rutaDeFoto } from "./rutas.mjs";
+import { enRuta } from "./rutas.mjs";
 
 const MARCA = "ACTIVE-WHATSAPP";
 const ensayo = process.argv.includes("--ensayo");
 const RAIZ = process.argv.find((a) => !a.startsWith("--") && a.includes("Enterizos"));
-/** Con --hoja=<carpeta> escribe la foto elegida de cada color para poder
- *  revisarlas de un vistazo antes de subir nada. */
 const HOJA = process.argv.find((a) => a.startsWith("--hoja="))?.slice(7);
-let orden = 0;
+
+/** Cuánto puede alejarse el color de una foto del color al que se le pega. */
+const CORTE = 30;
+
+/**
+ * Distancia entre dos colores, con el brillo pesando la mitad.
+ *
+ * En Lab a secas, un azul marino oscuro queda más cerca del negro que del
+ * azul, porque manda la diferencia de brillo. Y el brillo es justo lo que
+ * cambia con la luz de cada foto. Lo que de verdad identifica una prenda es el
+ * tono, así que ese pesa entero y el brillo a mitad.
+ */
+const separacion = (a, b) =>
+  Math.hypot((a[0] - b[0]) * 0.5, a[1] - b[1], a[2] - b[2]);
 
 /** Lo que dijo Carlos: carpeta -> captura del vídeo. */
 const PAREJAS = {
@@ -47,13 +78,14 @@ const PAREJAS = {
   "modelo 6": "36/0059",
   "modelo 7": "36/0114",
   "modelo 8": "36/0066",
+  "modelo 9": "36/0069",
   "modelo 10": "36/0073",
   "modelo 11": "36/0095",
   "modelo 12": "36/0082",
   "modelo 13": "36/0084",
-  // "modelo 14" queda fuera a propósito: sus fotos son verde oliva, vino y
-  // azul petróleo, y la prenda tiene registrados morado, negro y azul. Eso no
-  // cuadra, y forzarlo sería ponerle a la clienta un color que no va a recibir.
+  // "modelo 14": "36/0100"  <- espera a que le carguen los colores. Sus fotos
+  // son verde oliva, vino y azul petróleo, y tiene registrados morado, negro y
+  // azul: el reparto no tiene a qué agarrarse y le pega el vino al morado.
   "modelo 15": "36/0103",
   "Modelo 17": "36/0005",
   "modelo 19": "36/0107",
@@ -62,17 +94,15 @@ const PAREJAS = {
   "modelo 22": "36/0089",
   "modelo 24": "36/0124",
   "modelo 25": "36/0128",
+  "modelo 26": "36/0137",
   "modelo 27": "36/0140",
   "modelo 28": "36/0143",
   "modelo 29": "36/0147",
 };
 
 /**
- * Las que el reparto automático erraba y se fijan a mano.
- *
- * El color dominante se equivoca cuando la carpeta trae más colores de los que
- * la prenda tiene registrados: le ponía la foto verde oliva al rojo. Estas
- * cuatro se miraron una por una.
+ * Las que el reparto erraba y se fijan a mano. Aquí solo se dice cuál es la
+ * foto PRINCIPAL de ese color; las demás del mismo color caen solas detrás.
  */
 const A_MANO = {
   "IMG_7638|Gris": "IMG_7638.JPG",
@@ -97,21 +127,40 @@ const supabase = createClient(
   { auth: { persistSession: false } },
 );
 
-/** Las fotos de una carpeta, o la suelta si es un archivo. */
-function fotosDe(nombre) {
+const fotosDe = (nombre) => {
   const ruta = join(RAIZ, nombre);
-  if (statSync(ruta).isDirectory()) {
-    return readdirSync(ruta).map((f) => join(ruta, f));
-  }
-  return [ruta];
-}
+  return statSync(ruta).isDirectory()
+    ? readdirSync(ruta).map((f) => join(ruta, f))
+    : [ruta];
+};
 
-/** El nombre real en disco, que a veces lleva extensión. */
-function enDisco(clave) {
-  for (const e of readdirSync(RAIZ)) {
-    if (e === clave || e.replace(/\.[^.]+$/, "") === clave) return e;
-  }
-  return null;
+const enDisco = (clave) =>
+  readdirSync(RAIZ).find(
+    (e) => e === clave || e.replace(/\.[^.]+$/, "") === clave,
+  ) ?? null;
+
+/** La misma foto siempre en la misma ruta: así se puede repetir la carga. */
+async function subir(productoId, color, archivo) {
+  const datos = await sharp(archivo, { failOn: "none" })
+    .rotate()
+    .resize(1200, 1600, { fit: "inside", withoutEnlargement: true })
+    .jpeg({ quality: 86 })
+    .toBuffer();
+
+  const huella = createHash("sha1").update(datos).digest("hex").slice(0, 10);
+  const ruta = `${productoId}/${enRuta(color)}-${huella}.jpg`;
+
+  const { error } = await supabase.storage.from("fotos").upload(ruta, datos, {
+    contentType: "image/jpeg",
+    cacheControl: "31536000",
+    upsert: true,
+  });
+  if (error) throw new Error(error.message);
+
+  const url = supabase.storage.from("fotos").getPublicUrl(ruta).data.publicUrl;
+  const r = await fetch(url, { method: "HEAD", signal: AbortSignal.timeout(30000) });
+  if (!r.ok) throw new Error(`subió pero responde ${r.status}`);
+  return url;
 }
 
 const { data: paleta } = await supabase
@@ -120,7 +169,8 @@ const { data: paleta } = await supabase
   .eq("activo", true);
 
 const sobran = [];
-const cuenta = { fotos: 0, colores: 0, prendas: 0, fallos: 0 };
+const cuenta = { prendas: 0, principales: 0, galeria: 0, sueltas: 0, fallos: 0 };
+let nHoja = 0;
 
 for (const [clave, cuadro] of Object.entries(PAREJAS)) {
   const carpeta = enDisco(clave);
@@ -148,159 +198,184 @@ for (const [clave, cuadro] of Object.entries(PAREJAS)) {
     .eq("producto_id", producto.id)
     .order("orden");
 
-  // Qué color tiene cada foto, según lo que se ve en ella.
-  const leidas = [];
-  for (const foto of fotosDe(carpeta)) {
-    const rgb = await colorDominante(foto);
-    const cerca = rgb ? masCercano(rgb, paleta) : null;
-    const lab = rgb
-      ? aLab("#" + rgb.map((v) => Math.round(v).toString(16).padStart(2, "0")).join(""))
-      : null;
-    leidas.push({ foto, color: cerca?.nombre ?? "?", d: cerca?.d ?? 999, lab });
-  }
+  // Cada color, con su punto en el espacio de color contra el que medir.
+  const dianas = colores.map((c) => {
+    const p = paleta.find((x) => x.nombre.toLowerCase() === c.nombre.toLowerCase() && x.hex);
+    return { ...c, lab: p ? aLab(p.hex) : null, fotos: [] };
+  });
 
   console.log(`\n${clave}  ->  ${producto.nombre}: ${producto.descripcion}`);
-  console.log(`  colores en inventario: ${colores.map((c) => c.nombre).join(", ")}`);
+  console.log(`  colores: ${colores.map((c) => c.nombre).join(", ")}`);
 
-  for (const c of colores) {
-    /**
-     * La foto cuya prenda se parezca más a este color, midiendo el color y no
-     * comparando nombres. Un rojo leído como "Burdeos" es el mismo rojo: pedir
-     * que el nombre calce exacto dejaba fuera la mitad de las fotos.
-     *
-     * Si la prenda tiene un solo color, la mejor foto es suya y punto: la
-     * carpeta entera es de esa prenda.
-     */
-    const objetivo = paleta.find(
-      (x) => x.nombre.toLowerCase() === c.nombre.toLowerCase() && x.hex,
-    );
-    // Las fotos que otro color de esta misma prenda tiene reservada a mano no
-    // entran al reparto: si no, el color que va primero se las lleva y la
-    // corrección llega tarde. Fue justo lo que pasó con el leopardo gris.
-    const reservadas = new Set(
-      Object.entries(A_MANO)
-        .filter(([k]) => k.startsWith(`${clave}|`) && k !== `${clave}|${c.nombre}`)
-        .map(([, v]) => v),
-    );
-    const libres = leidas.filter(
-      (l) => !l.usada && !reservadas.has(basename(l.foto)),
-    );
-    if (libres.length === 0) {
-      console.log(`    ${c.nombre.padEnd(14)} ya no quedan fotos`);
+  /**
+   * Primero se agrupan las fotos, después se reparten los grupos.
+   *
+   * Las fotos vienen numeradas en orden y las consecutivas son el mismo color:
+   * el frente y la espalda de esa prenda. Comparar dos fotos del mismo estudio
+   * entre sí acierta mucho más que comparar una foto contra un hex del
+   * catálogo, así que primero se corta la carpeta en grupos por color y solo
+   * después se decide qué grupo es qué color.
+   *
+   * Hacerlo al revés, foto por foto, le metía las cuatro fotos en el negro a
+   * una prenda que tiene negro y azul.
+   */
+  const enOrden = fotosDe(carpeta).sort((a, b) => basename(a).localeCompare(basename(b), "es", { numeric: true }));
+
+  const medidas = [];
+  for (const foto of enOrden) {
+    const rgb = await colorDominante(foto);
+    medidas.push({
+      foto,
+      leido: rgb ? (masCercano(rgb, paleta)?.nombre ?? "?") : "?",
+      lab: rgb
+        ? aLab("#" + rgb.map((v) => Math.round(v).toString(16).padStart(2, "0")).join(""))
+        : null,
+    });
+  }
+
+  const grupos = [];
+  for (const m of medidas) {
+    const ult = grupos[grupos.length - 1];
+    const previa = ult?.[ult.length - 1];
+    if (previa?.lab && m.lab && separacion(m.lab, previa.lab) < 18) ult.push(m);
+    else grupos.push([m]);
+  }
+
+  // Cada grupo pide el color al que más se parezca, y el que más se parece se
+  // lo lleva: así dos grupos no pelean por el mismo.
+  const aspirantes = [];
+  for (const g of grupos) {
+    const lab = g.find((m) => m.lab)?.lab ?? null;
+    for (const d of dianas) {
+      aspirantes.push({
+        g, d,
+        punto: lab && d.lab ? separacion(lab, d.lab) : d.lab ? 999 : 500,
+      });
+    }
+  }
+  aspirantes.sort((a, b) => a.punto - b.punto);
+
+  const huerfanas = [];
+  const tomados = new Set();
+  const repartidos = new Set();
+  for (const { g, d, punto } of aspirantes) {
+    if (tomados.has(g) || repartidos.has(d) || punto > CORTE) continue;
+    tomados.add(g);
+    repartidos.add(d);
+    d.fotos.push(...g.map((m) => ({ ...m, cerca: punto })));
+  }
+
+  // Un color que se quedó sin nada se lleva el grupo suelto más parecido: pasa
+  // cuando el color del catálogo no está donde la prenda, como el enterizo
+  // azul petróleo registrado como "Turquesa".
+  for (const d of dianas) {
+    if (d.fotos.length > 0) continue;
+    const libres = grupos.filter((g) => !tomados.has(g));
+    if (!libres.length) continue;
+    const mejor = d.lab
+      ? libres
+          .map((g) => ({ g, p: g.find((m) => m.lab) ? separacion(g.find((m) => m.lab).lab, d.lab) : 999 }))
+          .sort((a, b) => a.p - b.p)[0].g
+      : libres[0];
+    tomados.add(mejor);
+    d.fotos.push(...mejor.map((m) => ({ ...m, cerca: null, rescatada: true })));
+  }
+
+  for (const g of grupos) if (!tomados.has(g)) huerfanas.push(...g);
+
+  /**
+   * Lo fijado a mano manda sobre todo el reparto.
+   *
+   * No solo dice cuál es la principal: saca la foto de donde el reparto la
+   * hubiera puesto y la lleva a su color. Antes solo reordenaba dentro de un
+   * color, y el leopardo gris se quedaba en Marrón por más que estuviera
+   * anotado.
+   */
+  for (const [k, archivo] of Object.entries(A_MANO)) {
+    if (!k.startsWith(`${clave}|`)) continue;
+    const color = k.split("|")[1];
+    const d = dianas.find((x) => x.nombre === color);
+    if (!d) continue;
+
+    let foto = null;
+    for (const otra of dianas) {
+      const i = otra.fotos.findIndex((f) => basename(f.foto) === archivo);
+      if (i >= 0) foto = otra.fotos.splice(i, 1)[0];
+    }
+    const j = huerfanas.findIndex((f) => basename(f.foto) === archivo);
+    if (j >= 0) foto = huerfanas.splice(j, 1)[0];
+
+    if (foto) d.fotos.unshift({ ...foto, fijada: true });
+  }
+
+  for (const d of dianas) {
+    if (d.fotos.length === 0) {
+      console.log(`    ${d.nombre.padEnd(14)} sin foto de ese color`);
       continue;
     }
-
-    let elegida;
-    const fijada = A_MANO[`${clave}|${c.nombre}`];
-    if (fijada) {
-      const enc = leidas.find((l) => basename(l.foto) === fijada);
-      elegida = enc ? { ...enc, cerca: 0 } : null;
-      if (!elegida) {
-        console.log(`    ${c.nombre.padEnd(14)} no encuentro ${fijada}`);
-        continue;
-      }
-    } else if (!objetivo) {
-      // "Por definir" y compañía no tienen color contra el que medir.
-      elegida = { ...libres[0], cerca: null };
-    } else {
-      const meta = aLab(objetivo.hex);
-      elegida = libres
-        .map((l) => ({
-          ...l,
-          cerca: l.lab
-            ? Math.hypot(l.lab[0] - meta[0], l.lab[1] - meta[1], l.lab[2] - meta[2])
-            : 999,
-        }))
-        .sort((a, b) => a.cerca - b.cerca)[0];
-    }
-
-    /**
-     * Si ninguna foto se parece de verdad a este color, no se pone ninguna.
-     *
-     * Las carpetas traen más colores de los que la prenda tiene registrados,
-     * así que sin este corte el reparto acababa poniéndole al rojo una foto
-     * verde oliva. Quedarse sin foto se ve y se arregla; una foto equivocada
-     * en la tienda no se ve y se vende.
-     */
-    const CORTE = 55;
-    if (elegida.cerca !== null && elegida.cerca > CORTE) {
-      console.log(
-        `    ${c.nombre.padEnd(14)} sin foto de ese color (la más cercana, ${basename(elegida.foto)}, parece ${elegida.color})`,
-      );
-      continue;
-    }
-
-    leidas.find((l) => l.foto === elegida.foto).usada = true;
-    const aviso = "";
     console.log(
-      `    ${c.nombre.padEnd(14)} <- ${basename(elegida.foto).padEnd(16)} leí ${String(elegida.color).padEnd(12)}${
-        elegida.cerca === null ? "" : `dist ${elegida.cerca.toFixed(0)}`
-      }${aviso}`,
+      `    ${d.nombre.padEnd(14)} ${d.fotos.length} foto(s): ${d.fotos.map((f) => basename(f.foto)).join(", ")}`,
     );
 
     if (HOJA) {
-      orden++;
-      await sharp(elegida.foto, { failOn: "none" })
-        .rotate()
-        .resize(260, 347, { fit: "cover" })
-        .jpeg({ quality: 82 })
-        .toFile(
-          `${HOJA}/${String(orden).padStart(2, "0")}_${clave.replace(/[^a-zA-Z0-9]+/g, "-")}_${c.nombre.replace(/[^a-zA-Z0-9]+/g, "-")}.jpg`,
-        );
+      for (const f of d.fotos) {
+        nHoja++;
+        await sharp(f.foto, { failOn: "none" })
+          .rotate().resize(250, 334, { fit: "cover" }).jpeg({ quality: 80 })
+          .toFile(`${HOJA}/${String(nHoja).padStart(2, "0")}_${clave.replace(/[^a-zA-Z0-9]+/g, "-")}_${d.nombre.replace(/[^a-zA-Z0-9]+/g, "-")}.jpg`);
+      }
     }
 
-    if (ensayo) { cuenta.colores++; continue; }
+    if (ensayo) {
+      cuenta.principales++;
+      cuenta.galeria += d.fotos.length - 1;
+      continue;
+    }
 
     try {
-      const datos = await sharp(elegida.foto, { failOn: "none" })
-        .rotate()
-        .resize(1200, 1600, { fit: "inside", withoutEnlargement: true })
-        .jpeg({ quality: 86 })
-        .toBuffer();
+      const urls = [];
+      for (const f of d.fotos) urls.push(await subir(producto.id, d.nombre, f.foto));
 
-      const ruta = rutaDeFoto(producto.id, c.nombre, "jpg");
-      const { error } = await supabase.storage
-        .from("fotos")
-        .upload(ruta, datos, { contentType: "image/jpeg", cacheControl: "31536000", upsert: true });
-      if (error) throw new Error(error.message);
-
-      const url = supabase.storage.from("fotos").getPublicUrl(ruta).data.publicUrl;
-      const r = await fetch(url, { method: "HEAD", signal: AbortSignal.timeout(30000) });
-      if (!r.ok) throw new Error(`subió pero responde ${r.status}`);
-
-      const { error: fallo } = await supabase
+      const { error: e1 } = await supabase
         .from("colores")
-        .update({ foto_url: url })
-        .eq("id", c.id);
-      if (fallo) throw new Error(fallo.message);
+        .update({ foto_url: urls[0] })
+        .eq("id", d.id);
+      if (e1) throw new Error(e1.message);
+      cuenta.principales++;
 
-      cuenta.colores++;
+      // La galería se rehace entera: si se vuelve a correr con más fotos, la
+      // de antes no se queda a medias.
+      await supabase.from("fotos_color").delete().eq("color_id", d.id);
+      if (urls.length > 1) {
+        const filas = urls.slice(1).map((url, i) => ({ color_id: d.id, url, orden: i + 1 }));
+        const { error: e2 } = await supabase.from("fotos_color").insert(filas);
+        if (e2) throw new Error(e2.message);
+        cuenta.galeria += filas.length;
+      }
     } catch (e) {
       console.log(`      FALLÓ: ${e.message}`);
       cuenta.fallos++;
     }
   }
 
-  const sinUsar = leidas.filter((l) => !l.usada);
-  if (sinUsar.length) {
-    sobran.push({ clave, producto: producto.descripcion, fotos: sinUsar });
+  if (huerfanas.length) {
+    sobran.push({ clave, producto: producto.descripcion, fotos: huerfanas });
+    cuenta.sueltas += huerfanas.length;
   }
   cuenta.prendas++;
-  cuenta.fotos += leidas.length;
 }
 
 console.log("\n" + (ensayo ? "ENSAYO, no se subió nada" : "Listo"));
-console.log(`  prendas   ${cuenta.prendas}`);
-console.log(`  colores   ${cuenta.colores}`);
-if (cuenta.fallos) console.log(`  fallos    ${cuenta.fallos}`);
+console.log(`  prendas     ${cuenta.prendas}`);
+console.log(`  principales ${cuenta.principales}`);
+console.log(`  de galería  ${cuenta.galeria}`);
+if (cuenta.fallos) console.log(`  fallos      ${cuenta.fallos}`);
 
 if (sobran.length) {
-  console.log("\nFOTOS QUE SOBRAN: colores que la prenda no tiene registrados.");
-  console.log("No se crean solos: hay que saber si de verdad los tienen y cuántos.\n");
+  console.log(`\nSIN COLOCAR (${cuenta.sueltas}): son de colores que la prenda todavía no tiene.`);
+  console.log("No se inventan. En cuanto el color exista en el panel, vuelve a correr esto.\n");
   for (const s of sobran) {
     console.log(`  ${s.clave} (${s.producto})`);
-    for (const f of s.fotos) {
-      console.log(`      ${basename(f.foto).padEnd(16)} parece ${f.color}`);
-    }
+    for (const f of s.fotos) console.log(`      ${basename(f.foto).padEnd(16)} parece ${f.leido}`);
   }
 }

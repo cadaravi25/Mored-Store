@@ -8,9 +8,14 @@
  * CÓMO LO ADIVINA
  *
  * Se mira el centro de la foto, que es donde está la prenda, y se descartan
- * los píxeles que son piel o fondo: los muy claros, los muy oscuros y los que
- * caen en el tono de la piel. De lo que queda se toma el color más repetido y
- * se busca el más cercano del catálogo de la tienda.
+ * los píxeles que son piel o pared. De lo que queda NO se toma el color más
+ * repetido: eso devolvía la pared, porque el fondo siempre ocupa más que la
+ * prenda. Se pesa lo repetido por lo saturado, que es lo que separa una prenda
+ * de un fondo de estudio.
+ *
+ * Y si nada está saturado, gana lo oscuro repetido: es como se reconoce un
+ * enterizo negro sobre pared blanca, que de otro modo no tiene color que
+ * ganar.
  *
  * NO ES INFALIBLE
  *
@@ -54,25 +59,37 @@ export async function colorDominante(archivo) {
     .toBuffer({ resolveWithObject: true });
 
   // Solo el centro: los bordes son fondo casi siempre.
-  const x0 = Math.floor(info.width * 0.25), x1 = Math.floor(info.width * 0.75);
-  const y0 = Math.floor(info.height * 0.15), y1 = Math.floor(info.height * 0.9);
+  const x0 = Math.floor(info.width * 0.28), x1 = Math.floor(info.width * 0.72);
+  const y0 = Math.floor(info.height * 0.18), y1 = Math.floor(info.height * 0.88);
 
   const cubos = new Map();
   for (let y = y0; y < y1; y++) {
     for (let x = x0; x < x1; x++) {
       const i = (y * info.width + x) * 3;
       const [r, g, b] = [data[i], data[i + 1], data[i + 2]];
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
       const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-      if (lum > 235 || esPiel(r, g, b)) continue;
+      if (lum > 240 || esPiel(r, g, b)) continue;
       const clave = `${r >> 4},${g >> 4},${b >> 4}`;
-      const c = cubos.get(clave) ?? { n: 0, r: 0, g: 0, b: 0 };
+      const c = cubos.get(clave) ?? { n: 0, r: 0, g: 0, b: 0, s: 0 };
       c.n++; c.r += r; c.g += g; c.b += b;
+      c.s += max === 0 ? 0 : (max - min) / max;
       cubos.set(clave, c);
     }
   }
   if (cubos.size === 0) return null;
 
-  const gana = [...cubos.values()].sort((a, b) => b.n - a.n)[0];
+  const lista = [...cubos.values()].map((c) => ({
+    ...c,
+    sat: c.s / c.n,
+    lum: (0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b) / c.n,
+  }));
+
+  const conColor = lista.filter((c) => c.sat > 0.18);
+  const gana = conColor.length
+    ? conColor.sort((a, b) => b.n * b.sat ** 1.5 - a.n * a.sat ** 1.5)[0]
+    : lista.sort((a, b) => b.n / (1 + b.lum / 40) - a.n / (1 + a.lum / 40))[0];
+
   return [gana.r / gana.n, gana.g / gana.n, gana.b / gana.n];
 }
 
