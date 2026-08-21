@@ -16,13 +16,13 @@ Proton, sin apagar la VPN.
 
 ## Dónde vive publicada
 
-`https://vermillion-horse-359f90.netlify.app`
+**https://moredstore.netlify.app**
 
 Netlify escucha la rama `main` de `github.com/cadaravi25/Mored-Store`: **cada
 push es un despliegue**, no hay nada más que hacer. La configuración está en
 `netlify.toml` y las variables en el panel de Netlify.
 
-Dos cosas que costaron tres intentos y conviene no volver a descubrir:
+Tres cosas que costaron cuatro intentos y conviene no volver a descubrir:
 
 - **El complemento de Next hay que declararlo.** Netlify detecta el proyecto
   pero no lo ejecuta solo. Sin él la compilación sale en verde y la tienda
@@ -30,10 +30,15 @@ Dos cosas que costaron tres intentos y conviene no volver a descubrir:
 - **`publish` hay que escribirlo.** Sin él Netlify supone que es la misma
   carpeta que `base` y el complemento se planta. Va relativo a la base, así que
   `.next` significa `app/.next`.
+- **Si un despliegue se cancela sin explicación, es la caché.** Netlify arrastra
+  la configuración vieja aunque el `netlify.toml` del repositorio ya esté bien:
+  compila, no empaqueta funciones, y cancela al no tener nada que publicar. Se
+  arregla con *Trigger deploy → Deploy project without cache*. Después de una
+  vez, los push normales ya heredan la buena.
 
-La tasa del BCV solo se refresca cuando alguien abre Finanzas o el punto de
-venta, que son los únicos que llaman a `/api/bcv`. Si pasan días sin entrar al
-panel, los precios en bolívares de la tienda salen con la tasa vieja.
+Las variables que no llevan `NEXT_PUBLIC_` se leen al vuelo, pero las que sí
+**se incrustan al compilar**. Cambiar el número de WhatsApp en el panel de
+Netlify no hace nada hasta que se vuelve a desplegar.
 
 ## El inventario hoy
 
@@ -42,7 +47,7 @@ panel, los precios en bolívares de la tienda salen con la tasa vieja.
 | Swim | 141 productos importados de Treinta |
 | Active | 174 productos: 170 de los vídeos y 4 que ya estaban |
 | Variantes | 587 |
-| En la tienda | 138 tarjetas de Swim y 164 de Active |
+| En la tienda | 138 tarjetas de Swim y 169 de Active |
 | Fotos | todas en el depósito propio, ninguna apunta afuera |
 
 Swim entró con `app/scripts/treinta.mjs` + `importar_treinta.mjs`, llamando a la
@@ -119,6 +124,28 @@ primero y la pantalla lo dice.
   la vieja.
 - Un cambio de divisas no es ingreso ni gasto: mueve saldo entre cajas.
 
+## La tasa se actualiza sola
+
+Un trabajo de `pg_cron` dentro de Postgres llama a `refrescar_tasa_bcv()` a las
+**00:05, 08:05 y 17:05 hora Caracas**. No depende de Netlify ni de que nadie
+abra el panel, y no hay ninguna clave en juego.
+
+Antes solo se refrescaba al entrar a Finanzas, que es quien llama a `/api/bcv`,
+y esa ruta exige sesión. Se notó el día que la tasa guardada llevaba tres días
+vieja mientras la tienda cobraba con ella.
+
+Tres veces al día y no una: con una sola, un fallo de red deja la tienda
+cobrando con la tasa de ayer veinticuatro horas. Y no sustituye a `/api/bcv`, se
+suma: esa sigue raspando el sitio del BCV, que es la única que trae la fecha
+valor. El cron lee la API de respaldo, que aguanta mejor sin nadie mirando.
+
+Para ver qué han hecho los trabajos:
+
+```sql
+select jobname, status, return_message, start_time
+  from cron.job_run_details order by start_time desc limit 10;
+```
+
 ## El depósito no acepta cualquier nombre de archivo
 
 Las claves de Supabase Storage rechazan acentos y espacios, y escaparlos no
@@ -170,8 +197,10 @@ llevan su propia copia porque corren fuera de Next.
 - Las 164 fotos salieron recortadas del propio vídeo, así que son de 276 px y
   provisionales. Están en el depósito con el sufijo `-video.jpg`, que es por
   donde hay que buscarlas para reemplazarlas de una pasada.
-- **Los 6 accesorios deportivos entraron sin ninguna foto** y por eso no salen
-  en la tienda: en el vídeo 48 salen ampliados y no hay imagen que recortar.
+- **De los 6 accesorios deportivos, 5 ya tienen foto.** El vídeo 48 los ampliaba
+  sobre la lista de WhatsApp y no sobre la ficha, pero esa lista sí enseña la
+  miniatura y en cinco hay algún cuadro nítido. **La faja sigue sin foto** y por
+  eso sigue sin salir: sus seis cuadros están todos movidos.
 - 46 colores no tienen foto propia y salen con la de otro color de la misma
   prenda. Se ven en el panel con la nota en gris.
 - Por eso hay **19 prendas de Active con varios colores y una sola foto**: la
