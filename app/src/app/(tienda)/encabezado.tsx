@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { leerCarrito } from "@/lib/carrito";
 
@@ -24,9 +24,25 @@ import { leerCarrito } from "@/lib/carrito";
  */
 export default function Encabezado() {
   const [piezas, setPiezas] = useState(0);
-  const [enSwim, setEnSwim] = useState(false);
   const ruta = usePathname();
   const enCatalogo = ruta?.startsWith("/catalogo") ?? false;
+
+  /**
+   * En qué colección está parado quien mira.
+   *
+   * Se lee de la dirección y no de un estado compartido porque el encabezado
+   * vive en la plantilla, por encima de las páginas, y no tiene forma de
+   * preguntárselo a ninguna.
+   *
+   * Y se lee con useSearchParams y no mirando window.location dentro de un
+   * efecto. La diferencia no es de estilo: el efecto solo corre cuando este
+   * componente se vuelve a dibujar, y al cambiar de colección desde el filtro
+   * lateral la página cambia pero la plantilla no, así que el encabezado se
+   * quedaba marcando Active con el catálogo entero en Swim. Este hook sí
+   * escucha al router.
+   */
+  const parametros = useSearchParams();
+  const enSwim = parametros.get("c") === "swim";
 
   useEffect(() => {
     const contar = () =>
@@ -39,22 +55,6 @@ export default function Encabezado() {
       window.removeEventListener("storage", contar);
     };
   }, []);
-
-  /**
-   * En qué colección está parado quien mira.
-   *
-   * Se lee de la dirección y no de un estado compartido porque el encabezado
-   * vive en la plantilla, por encima de las páginas, y no tiene forma de
-   * preguntárselo a ninguna. Se mira en cada navegación: sin eso, el logotipo
-   * devuelve a Active desde una prenda de Swim.
-   */
-  useEffect(() => {
-    const mirar = () =>
-      setEnSwim(new URLSearchParams(window.location.search).get("c") === "swim");
-    mirar();
-    window.addEventListener("popstate", mirar);
-    return () => window.removeEventListener("popstate", mirar);
-  });
 
   const enlaces = enCatalogo
     ? [
