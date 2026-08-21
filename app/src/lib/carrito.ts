@@ -10,6 +10,17 @@ import { colorVisible, SIN_TALLA } from "./prendas";
 import { precioVisible, type Moneda } from "./moneda";
 
 const LLAVE = "mored-carrito";
+const LLAVE_FECHA = "mored-carrito-fecha";
+
+/**
+ * Cuánto vive un carrito abandonado, en horas.
+ *
+ * Sin esto el carrito no caduca nunca: se entra, se sale, se vuelve tres días
+ * después y ahí sigue la prenda con el contador puesto, como si el pedido
+ * estuviera a medias. Un día es tiempo de sobra para volver a rematar una
+ * compra, y pasado eso lo honesto es empezar limpio.
+ */
+const HORAS_DE_VIDA = 24;
 
 export interface ItemCarrito {
   variante_id: string;
@@ -26,6 +37,12 @@ export interface ItemCarrito {
 export function leerCarrito(): ItemCarrito[] {
   if (typeof window === "undefined") return [];
   try {
+    const desde = Number(window.localStorage.getItem(LLAVE_FECHA) ?? 0);
+    if (desde && Date.now() - desde > HORAS_DE_VIDA * 3600_000) {
+      window.localStorage.removeItem(LLAVE);
+      window.localStorage.removeItem(LLAVE_FECHA);
+      return [];
+    }
     const crudo = window.localStorage.getItem(LLAVE);
     const lista = crudo ? JSON.parse(crudo) : [];
     return Array.isArray(lista) ? (lista as ItemCarrito[]) : [];
@@ -36,6 +53,10 @@ export function leerCarrito(): ItemCarrito[] {
 
 export function guardarCarrito(items: ItemCarrito[]) {
   window.localStorage.setItem(LLAVE, JSON.stringify(items));
+  // La fecha es la del último cambio, no la del primero: mientras sigan
+  // agregando, el carrito sigue vivo.
+  if (items.length) window.localStorage.setItem(LLAVE_FECHA, String(Date.now()));
+  else window.localStorage.removeItem(LLAVE_FECHA);
   // Un evento propio: el localStorage solo avisa a las OTRAS pestañas, y acá
   // hace falta que el contador del carrito se entere en esta misma.
   window.dispatchEvent(new CustomEvent("carrito"));

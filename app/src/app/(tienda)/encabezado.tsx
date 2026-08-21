@@ -1,20 +1,32 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { leerCarrito } from "@/lib/carrito";
 
-const ENLACES = [
-  { href: "/?c=active", texto: "Active" },
-  { href: "/?c=swim", texto: "Swim" },
-  { href: "/catalogo", texto: "Catálogo" },
-];
-
-/** Barra fina y blanca, con el logotipo al centro. Lo que tiene que resaltar
- *  es la ropa, no la navegación. */
+/**
+ * Barra fina y blanca, con el logotipo al centro. Lo que tiene que resaltar
+ * es la ropa, no la navegación.
+ *
+ * TODO EN UNA FILA, TAMBIÉN EN EL TELÉFONO
+ *
+ * Antes la navegación bajaba a una segunda fila en pantallas pequeñas y el
+ * encabezado ocupaba el doble. Cabe en una: los enlaces se achican un punto y
+ * el logotipo se queda en el centro con las dos mitades empujando por igual.
+ *
+ * LOS ENLACES NO DICEN LO MISMO EN TODAS PARTES
+ *
+ * En la portada, Active y Swim llevan a la portada de esa colección. Dentro
+ * del catálogo eso era un callejón: pulsabas Swim estando en el catálogo y te
+ * sacaba a la página principal. Ahí los mismos dos enlaces cambian de
+ * colección sin sacarte, y Catálogo desaparece porque ya estás en él.
+ */
 export default function Encabezado() {
   const [piezas, setPiezas] = useState(0);
   const [enSwim, setEnSwim] = useState(false);
+  const ruta = usePathname();
+  const enCatalogo = ruta?.startsWith("/catalogo") ?? false;
 
   useEffect(() => {
     const contar = () =>
@@ -44,18 +56,41 @@ export default function Encabezado() {
     return () => window.removeEventListener("popstate", mirar);
   });
 
+  const enlaces = enCatalogo
+    ? [
+        { href: "/catalogo?c=active", texto: "Active", puesto: !enSwim },
+        { href: "/catalogo?c=swim", texto: "Swim", puesto: enSwim },
+      ]
+    : [
+        { href: "/?c=active", texto: "Active", puesto: false },
+        { href: "/?c=swim", texto: "Swim", puesto: false },
+        { href: "/catalogo", texto: "Catálogo", puesto: false },
+      ];
+
   return (
     <header className="sticky top-0 z-30 border-b border-linea bg-nieve/95 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-[1400px] items-center gap-4 px-5 py-4 lg:px-10">
-        <nav className="hidden flex-1 gap-7 text-[13px] uppercase tracking-[0.14em] text-gris md:flex">
-          {ENLACES.map((e) => (
-            <Link key={e.href} href={e.href} className="hover:text-carbon">
+      <div className="mx-auto flex w-full max-w-[1400px] items-center gap-3 px-5 py-4 sm:gap-4 lg:px-10">
+        <nav className="flex flex-1 gap-3.5 text-[11px] uppercase tracking-[0.1em] text-gris sm:gap-7 sm:text-[13px] sm:tracking-[0.14em]">
+          {enlaces.map((e) => (
+            <Link
+              key={e.href}
+              href={e.href}
+              // Dentro del catálogo hay una de las dos puesta, y se nota:
+              // si no, no hay forma de saber qué estás mirando.
+              className={`whitespace-nowrap hover:text-carbon ${
+                e.puesto ? "text-carbon" : ""
+              }`}
+            >
               {e.texto}
             </Link>
           ))}
         </nav>
 
-        <Link href={enSwim ? "/?c=swim" : "/"} className="shrink-0 md:mx-auto">
+        <Link
+          href={enSwim ? "/?c=swim" : "/"}
+          aria-label="Mored, ir al inicio"
+          className="shrink-0"
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/mored-texto.png" alt="Mored" className="h-4 w-auto lg:h-5" />
         </Link>
@@ -93,16 +128,6 @@ export default function Encabezado() {
           </button>
         </div>
       </div>
-
-      {/* En el teléfono la navegación va debajo del logotipo, en una fila que
-          se desliza: así el encabezado no se come la pantalla. */}
-      <nav className="-mt-1 flex gap-6 overflow-x-auto px-5 pb-3 text-[13px] uppercase tracking-[0.14em] text-gris md:hidden">
-        {ENLACES.map((e) => (
-          <Link key={e.href} href={e.href} className="shrink-0">
-            {e.texto}
-          </Link>
-        ))}
-      </nav>
     </header>
   );
 }

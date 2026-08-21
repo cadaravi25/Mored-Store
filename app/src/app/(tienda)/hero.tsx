@@ -156,8 +156,22 @@ export default function Hero({
           MORED no se mueve nunca: es el mismo en las dos colecciones y verlo
           desaparecer para volver igual no aporta nada. Lo único que cambia es
           la palabra de abajo. */}
-      <div className="pointer-events-none absolute inset-0 z-10 flex justify-center px-6 lg:justify-end lg:pr-[9%]">
-        <div className="flex h-full w-[74vw] max-w-[520px] flex-col justify-center lg:w-[36vw]">
+      {/* En pantalla ancha el logotipo va al centro de su columna, corrido a la
+          derecha, y la modela lo cruza por la izquierda sin taparlo. Ahí el
+          cruce es del diseño y por eso este bloque va por detrás de ella.
+
+          En el teléfono no hay a dónde correrse: la modela ocupa el ancho y su
+          cabeza llegaba justo a la mitad, que es donde caía MORED. Así que el
+          bloque sube y se apoya arriba, en el cielo, que es la única zona que
+          ella no pisa.
+
+          Subirlo alcanza para el logotipo pero no para el botón: en una
+          pantalla corta la modela arranca a doscientos y pico y no queda hueco
+          para los dos. Así que en el teléfono este bloque pasa por delante de
+          ella. No se pierde nada: ahí arriba no la toca, y el botón se lee
+          igual sobre la foto porque lleva su propio borde y desenfoque. */}
+      <div className="pointer-events-none absolute inset-0 z-30 flex justify-center px-6 lg:z-10 lg:justify-end lg:pr-[9%]">
+        <div className="flex h-full w-[74vw] max-w-[520px] flex-col justify-start pt-[7%] lg:w-[36vw] lg:justify-center lg:pt-0">
           <div className="acerca w-full drop-shadow-[0_2px_20px_rgba(0,0,0,0.22)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/hero/mored.svg" alt="Mored" className="w-full" />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Carrito from "./carrito";
 import Hero, { type Coleccion } from "./hero";
@@ -43,16 +43,21 @@ export default function Portada({
   /**
    * La colección se cambia desde dos sitios y hay que atender los dos.
    *
-   * Desde el hero se cambia aquí mismo, al instante, sin ir al servidor: es
-   * una animación y no puede esperar a nadie.
+   * Aquí mismo se ve al instante, sin ir al servidor: es una animación y no
+   * puede esperar a nadie. Pero desde el encabezado se cambia navegando, y esa
+   * navegación llega como una propiedad nueva. Sin conciliarlas, la dirección
+   * decía swim y la página seguía entera en active.
    *
-   * Desde el encabezado se cambia navegando, y esa navegación llega hasta aquí
-   * como una propiedad nueva. Sin esto, el estado se quedaba con la anterior:
-   * la dirección decía swim y la página seguía entera en active.
+   * Se concilia durante el render y no en un efecto: así React lo resuelve en
+   * la misma pasada, sin pintar una vez con la colección vieja. Un efecto
+   * pintaría primero lo anterior y lo corregiría después, que es justo el
+   * parpadeo que se quiere evitar.
    */
-  useEffect(() => {
+  const [ultimaDireccion, setUltimaDireccion] = useState(coleccionInicial);
+  if (coleccionInicial !== ultimaDireccion) {
+    setUltimaDireccion(coleccionInicial);
     setColeccion(coleccionInicial);
-  }, [coleccionInicial]);
+  }
 
   const tarjetas = useMemo(() => agrupar(filas), [filas]);
   const acento = ACENTOS[coleccion];

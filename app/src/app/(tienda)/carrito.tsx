@@ -13,11 +13,6 @@ import {
   type ItemCarrito,
 } from "@/lib/carrito";
 
-const dinero = new Intl.NumberFormat("es-VE", {
-  style: "currency",
-  currency: "EUR",
-});
-
 /**
  * El pedido se cierra por WhatsApp, que es como su clientela ya compra. El
  * botón arma el mensaje con lo que eligieron; de ahí en adelante la
@@ -167,6 +162,14 @@ export default function Carrito({ whatsapp }: { whatsapp: string | null }) {
                     href={enlaceWhatsapp(items, whatsapp, moneda, tasa)}
                     target="_blank"
                     rel="noopener noreferrer"
+                    // El pedido ya viaja escrito en el mensaje, así que el
+                    // carrito cumplió y se vacía. Si no, quien vuelve a la
+                    // tienda se encuentra el pedido que ya hizo todavía ahí,
+                    // sin saber si se envió o no.
+                    onClick={() => {
+                      vaciarCarrito();
+                      setAbierto(false);
+                    }}
                     className="mt-5 block bg-carbon px-6 py-4 text-center text-sm uppercase tracking-[0.14em] text-nieve"
                   >
                     Pedir por WhatsApp

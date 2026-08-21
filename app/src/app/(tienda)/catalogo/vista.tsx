@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import Carrito from "../carrito";
 import { colorVisible } from "@/lib/prendas";
@@ -89,6 +90,7 @@ export default function Vista({
   coleccionInicial: Coleccion;
   tipoInicial: string;
 }) {
+  const router = useRouter();
   const [coleccion, setColeccion] = useState<Coleccion>(coleccionInicial);
   const [tipos, setTipos] = useState<string[]>(
     tipoInicial ? [tipoInicial] : [],
@@ -100,6 +102,38 @@ export default function Vista({
   const [columnas, setColumnas] = useState(3);
   const [panel, setPanel] = useState(false);
   const { moneda, tasa } = useMoneda();
+
+  /**
+   * La colección se cambia desde dos sitios y hay que atender los dos.
+   *
+   * Aquí mismo se ve al instante, sin ir al servidor: es una animación y no
+   * puede esperar a nadie. Pero desde el encabezado se cambia navegando, y esa
+   * navegación llega como una propiedad nueva. Sin conciliarlas, la dirección
+   * decía swim y la página seguía entera en active.
+   *
+   * Se concilia durante el render y no en un efecto: así React lo resuelve en
+   * la misma pasada, sin pintar una vez con la colección vieja. Un efecto
+   * pintaría primero lo anterior y lo corregiría después, que es justo el
+   * parpadeo que se quiere evitar.
+   */
+  const [ultimaDireccion, setUltimaDireccion] = useState(coleccionInicial);
+  if (coleccionInicial !== ultimaDireccion) {
+    setUltimaDireccion(coleccionInicial);
+    setColeccion(coleccionInicial);
+  }
+
+  /**
+   * Se cambia de colección desde dos sitios, el encabezado y el filtro
+   * lateral, y los dos tienen que dejar la dirección contando lo mismo. Si el
+   * filtro cambiara solo el estado, el encabezado seguiría marcando la otra
+   * colección y compartir el enlace abriría la que no es.
+   */
+  function cambiarColeccion(c: Coleccion) {
+    setColeccion(c);
+    router.replace(c === "active" ? "/catalogo" : `/catalogo?c=${c}`, {
+      scroll: false,
+    });
+  }
 
   const acento = ACENTOS[coleccion];
   const todas = useMemo(() => agrupar(filas), [filas]);
@@ -203,7 +237,7 @@ export default function Vista({
             <button
               key={c}
               type="button"
-              onClick={() => setColeccion(c)}
+              onClick={() => cambiarColeccion(c)}
               className={`rounded-full border px-4 py-1.5 text-[13px] transition-colors ${
                 coleccion === c
                   ? "border-carbon bg-carbon text-nieve"
@@ -350,11 +384,13 @@ export default function Vista({
         </aside>
 
         <div>
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-linea pb-4">
+          {/* Una sola fila, también en el teléfono. Antes `flex-wrap` mandaba
+              "Filtrar" a un renglón suyo y el de abajo quedaba desalineado. */}
+          <div className="mb-6 flex items-center justify-between gap-3 border-b border-linea pb-4 sm:gap-4">
             <button
               type="button"
               onClick={() => setPanel(true)}
-              className="rounded-full border border-linea px-5 py-2 text-[13px] lg:hidden"
+              className="shrink-0 whitespace-nowrap rounded-full border border-linea px-4 py-2 text-[13px] sm:px-5 lg:hidden"
             >
               Filtrar{filtrando ? " ·" : ""}
             </button>
@@ -384,13 +420,15 @@ export default function Vista({
               ))}
             </div>
 
-            <div className="ml-auto flex items-center gap-4">
-              <label className="flex items-center gap-2 text-[13px] text-gris">
-                Ordenar
+            <div className="ml-auto flex min-w-0 items-center gap-2 sm:gap-4">
+              <label className="flex min-w-0 items-center gap-2 text-[13px] text-gris">
+                {/* La palabra sobra en el teléfono: el propio desplegable dice
+                    por qué está ordenando. */}
+                <span className="hidden sm:inline">Ordenar</span>
                 <select
                   value={orden}
                   onChange={(e) => setOrden(e.target.value as Orden)}
-                  className="rounded-lg border border-linea bg-nieve px-3 py-1.5 text-carbon outline-none"
+                  className="min-w-0 rounded-lg border border-linea bg-nieve px-2 py-1.5 text-carbon outline-none sm:px-3"
                 >
                   {ORDENES.map((o) => (
                     <option key={o.id} value={o.id}>
@@ -399,7 +437,7 @@ export default function Vista({
                   ))}
                 </select>
               </label>
-              <p className="text-[13px] text-gris">
+              <p className="whitespace-nowrap text-[13px] text-gris">
                 {visibles.length} {visibles.length === 1 ? "pieza" : "piezas"}
               </p>
             </div>
