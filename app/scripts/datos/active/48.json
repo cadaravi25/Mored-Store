@@ -17,7 +17,8 @@
     "seccion": "Accesorios deportivos" },
 
   { "cuadro": "48/0012", "rotulo": "fajas", "desc": "Cinturilla Moldeadora de Alta Compresión con Cierre Frontal", "eur": 12, "bs": 14,
-    "colores": [{ "color": "Negro", "tallas": ["ÚNICA"] }], "origen": "fajas precio especial 12$ / Ref 14€",
+    "colores": [{ "color": "Negro", "tallas": ["M", "L"] }], "origen": "fajas precio especial 12$ / Ref 14€/ talla M y L",
+    "nota": "Entró sin talla por leerla de una captura recortada. La ficha completa dice talla M y L.",
     "seccion": "Accesorios deportivos" },
 
   { "cuadro": "48/0021", "rotulo": "guantes", "desc": "Guantes de Fitness Transpirables de Malla Medio Dedos (Unisex)", "eur": 6, "bs": 7,
