@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { agregarAlCarrito } from "@/lib/carrito";
 import { SIN_TALLA } from "@/lib/prendas";
@@ -28,8 +28,12 @@ export default function Ficha({
   const [puesto, setPuesto] = useState(false);
   const [mirando, setMirando] = useState(0);
   const { moneda, tasa } = useMoneda();
+  const router = useRouter();
 
   const primera = filas[0];
+  /** A dónde ir si no hay historial: el catálogo de su colección. */
+  const volverA =
+    primera.coleccion === "swim" ? "/catalogo?c=swim" : "/catalogo";
   const acento = ACENTOS[primera.coleccion === "swim" ? "swim" : "active"];
 
   const delColor = filas
@@ -77,14 +81,27 @@ export default function Ficha({
   return (
     <main style={acento as React.CSSProperties}>
       <div className="mx-auto w-full max-w-[1400px] px-5 py-5 lg:px-10">
-        {/* Con la colección puesta. Sin ella, quien estaba viendo Swim
-            aterriza en Active y parece que se equivocó de tienda. */}
-        <Link
-          href={primera.coleccion === "swim" ? "/?c=swim" : "/"}
+        {/* Volver atrás de verdad, no a un sitio parecido.
+ 
+            Antes esto llevaba a la portada. Si alguien venía de la prenda 300
+            del catálogo, salía y aterrizaba arriba del todo, con trescientas
+            tarjetas por delante otra vez. Ir atrás en el historial devuelve al
+            catálogo con el desplazamiento donde estaba, que es lo que el
+            navegador ya sabe hacer solo.
+
+            Si llegaron por un enlace compartido no hay historial al que
+            volver, así que ahí sí se va al catálogo de su colección, que es lo
+            más cerca de "seguir viendo" que existe. */}
+        <button
+          type="button"
+          onClick={() => {
+            if (window.history.length > 1) router.back();
+            else router.push(volverA);
+          }}
           className="text-[13px] text-gris hover:text-carbon"
         >
           ← Seguir viendo
-        </Link>
+        </button>
       </div>
 
       <div className="mx-auto grid w-full max-w-[1400px] gap-10 px-5 pb-16 lg:grid-cols-2 lg:gap-16 lg:px-10">

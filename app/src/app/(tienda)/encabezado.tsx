@@ -17,15 +17,19 @@ import { leerCarrito } from "@/lib/carrito";
  *
  * LOS ENLACES NO DICEN LO MISMO EN TODAS PARTES
  *
- * En la portada, Active y Swim llevan a la portada de esa colección. Dentro
- * del catálogo eso era un callejón: pulsabas Swim estando en el catálogo y te
- * sacaba a la página principal. Ahí los mismos dos enlaces cambian de
- * colección sin sacarte, y Catálogo desaparece porque ya estás en él.
+ * En la portada, Active y Swim cambian la colección del hero, que es lo que se
+ * está mirando ahí, y Catálogo lleva a la lista.
+ *
+ * En cualquier otro sitio eso era un callejón: pulsabas Swim estando en el
+ * catálogo, o dentro de una prenda, y te sacaba a la página principal. Así que
+ * de la portada para adentro los dos enlaces llevan al catálogo de esa
+ * colección, que es donde se sigue comprando, y el de la colección en la que
+ * estás queda marcado. Catálogo desaparece porque esos dos ya llevan ahí.
  */
 export default function Encabezado() {
   const [piezas, setPiezas] = useState(0);
   const ruta = usePathname();
-  const enCatalogo = ruta?.startsWith("/catalogo") ?? false;
+  const enPortada = ruta === "/";
 
   /**
    * En qué colección está parado quien mira.
@@ -56,15 +60,15 @@ export default function Encabezado() {
     };
   }, []);
 
-  const enlaces = enCatalogo
+  const enlaces = enPortada
     ? [
-        { href: "/catalogo?c=active", texto: "Active", puesto: !enSwim },
-        { href: "/catalogo?c=swim", texto: "Swim", puesto: enSwim },
-      ]
-    : [
         { href: "/?c=active", texto: "Active", puesto: false },
         { href: "/?c=swim", texto: "Swim", puesto: false },
         { href: "/catalogo", texto: "Catálogo", puesto: false },
+      ]
+    : [
+        { href: "/catalogo?c=active", texto: "Active", puesto: !enSwim },
+        { href: "/catalogo?c=swim", texto: "Swim", puesto: enSwim },
       ];
 
   return (
