@@ -133,9 +133,11 @@ export const COLORES = {
     Negro: ["IMG_7588.AVIF", "IMG_7589.AVIF"],
   },
   "modelo 13": {
-    // La segunda es la foto de producto, con las dos prendas juntas.
-    Rojo: ["IMG_7590.jpg", "IMG_7593.jpg"],
-    Negro: [],
+    Rojo: ["IMG_7590.jpg"],
+    // La unica donde sale la negra es la foto de producto, con las dos
+    // prendas juntas. Vale mas que dejarla sin foto: sin foto propia hereda
+    // la del primer color, y la tienda enseñaria la roja bajo "Negro".
+    Negro: ["IMG_7593.jpg"],
   },
   "modelo 14": {
     Negro: ["IMG_7600.AVIF"],
