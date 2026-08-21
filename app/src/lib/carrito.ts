@@ -124,6 +124,10 @@ export function mensajeWhatsapp(
   items: ItemCarrito[],
   moneda: Moneda = "eur",
   tasa: number | null = null,
+  /** Número de la orden ya registrada, si se pudo registrar. Va en el mensaje
+   *  para que ellas puedan casarlo con lo que ven en el panel: sin eso, dos
+   *  clientas pidiendo lo mismo a la vez son indistinguibles. */
+  orden: number | null = null,
 ): string {
   const lineas = items.map((x) => {
     // Ni el color pendiente ni la marca de talla única entran al mensaje: son
@@ -144,7 +148,7 @@ export function mensajeWhatsapp(
     return `• ${partes.join(" · ")} — ${linea}`;
   });
   return [
-    "¡Hola! Quiero pedir:",
+    orden ? `¡Hola! Quiero pedir (pedido #${orden}):` : "¡Hola! Quiero pedir:",
     "",
     ...lineas,
     "",
@@ -161,8 +165,9 @@ export function enlaceWhatsapp(
   numero: string,
   moneda: Moneda = "eur",
   tasa: number | null = null,
+  orden: number | null = null,
 ): string {
   return `https://wa.me/${numero.replace(/\D/g, "")}?text=${encodeURIComponent(
-    mensajeWhatsapp(items, moneda, tasa),
+    mensajeWhatsapp(items, moneda, tasa, orden),
   )}`;
 }

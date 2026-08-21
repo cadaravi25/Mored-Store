@@ -55,6 +55,17 @@ const ITEMS: Item[] = [
     ),
   },
   {
+    href: "/panel/ordenes",
+    etiqueta: "Órdenes",
+    icono: (
+      <svg viewBox="0 0 24 24" {...trazo}>
+        <path d="M4 4h3l2.2 11.2a2 2 0 002 1.6h7.4a2 2 0 002-1.6L22 8H7" />
+        <circle cx="10" cy="20" r="1.4" />
+        <circle cx="18" cy="20" r="1.4" />
+      </svg>
+    ),
+  },
+  {
     href: "/panel/vender",
     etiqueta: "Vender",
     icono: (

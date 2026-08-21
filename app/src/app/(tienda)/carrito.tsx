@@ -1,6 +1,7 @@
 "use client";
 
 import { precioVisible } from "@/lib/moneda";
+import { crearClienteNavegador } from "@/lib/supabase/client";
 import { useMoneda } from "@/lib/usar-moneda";
 import { useEffect, useState } from "react";
 import {
@@ -49,6 +50,56 @@ export default function Carrito({ whatsapp }: { whatsapp: string | null }) {
   }, [abierto]);
 
   const piezas = items.reduce((s, x) => s + x.cantidad, 0);
+  const [pidiendo, setPidiendo] = useState(false);
+
+  /**
+   * Pedir: primero se registra la orden, después se abre WhatsApp.
+   *
+   * Registrarla es lo que hace que a ellas les llegue la prenda con su foto al
+   * panel, en vez de un mensaje que dice "chaqueta negro talla s" y las obliga
+   * a adivinar cuál de las siete es.
+   *
+   * SI LA BASE FALLA, EL PEDIDO SE MANDA IGUAL
+   *
+   * Una clienta con el pedido armado no puede quedarse sin poder pedirlo
+   * porque nuestra base no respondió. Se abre WhatsApp de todos modos, solo
+   * que sin número de pedido. Es la misma regla que ya sigue el punto de
+   * venta: nunca bloquear una venta real.
+   *
+   * LA VENTANA SE ABRE ANTES DE ESPERAR
+   *
+   * Si se abriera después del await, el navegador lo tomaría por una ventana
+   * emergente y la bloquearía, porque ya no está pegada al clic. Se abre
+   * vacía en el momento del clic y se le pone la dirección al volver.
+   */
+  async function pedir() {
+    if (!whatsapp || pidiendo || items.length === 0) return;
+    setPidiendo(true);
+
+    const ventana = window.open("", "_blank");
+
+    let numero: number | null = null;
+    try {
+      const { data } = await crearClienteNavegador().rpc("crear_orden", {
+        p_lineas: items.map((x) => ({
+          variante_id: x.variante_id,
+          cantidad: x.cantidad,
+        })),
+      });
+      const orden = data as { numero?: number } | null;
+      numero = typeof orden?.numero === "number" ? orden.numero : null;
+    } catch {
+      // Queda sin número y sigue.
+    }
+
+    const url = enlaceWhatsapp(items, whatsapp, moneda, tasa, numero);
+    if (ventana) ventana.location.href = url;
+    else window.location.href = url;
+
+    vaciarCarrito();
+    setAbierto(false);
+    setPidiendo(false);
+  }
 
   return (
     <>
@@ -158,22 +209,14 @@ export default function Carrito({ whatsapp }: { whatsapp: string | null }) {
                 </div>
 
                 {whatsapp ? (
-                  <a
-                    href={enlaceWhatsapp(items, whatsapp, moneda, tasa)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    // El pedido ya viaja escrito en el mensaje, así que el
-                    // carrito cumplió y se vacía. Si no, quien vuelve a la
-                    // tienda se encuentra el pedido que ya hizo todavía ahí,
-                    // sin saber si se envió o no.
-                    onClick={() => {
-                      vaciarCarrito();
-                      setAbierto(false);
-                    }}
-                    className="mt-5 block bg-carbon px-6 py-4 text-center text-sm uppercase tracking-[0.14em] text-nieve"
+                  <button
+                    type="button"
+                    onClick={pedir}
+                    disabled={pidiendo}
+                    className="mt-5 block w-full bg-carbon px-6 py-4 text-center text-sm uppercase tracking-[0.14em] text-nieve disabled:opacity-60"
                   >
-                    Pedir por WhatsApp
-                  </a>
+                    {pidiendo ? "Un momento…" : "Pedir por WhatsApp"}
+                  </button>
                 ) : (
                   <p className="mt-5 bg-alerta-tenue px-4 py-3 text-center text-sm text-alerta">
                     Falta configurar el número de WhatsApp de la tienda.

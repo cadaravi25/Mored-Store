@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { crearClienteNavegador } from "@/lib/supabase/client";
+import { useSearchParams } from "next/navigation";
+import { LLAVE_ORDEN } from "../ordenes/lista";
 import { diaEnCaracas, enCorto } from "@/lib/fechas";
 import PasoCliente, { type Elegido } from "./selector-cliente";
 
@@ -65,6 +67,39 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
   const [guardando, setGuardando] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [listo, setListo] = useState<number | null>(null);
+
+  /**
+   * Cuando se llega desde Órdenes, la venta ya viene armada.
+   *
+   * La orden viaja por sessionStorage y solo su identificador por la
+   * dirección: son varias prendas con foto y precio, y eso en la barra de
+   * direcciones sería ilegible y editable a mano.
+   *
+   * Aquí no se cobra distinto ni se guarda distinto. Se carga el carrito y
+   * sigue el mismo camino de siempre, que es lo bueno de traerla a esta
+   * pantalla: pueden quitar una prenda, cambiar la cantidad o agregar otra si
+   * la clienta cambió de idea, y cobrar como cualquier venta.
+   */
+  const parametros = useSearchParams();
+  const ordenId = parametros.get("orden");
+  const [ordenNumero, setOrdenNumero] = useState<number | null>(null);
+  const [ordenCargada, setOrdenCargada] = useState<string | null>(null);
+
+  if (ordenId && ordenCargada !== ordenId) {
+    setOrdenCargada(ordenId);
+    try {
+      const crudo = window.sessionStorage.getItem(LLAVE_ORDEN);
+      const guardada = crudo ? JSON.parse(crudo) : null;
+      if (guardada?.id === ordenId && Array.isArray(guardada.carrito)) {
+        setCarrito(guardada.carrito as Linea[]);
+        setOrdenNumero(
+          typeof guardada.numero === "number" ? guardada.numero : null,
+        );
+      }
+    } catch {
+      // Si no se pudo leer, queda el carrito vacío y lo arman a mano.
+    }
+  }
 
   useEffect(() => {
     const t = setTimeout(async () => {
@@ -230,6 +265,14 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
       return;
     }
 
+    // La orden deja de estar pendiente. Si esto fallara, la venta ya quedó
+    // registrada igual: lo peor que pasa es que la orden siga apareciendo sin
+    // atender y la cancelen a mano. Nunca al revés.
+    if (ordenId) {
+      await supabase.rpc("marcar_orden_atendida", { p_venta_id: ordenId });
+      setOrdenNumero(null);
+    }
+
     setListo(total);
     setCarrito([]);
     setPagos([]);
@@ -336,6 +379,15 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
           <p className="mb-3 text-xs uppercase tracking-wide text-tinta-suave">
             Venta
           </p>
+
+          {/* Que se vea de dónde salió, para que nadie cobre una orden creyendo
+              que es una venta de mostrador y la deje pendiente en Órdenes. */}
+          {ordenNumero !== null && (
+            <p className="mb-3 rounded-lg bg-marron-tenue px-3 py-2 text-xs text-marron-hondo">
+              Cobrando el pedido #{ordenNumero} de la tienda. Puedes quitar,
+              agregar o cambiar cantidades antes de cobrar.
+            </p>
+          )}
 
           {carrito.length === 0 ? (
             <p className="py-6 text-center text-sm text-tinta-suave">
