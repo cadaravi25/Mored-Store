@@ -87,28 +87,42 @@ const PAREJAS = {
   // son verde oliva, vino y azul petróleo, y tiene registrados morado, negro y
   // azul: el reparto no tiene a qué agarrarse y le pega el vino al morado.
   "modelo 15": "36/0103",
+  "modelo 18": "36/0034",
   "Modelo 17": "36/0005",
   "modelo 19": "36/0107",
   "modelo 20": "36/0111",
   "modelo 21": "36/0077",
   "modelo 22": "36/0089",
+  "modelo 23": "36/0119",
   "modelo 24": "36/0124",
   "modelo 25": "36/0128",
   "modelo 26": "36/0137",
   "modelo 27": "36/0140",
   "modelo 28": "36/0143",
   "modelo 29": "36/0147",
+  "modelo 31": "36/0167",
+  "modelo 32": "36/0159",
 };
 
 /**
- * Las que el reparto erraba y se fijan a mano. Aquí solo se dice cuál es la
- * foto PRINCIPAL de ese color; las demás del mismo color caen solas detrás.
+ * Las que el reparto erraba y se fijan a mano.
+ *
+ * Con un nombre suelto se dice cuál es la foto PRINCIPAL de ese color y las
+ * demás del mismo color caen solas detrás. Con una lista se dice cuáles son
+ * TODAS, y lo que el reparto hubiera metido ahí se va a huérfanas.
+ *
+ * La lista hace falta cuando el grupo entero está mal, no solo el orden: en el
+ * modelo 32 hay dos azul marino, un burdeos y un negro, pero registrado solo
+ * está el negro, así que el reparto le daba el azul marino por ser lo más
+ * oscuro que quedaba.
  */
 const A_MANO = {
   "IMG_7638|Gris": "IMG_7638.JPG",
   "modelo 5|Rojo": "IMG_7545.JPG",
   "modelo 8|Burdeos": "IMG_7569.JPG",
   "modelo 15|Rojo": "IMG_7605.AVIF",
+  "modelo 31|Negro": ["IMG_7640.jpg", "IMG_7639.jpg"],
+  "modelo 32|Negro": ["IMG_7646.jpg"],
 };
 
 const entorno = Object.fromEntries(
@@ -291,21 +305,29 @@ for (const [clave, cuadro] of Object.entries(PAREJAS)) {
    * color, y el leopardo gris se quedaba en Marrón por más que estuviera
    * anotado.
    */
-  for (const [k, archivo] of Object.entries(A_MANO)) {
+  for (const [k, anotado] of Object.entries(A_MANO)) {
     if (!k.startsWith(`${clave}|`)) continue;
     const color = k.split("|")[1];
     const d = dianas.find((x) => x.nombre === color);
     if (!d) continue;
 
-    let foto = null;
-    for (const otra of dianas) {
-      const i = otra.fotos.findIndex((f) => basename(f.foto) === archivo);
-      if (i >= 0) foto = otra.fotos.splice(i, 1)[0];
-    }
-    const j = huerfanas.findIndex((f) => basename(f.foto) === archivo);
-    if (j >= 0) foto = huerfanas.splice(j, 1)[0];
+    const exacta = Array.isArray(anotado);
+    // Con lista se vacía el color primero: lo que estaba mal puesto no puede
+    // quedarse detrás de lo correcto.
+    if (exacta) huerfanas.push(...d.fotos.splice(0));
 
-    if (foto) d.fotos.unshift({ ...foto, fijada: true });
+    for (const archivo of exacta ? [...anotado].reverse() : [anotado]) {
+      let foto = null;
+      for (const otra of dianas) {
+        const i = otra.fotos.findIndex((f) => basename(f.foto) === archivo);
+        if (i >= 0) foto = otra.fotos.splice(i, 1)[0];
+      }
+      const j = huerfanas.findIndex((f) => basename(f.foto) === archivo);
+      if (j >= 0) foto = huerfanas.splice(j, 1)[0];
+
+      if (foto) d.fotos.unshift({ ...foto, fijada: true });
+      else console.log(`    ojo: ${archivo} anotada a mano y no está en la carpeta`);
+    }
   }
 
   for (const d of dianas) {
