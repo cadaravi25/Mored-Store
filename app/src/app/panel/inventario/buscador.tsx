@@ -76,6 +76,8 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
   const [color, setColor] = useState("");
   const [talla, setTalla] = useState("");
   const [estilo, setEstilo] = useState("");
+  const [soloSinFoto, setSoloSinFoto] = useState(false);
+  const [orden, setOrden] = useState("");
 
   // El tope existe para que la pantalla no se ahogue, pero tiene que quedar
   // por encima del inventario real: con 231 variantes y un tope de 200, la
@@ -146,8 +148,35 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
     return s;
   }, [resultados]);
 
-  const sinFoto = grupos.filter((g) => !conFoto.has(g.v.producto_id)).length;
-  const hayFiltro = Boolean(color || talla || estilo);
+  const sinFotoLista = grupos.filter((g) => !conFoto.has(g.v.producto_id));
+  const sinFoto = sinFotoLista.length;
+
+  // El aviso de "sin foto" es la lista de trabajo pendiente, así que además de
+  // contarlas deja verlas: contarlas y que después haya que ir buscándolas a
+  // mano por la lista entera no sirve de nada.
+  const base = soloSinFoto ? sinFotoLista : grupos;
+
+  /**
+   * Ordenar por lo que queda, para ver qué se está acabando.
+   *
+   * El stock del grupo es la suma de sus tallas: lo que interesa saber es si
+   * de ese top blanco queda una sola pieza entre todas las tallas, no si la M
+   * está en cero mientras hay seis de la S.
+   */
+  const quedan = (g: { tallas: Variante[] }) =>
+    g.tallas.reduce((s, t) => s + t.disponible, 0);
+
+  const mostrados = useMemo(() => {
+    if (!orden) return base;
+    const lista = [...base];
+    lista.sort((a, b) =>
+      orden === "menos" ? quedan(a) - quedan(b) : quedan(b) - quedan(a),
+    );
+    return lista;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [base, orden]);
+
+  const hayFiltro = Boolean(color || talla || estilo || soloSinFoto);
 
   return (
     <div className="space-y-4">
@@ -167,16 +196,40 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
         <Selector etiqueta="Estilo" opciones={opciones.estilos} valor={estilo} onChange={setEstilo} />
       </div>
 
+      {/* Este no filtra, ordena: no esconde nada, solo pone delante lo que se
+          está acabando. Por eso va aparte de los tres de arriba. */}
+      <select
+        aria-label="Ordenar"
+        value={orden}
+        onChange={(e) => setOrden(e.target.value)}
+        className={`w-full rounded-lg border bg-crema-alto px-3 py-2.5 text-sm outline-none sm:w-auto ${
+          orden ? "border-marron text-tinta" : "border-borde text-tinta-suave"
+        }`}
+      >
+        <option value="">Orden: como salen</option>
+        <option value="menos">Lo que se está acabando primero</option>
+        <option value="mas">Lo que más queda primero</option>
+      </select>
+
       <div className="flex items-center justify-between gap-3">
         <p className="text-sm text-tinta-suave">
           {cargando
             ? "Buscando…"
             : `${grupos.length} ${grupos.length === 1 ? "resultado" : "resultados"} · ${totalPrendas} ${totalPrendas === 1 ? "prenda" : "prendas"}`}
           {!cargando && sinFoto > 0 && (
-            <span className="text-alerta">
+            <>
               {" · "}
-              {sinFoto} sin foto
-            </span>
+              <button
+                type="button"
+                onClick={() => setSoloSinFoto(!soloSinFoto)}
+                aria-pressed={soloSinFoto}
+                className={`text-alerta underline-offset-4 hover:underline ${
+                  soloSinFoto ? "underline" : ""
+                }`}
+              >
+                {sinFoto} sin foto
+              </button>
+            </>
           )}
           {/* Si se llegó al tope hay más y no se ven. Callarlo haría creer que
               el inventario es más pequeño de lo que es. */}
@@ -194,6 +247,8 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
               setColor("");
               setTalla("");
               setEstilo("");
+              setSoloSinFoto(false);
+              setOrden("");
             }}
             className="shrink-0 text-sm text-marron-hondo underline-offset-4 hover:underline"
           >
@@ -203,7 +258,7 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
       </div>
 
       <ul className="space-y-2">
-        {grupos.map(({ v, tallas }) => {
+        {mostrados.map(({ v, tallas }) => {
           // Lo que entró del catálogo de Treinta sin saber el reparto queda
           // bajo una talla marcada. No se muestra como una talla más: se
           // muestra como lo que es, trabajo pendiente.
@@ -322,7 +377,7 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
         })}
       </ul>
 
-      {!cargando && grupos.length === 0 && (
+      {!cargando && mostrados.length === 0 && (
         <p className="rounded-xl border border-borde bg-crema-alto px-5 py-10 text-center text-tinta-suave">
           {termino || hayFiltro
             ? "Nada coincide con esa búsqueda."
