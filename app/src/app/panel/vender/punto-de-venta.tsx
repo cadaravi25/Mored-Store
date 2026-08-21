@@ -8,6 +8,7 @@ import PasoCliente, { type Elegido } from "./selector-cliente";
 
 interface Variante {
   variante_id: string;
+  producto_id: string;
   producto_nombre: string;
   color_nombre: string;
   color_hex: string | null;
@@ -126,6 +127,25 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
    * raro que pase y partir la venta en dos precios daría un total que no
    * cuadra con ninguno de los dos.
    */
+  /**
+   * La foto de una prenda, aunque ese color no tenga la suya.
+   *
+   * En la base la foto cuelga del color, y hay colores que todavía no tienen
+   * una propia: heredan la primera del producto. La tienda ya resuelve esa
+   * herencia, pero la búsqueda del panel devuelve el color pelado, así que
+   * aquí se rearma. Si no, media pantalla de Vender sale con cuadros de color
+   * y no se reconoce nada de un vistazo, que es justo para lo que sirve.
+   */
+  const fotoPorProducto = useMemo(() => {
+    const mapa = new Map<string, string>();
+    for (const v of resultados) {
+      if (v.foto_url && !mapa.has(v.producto_id)) mapa.set(v.producto_id, v.foto_url);
+    }
+    return mapa;
+  }, [resultados]);
+
+  const fotoDe = (v: Variante) => v.foto_url ?? fotoPorProducto.get(v.producto_id) ?? null;
+
   const enBs = pagos.length > 0 && pagos[0].moneda === "BS";
   const precioDe = (l: { precio_usd: number; precio_bs: number }) =>
     Number(enBs ? (l.precio_bs || l.precio_usd) : l.precio_usd);
@@ -261,11 +281,25 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
                 onClick={() => agregar(v)}
                 className="flex w-full items-center gap-3 rounded-xl border border-borde bg-crema-alto p-3 text-left transition-colors hover:border-marron-suave"
               >
-                <span
-                  aria-hidden
-                  className="h-12 w-12 shrink-0 rounded-lg border border-borde"
-                  style={{ backgroundColor: v.color_hex ?? "#efe9dd" }}
-                />
+                {/* La foto, que es como reconocen la prenda de un vistazo.
+                    El cuadro de color se queda solo para las que todavía no
+                    tienen: es más útil que un recuadro gris, porque al menos
+                    dice de qué color es. */}
+                {fotoDe(v) ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={fotoDe(v)!}
+                    alt=""
+                    loading="lazy"
+                    className="h-12 w-12 shrink-0 rounded-lg border border-borde object-cover"
+                  />
+                ) : (
+                  <span
+                    aria-hidden
+                    className="h-12 w-12 shrink-0 rounded-lg border border-borde"
+                    style={{ backgroundColor: v.color_hex ?? "#efe9dd" }}
+                  />
+                )}
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-sm text-tinta">
                     {v.producto_nombre}
