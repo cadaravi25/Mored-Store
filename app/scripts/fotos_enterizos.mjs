@@ -45,6 +45,7 @@ import { createClient } from "@supabase/supabase-js";
 import sharp from "sharp";
 import { colorDominante, masCercano, aLab } from "./color_de_foto.mjs";
 import { enRuta } from "./rutas.mjs";
+import { PAREJAS, COLORES } from "./enterizos.mjs";
 
 const MARCA = "ACTIVE-WHATSAPP";
 const ensayo = process.argv.includes("--ensayo");
@@ -65,64 +66,29 @@ const CORTE = 30;
 const separacion = (a, b) =>
   Math.hypot((a[0] - b[0]) * 0.5, a[1] - b[1], a[2] - b[2]);
 
-/** Lo que dijo Carlos: carpeta -> captura del vídeo. */
-const PAREJAS = {
-  "IMG_7544": "36/0047",
-  "IMG_7638": "36/0151",
-  "IMG_7647": "36/0015",
-  "modelo 1": "36/0004",
-  "Modelo 2": "36/0091",
-  "modelo 3": "36/0030",
-  "modelo 4": "36/0039",
-  "modelo 5": "36/0053",
-  "modelo 6": "36/0059",
-  "modelo 7": "36/0114",
-  "modelo 8": "36/0066",
-  "modelo 9": "36/0069",
-  "modelo 10": "36/0073",
-  "modelo 11": "36/0095",
-  "modelo 12": "36/0082",
-  "modelo 13": "36/0084",
-  // "modelo 14": "36/0100"  <- espera a que le carguen los colores. Sus fotos
-  // son verde oliva, vino y azul petróleo, y tiene registrados morado, negro y
-  // azul: el reparto no tiene a qué agarrarse y le pega el vino al morado.
-  "modelo 15": "36/0103",
-  "modelo 18": "36/0034",
-  "Modelo 17": "36/0005",
-  "modelo 19": "36/0107",
-  "modelo 20": "36/0111",
-  "modelo 21": "36/0077",
-  "modelo 22": "36/0089",
-  "modelo 23": "36/0119",
-  "modelo 24": "36/0124",
-  "modelo 25": "36/0128",
-  "modelo 26": "36/0137",
-  "modelo 27": "36/0140",
-  "modelo 28": "36/0143",
-  "modelo 29": "36/0147",
-  "modelo 31": "36/0167",
-  "modelo 32": "36/0159",
-};
 
 /**
- * Las que el reparto erraba y se fijan a mano.
+ * Lo que no se adivina: qué foto es de qué color.
+ *
+ * Casi todo sale de la tabla escrita a mano en enterizos.mjs, que dice el
+ * color y TODAS sus fotos en orden. Lo que quede fuera de esa tabla lo sigue
+ * repartiendo el parecido de color, que basta cuando la carpeta trae un color
+ * solo.
  *
  * Con un nombre suelto se dice cuál es la foto PRINCIPAL de ese color y las
- * demás del mismo color caen solas detrás. Con una lista se dice cuáles son
- * TODAS, y lo que el reparto hubiera metido ahí se va a huérfanas.
- *
- * La lista hace falta cuando el grupo entero está mal, no solo el orden: en el
- * modelo 32 hay dos azul marino, un burdeos y un negro, pero registrado solo
- * está el negro, así que el reparto le daba el azul marino por ser lo más
- * oscuro que quedaba.
+ * demás caen solas detrás. Con una lista se dice cuáles son TODAS, y lo que el
+ * reparto hubiera metido ahí se va a huérfanas: hace falta cuando el grupo
+ * entero está mal, no solo el orden.
  */
 const A_MANO = {
   "IMG_7638|Gris": "IMG_7638.JPG",
-  "modelo 5|Rojo": "IMG_7545.JPG",
-  "modelo 8|Burdeos": "IMG_7569.JPG",
-  "modelo 15|Rojo": "IMG_7605.AVIF",
-  "modelo 31|Negro": ["IMG_7640.jpg", "IMG_7639.jpg"],
-  "modelo 32|Negro": ["IMG_7646.jpg"],
+  ...Object.fromEntries(
+    Object.entries(COLORES).flatMap(([carpeta, colores]) =>
+      Object.entries(colores)
+        .filter(([, fotos]) => fotos.length)
+        .map(([color, fotos]) => [`${carpeta}|${color}`, fotos]),
+    ),
+  ),
 };
 
 const entorno = Object.fromEntries(

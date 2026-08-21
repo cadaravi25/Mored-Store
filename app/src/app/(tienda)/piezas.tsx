@@ -38,6 +38,9 @@ export interface ColorDeTarjeta {
   color: string;
   hex: string | null;
   foto_url: string;
+  /** La principal primero. La segunda, si la hay, es la que sale al pasar por
+   *  encima: casi siempre la de espaldas. */
+  fotos: string[];
   precio: number;
   precioBs: number;
   tallas: { talla: string; disponible: number }[];
@@ -136,6 +139,7 @@ export function agrupar(filas: FilaCatalogo[]): Tarjeta[] {
         color: f.color,
         hex: f.hex,
         foto_url: f.foto_url,
+        fotos: f.fotos?.length ? f.fotos : [f.foto_url],
         precio: Number(f.precio_usd),
         precioBs: Number(f.precio_bs ?? f.precio_usd),
         tallas: [],
@@ -308,14 +312,34 @@ export function TarjetaProducto({
         className="group block"
       >
         <div className="relative overflow-hidden bg-humo">
+          {/* Con dos fotos, pasar por encima enseña la de espaldas en vez de
+              ampliar: se ve más de la prenda sin tener que entrar. Con una
+              sola no hay nada que enseñar, así que se queda el acercamiento.
+              El vuelto no se cruza en el móvil, donde no hay ratón, y ahí la
+              tarjeta se comporta como siempre. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={c.foto_url}
             alt={`${t.producto} ${c.color}`}
             loading="lazy"
-            className={`aspect-[3/4] w-full object-cover transition-transform duration-[900ms] group-hover:scale-105 ${tope ?? ""}`}
+            className={`aspect-[3/4] w-full object-cover duration-[900ms] ${
+              c.fotos.length > 1
+                ? "transition-opacity group-hover:opacity-0"
+                : "transition-transform group-hover:scale-105"
+            } ${tope ?? ""}`}
             style={{ transitionTimingFunction: "var(--curva)" }}
           />
+          {c.fotos.length > 1 && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={c.fotos[1]}
+              alt=""
+              aria-hidden
+              loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-[900ms] group-hover:opacity-100"
+              style={{ transitionTimingFunction: "var(--curva)" }}
+            />
+          )}
           {hay.length === 0 && (
             <span className="absolute left-3 top-3 bg-nieve px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-gris">
               Agotado
