@@ -8,6 +8,16 @@ import { NextResponse, type NextRequest } from "next/server";
 const RUTAS_PRIVADAS = ["/panel"];
 
 /**
+ * Lo que vive bajo /panel pero tiene que poder leerse sin haber entrado.
+ *
+ * El manifiesto lo pide el navegador para ofrecer instalar la aplicación, y lo
+ * pide sin las cookies de nadie. Si le contesta la pantalla de entrada, el
+ * teléfono decide que no hay aplicación que instalar y no vuelve a preguntar.
+ * No lleva nada privado: el nombre, el color y los iconos.
+ */
+const EXCEPCIONES = ["/panel/manifest"];
+
+/**
  * En Next 16 esto se llama `proxy`; hasta la 15 era `middleware`.
  *
  * Su trabajo aquí es refrescar la sesión y mandar a la pantalla de entrada a
@@ -45,7 +55,13 @@ export async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const ruta = request.nextUrl.pathname;
-  const esPrivada = RUTAS_PRIVADAS.some((r) => ruta.startsWith(r));
+  // Por segmento y no por prefijo suelto: con startsWith a secas, /panel-sw.js
+  // contaba como privado y el ayudante de los avisos nunca llegaba a
+  // instalarse, porque el navegador recibía la pantalla de entrada en vez del
+  // guion.
+  const esPrivada =
+    !EXCEPCIONES.includes(ruta) &&
+    RUTAS_PRIVADAS.some((r) => ruta === r || ruta.startsWith(`${r}/`));
 
   if (!user && esPrivada) {
     const url = request.nextUrl.clone();
@@ -68,6 +84,6 @@ export async function proxy(request: NextRequest) {
 // bloqueando el CSS de la propia pantalla de entrada.
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|webp|ico)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|webp|ico|js)$).*)",
   ],
 };
