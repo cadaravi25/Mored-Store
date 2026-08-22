@@ -6,6 +6,8 @@ import { crearClienteNavegador } from "@/lib/supabase/client";
 
 export interface Resumen {
   fecha: string;
+  desde: string;
+  hasta: string;
   cantidad_ventas: number;
   total_ventas_usd: number;
   efectivo_usd_esperado: number;
@@ -21,6 +23,8 @@ export interface Resumen {
     monto_usd: number;
     cantidad: number;
   }[];
+  /** Cómo se repartió el período por días. Para mirar el mes por dentro. */
+  dias: { dia: string; ventas: number; total_usd: number }[];
   cierre: {
     estado: string;
     efectivo_usd_contado: number | null;
@@ -67,10 +71,12 @@ function Diferencia({
 }
 
 export default function Arqueo({
-  fecha,
+  desde,
+  hasta,
   resumen,
 }: {
-  fecha: string;
+  desde: string;
+  hasta: string;
   resumen: Resumen;
 }) {
   const router = useRouter();
@@ -94,8 +100,9 @@ export default function Arqueo({
     setError(null);
 
     const supabase = crearClienteNavegador();
-    const { error: fallo } = await supabase.rpc("cerrar_caja", {
-      p_fecha: fecha,
+    const { error: fallo } = await supabase.rpc("cerrar_caja_rango", {
+      p_desde: desde,
+      p_hasta: hasta,
       p_efectivo_usd_contado: contadoUsd.trim() === "" ? null : Number(contadoUsd),
       p_efectivo_bs_contado: contadoBs.trim() === "" ? null : Number(contadoBs),
       p_nota: nota.trim() || null,
@@ -118,7 +125,7 @@ export default function Arqueo({
     return (
       <section className="rounded-2xl border border-borde bg-crema-alto p-5">
         <p className="text-xs uppercase tracking-wide text-tinta-suave">
-          Arqueo del día
+          Arqueo
         </p>
 
         <dl className="mt-3 space-y-3">
@@ -211,7 +218,7 @@ export default function Arqueo({
   return (
     <section className="rounded-2xl border border-borde bg-crema-alto p-5">
       <p className="text-xs uppercase tracking-wide text-tinta-suave">
-        {rehaciendo ? "Rehacer el cierre" : "Cerrar el día"}
+        {rehaciendo ? "Rehacer el cierre" : "Cerrar la caja"}
       </p>
       <p className="mt-1 text-sm text-tinta-suave">
         Cuenten el efectivo que hay en la caja y anótenlo aquí.

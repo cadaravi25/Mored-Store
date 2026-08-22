@@ -1,7 +1,15 @@
 import Link from "next/link";
 import { crearClienteServidor } from "@/lib/supabase/server";
-import { diaEnCaracas, enPalabras, enCorto } from "@/lib/fechas";
+import {
+  diaEnCaracas,
+  enCorto,
+  limitesDelMes,
+  mesDe,
+  mesEnPalabras,
+  mesEnSiglas,
+} from "@/lib/fechas";
 import Arqueo, { type Resumen } from "./arqueo";
+import Periodo from "./periodo";
 
 export const dynamic = "force-dynamic";
 
@@ -24,47 +32,80 @@ const NOMBRE_METODO: Record<string, string> = {
 
 interface Cierre {
   fecha: string;
+  hasta: string;
   diferencia_usd: number | null;
   diferencia_bs: number | null;
   total_ventas_usd: number | null;
   cantidad_ventas: number | null;
 }
 
-/** Un día anterior, en formato aaaa-mm-dd. */
-function diaAntes(fecha: string): string {
-  const d = new Date(`${fecha}T12:00:00Z`);
-  d.setUTCDate(d.getUTCDate() - 1);
-  return d.toISOString().slice(0, 10);
+interface MesConCaja {
+  mes: string;
+  ventas: number;
+  total_usd: number;
+  cerrado: boolean;
 }
 
+const FECHA = /^\d{4}-\d{2}-\d{2}$/;
+
+/**
+ * La caja se cierra por mes.
+ *
+ * Yolima y Sara hacen el cierre mensual, no diario, así que la pantalla ya no
+ * pide cuadrar el efectivo cada noche. Entra mostrando el mes en curso, y el
+ * detalle por día se puede mirar dentro del mes sin tener que cerrar nada.
+ *
+ * El rango a mano existe porque no todos los cortes caen en un mes limpio: si
+ * se fueron de viaje y quieren cuadrar lo de una semana suelta, se puede.
+ */
 export default async function Caja({
   searchParams,
 }: {
-  searchParams: Promise<{ f?: string }>;
+  searchParams: Promise<{ desde?: string; hasta?: string; m?: string }>;
 }) {
-  const { f } = await searchParams;
+  const { desde: d, hasta: h, m } = await searchParams;
   const hoy = diaEnCaracas();
-  // Solo se acepta una fecha con forma de fecha, y nunca del futuro.
-  const fecha =
-    f && /^\d{4}-\d{2}-\d{2}$/.test(f) && f <= hoy ? f : hoy;
+
+  // Un rango a mano manda sobre el mes. Si no hay nada, el mes en curso.
+  let desde: string;
+  let hasta: string;
+  if (d && h && FECHA.test(d) && FECHA.test(h) && d <= h) {
+    desde = d;
+    hasta = h;
+  } else {
+    const limites = limitesDelMes(m && /^\d{4}-\d{2}$/.test(m) ? m : mesDe(hoy));
+    desde = limites.desde;
+    hasta = limites.hasta;
+  }
+  // Cuadrar contra días que todavía no llegaron no tiene sentido, y además
+  // haría ver el mes en curso como si ya hubiera terminado.
+  if (hasta > hoy) hasta = hoy;
+
+  const esMesCompleto =
+    desde === limitesDelMes(mesDe(desde)).desde &&
+    (hasta === limitesDelMes(mesDe(desde)).hasta || mesDe(desde) === mesDe(hoy));
 
   const supabase = await crearClienteServidor();
-  const [{ data: resumen, error }, { data: anteriores }] = await Promise.all([
-    supabase.rpc("resumen_caja", { p_fecha: fecha }),
-    supabase
-      .from("cierres_caja")
-      .select("fecha,diferencia_usd,diferencia_bs,total_ventas_usd,cantidad_ventas")
-      .eq("estado", "cerrado")
-      .order("fecha", { ascending: false })
-      .limit(8),
-  ]);
+  const [{ data: resumen, error }, { data: meses }, { data: anteriores }] =
+    await Promise.all([
+      supabase.rpc("resumen_caja_rango", { p_desde: desde, p_hasta: hasta }),
+      supabase.rpc("meses_de_caja"),
+      supabase
+        .from("cierres_caja")
+        .select(
+          "fecha,hasta,diferencia_usd,diferencia_bs,total_ventas_usd,cantidad_ventas",
+        )
+        .eq("estado", "cerrado")
+        .order("fecha", { ascending: false })
+        .limit(8),
+    ]);
 
   if (error || !resumen) {
     return (
       <main className="mx-auto w-full max-w-3xl px-5 py-7">
         <h1 className="text-2xl text-tinta">Caja</h1>
         <p className="mt-4 rounded-2xl bg-alerta-tenue px-4 py-3 text-sm text-alerta">
-          No se pudo cargar el corte del día. {error?.message}
+          No se pudo cargar el corte. {error?.message}
         </p>
       </main>
     );
@@ -73,47 +114,53 @@ export default async function Caja({
   const r = resumen as Resumen;
   const cerrado = r.cierre?.estado === "cerrado";
   const detalle = r.detalle ?? [];
+  const dias = r.dias ?? [];
   const enEspera = r.por_verificar?.cantidad ?? 0;
-  const ayer = diaAntes(hoy);
+  const mesActivo = mesDe(desde);
 
   return (
     <main className="mx-auto w-full max-w-3xl px-5 py-7">
-      <header className="mb-6">
+      <header className="mb-5">
         <div className="flex flex-wrap items-baseline justify-between gap-3">
           <h1 className="text-2xl text-tinta">Caja</h1>
-          <nav className="flex gap-1.5">
-            {[
-              { id: hoy, nombre: "Hoy" },
-              { id: ayer, nombre: "Ayer" },
-            ].map((x) => (
-              <Link
-                key={x.id}
-                href={`/panel/caja?f=${x.id}`}
-                className={`rounded-full border px-3 py-1.5 text-sm ${
-                  x.id === fecha
-                    ? "border-marron bg-marron text-crema-alto"
-                    : "border-borde bg-crema-alto text-tinta-suave"
-                }`}
-              >
-                {x.nombre}
-              </Link>
-            ))}
-          </nav>
-        </div>
-        <p className="mt-1 text-sm capitalize text-tinta-suave">
-          {enPalabras(fecha)}
           {cerrado && (
-            <span className="ml-2 rounded-full bg-marron-tenue px-2 py-0.5 text-xs uppercase not-italic tracking-wide text-marron-hondo">
+            <span className="rounded-full bg-marron-tenue px-2.5 py-1 text-xs uppercase tracking-wide text-marron-hondo">
               cerrada
             </span>
           )}
+        </div>
+        <p className="mt-1 text-sm capitalize text-tinta-suave">
+          {esMesCompleto
+            ? mesEnPalabras(mesActivo)
+            : `${enCorto(desde)} — ${enCorto(hasta)}`}
         </p>
       </header>
+
+      {/* Los meses primero, que es como cierran. El rango a mano queda detrás
+          de un toque, para lo que no cuadre con un mes. */}
+      <nav className="mb-4 flex flex-wrap gap-1.5">
+        {((meses ?? []) as MesConCaja[]).slice(0, 12).map((x) => (
+          <Link
+            key={x.mes}
+            href={`/panel/caja?m=${x.mes.slice(0, 7)}`}
+            className={`rounded-full border px-3 py-1.5 text-sm ${
+              esMesCompleto && mesDe(x.mes) === mesActivo
+                ? "border-marron bg-marron text-crema-alto"
+                : "border-borde bg-crema-alto text-tinta-suave"
+            }`}
+          >
+            {mesEnSiglas(mesDe(x.mes))}
+            {x.cerrado && <span className="ml-1 text-xs opacity-60">·</span>}
+          </Link>
+        ))}
+      </nav>
+
+      <Periodo desde={desde} hasta={hasta} aMano={!esMesCompleto} />
 
       <section className="mb-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
         <div className="rounded-2xl border border-borde bg-crema-alto p-4">
           {/* "Cobrado" y no "vendido": un apartado a medio pagar entra por lo
-              que pagaron hoy, que es lo que tiene que cuadrar con la caja. */}
+              que pagaron, que es lo que tiene que cuadrar con la caja. */}
           <p className="text-xs uppercase tracking-wide text-tinta-suave">
             Cobrado
           </p>
@@ -159,7 +206,7 @@ export default async function Caja({
         </p>
         {detalle.length === 0 ? (
           <p className="py-8 text-center text-sm text-tinta-suave">
-            Todavía no hay cobros en este día.
+            Todavía no hay cobros en este período.
           </p>
         ) : (
           <ul className="mt-2 divide-y divide-borde">
@@ -198,7 +245,33 @@ export default async function Caja({
         )}
       </section>
 
-      <Arqueo fecha={fecha} resumen={r} />
+      {/* El desglose por día no decide nada del cierre: está para que al
+          cuadrar se vea qué día se salió de lo normal. */}
+      {dias.length > 1 && (
+        <section className="mb-3 rounded-2xl border border-borde bg-crema-alto p-5">
+          <p className="text-xs uppercase tracking-wide text-tinta-suave">
+            Día por día
+          </p>
+          <ul className="mt-2 divide-y divide-borde">
+            {dias.map((x) => (
+              <li
+                key={x.dia}
+                className="flex items-baseline justify-between gap-3 py-2"
+              >
+                <span className="text-sm text-tinta">{enCorto(x.dia)}</span>
+                <span className="text-xs text-tinta-suave">
+                  {x.ventas} {x.ventas === 1 ? "venta" : "ventas"}
+                </span>
+                <span className="text-sm tabular-nums text-tinta">
+                  {usd.format(Number(x.total_usd))}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <Arqueo desde={desde} hasta={hasta} resumen={r} />
 
       {(anteriores ?? []).length > 0 && (
         <section className="mt-3 rounded-2xl border border-borde bg-crema-alto p-5">
@@ -210,13 +283,21 @@ export default async function Caja({
               const dif = Number(c.diferencia_usd ?? 0);
               const difBs = Number(c.diferencia_bs ?? 0);
               const cuadra = dif === 0 && difBs === 0;
+              const unDia = c.fecha === c.hasta;
               return (
-                <li key={c.fecha}>
+                <li key={`${c.fecha}-${c.hasta}`}>
                   <Link
-                    href={`/panel/caja?f=${c.fecha}`}
+                    href={`/panel/caja?desde=${c.fecha}&hasta=${c.hasta}`}
                     className="flex items-baseline justify-between gap-3 py-2.5 hover:text-marron-hondo"
                   >
-                    <span className="text-sm text-tinta">{enCorto(c.fecha)}</span>
+                    <span className="text-sm capitalize text-tinta">
+                      {unDia
+                        ? enCorto(c.fecha)
+                        : c.fecha === limitesDelMes(mesDe(c.fecha)).desde &&
+                            c.hasta === limitesDelMes(mesDe(c.fecha)).hasta
+                          ? mesEnPalabras(mesDe(c.fecha))
+                          : `${enCorto(c.fecha)} — ${enCorto(c.hasta)}`}
+                    </span>
                     <span className="text-xs text-tinta-suave">
                       {c.cantidad_ventas ?? 0}{" "}
                       {c.cantidad_ventas === 1 ? "venta" : "ventas"} ·{" "}

@@ -76,3 +76,39 @@ const CON_DIA_SEMANA = new Intl.DateTimeFormat("es-VE", {
 export function conDiaSemana(fecha: string): string {
   return CON_DIA_SEMANA.format(new Date(`${fecha}T12:00:00Z`));
 }
+
+/** Primer y último día de un mes dado como aaaa-mm. */
+export function limitesDelMes(mes: string): { desde: string; hasta: string } {
+  const [a, m] = mes.split("-").map(Number);
+  const ultimo = new Date(Date.UTC(a, m, 0)).getUTCDate();
+  return {
+    desde: `${mes}-01`,
+    hasta: `${mes}-${String(ultimo).padStart(2, "0")}`,
+  };
+}
+
+/** El mes al que pertenece una fecha, como aaaa-mm. */
+export const mesDe = (fecha: string) => fecha.slice(0, 7);
+
+const NOMBRE_MES = new Intl.DateTimeFormat("es-VE", {
+  month: "long",
+  year: "numeric",
+  timeZone: ZONA,
+});
+
+/** "agosto de 2026" a partir de aaaa-mm. */
+export function mesEnPalabras(mes: string): string {
+  return NOMBRE_MES.format(new Date(`${mes}-15T12:00:00Z`));
+}
+
+const MES_CORTO = new Intl.DateTimeFormat("es-VE", {
+  month: "short",
+  timeZone: ZONA,
+});
+
+/** "AGO" a partir de aaaa-mm. Para las pestañas, donde no cabe más. */
+export function mesEnSiglas(mes: string): string {
+  return MES_CORTO.format(new Date(`${mes}-15T12:00:00Z`))
+    .replace(".", "")
+    .toUpperCase();
+}

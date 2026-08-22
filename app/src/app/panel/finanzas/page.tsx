@@ -1,6 +1,12 @@
 ﻿import Link from "next/link";
 import { crearClienteServidor } from "@/lib/supabase/server";
-import { diaEnCaracas, inicioDelDia } from "@/lib/fechas";
+import {
+  diaEnCaracas,
+  inicioDelDia,
+  limitesDelMes,
+  mesEnPalabras,
+  mesEnSiglas,
+} from "@/lib/fechas";
 import { NuevoCambio, NuevoMovimiento } from "./acciones";
 import { BarraTasas, TasaDeVenta } from "./tasas";
 
@@ -55,12 +61,28 @@ function Dato({
 export default async function Finanzas({
   searchParams,
 }: {
-  searchParams: Promise<{ p?: string }>;
+  searchParams: Promise<{ p?: string; m?: string }>;
 }) {
-  const { p } = await searchParams;
-  const periodo = PERIODOS.find((x) => x.id === p) ?? PERIODOS[2];
-  const desde = fecha(periodo.dias);
-  const hasta = fecha(0);
+  const { p, m } = await searchParams;
+
+  // Un mes manda sobre los días corridos. Los dos conviven porque responden
+  // preguntas distintas: los días dicen cómo va la racha, el mes es el que
+  // cuadra con el cierre de caja.
+  const mes = m && /^\d{4}-\d{2}$/.test(m) ? m : null;
+  const periodo = mes ? null : (PERIODOS.find((x) => x.id === p) ?? PERIODOS[2]);
+  const hoy = diaEnCaracas();
+  const limites = mes ? limitesDelMes(mes) : null;
+  const desde = limites ? limites.desde : fecha(periodo!.dias);
+  // Un mes en curso llega hasta hoy: mostrar el mes entero haría creer que las
+  // cifras están cerradas cuando todavía faltan días por vender.
+  const hasta = limites ? (limites.hasta > hoy ? hoy : limites.hasta) : hoy;
+
+  /** Los últimos meses, para el selector. */
+  const meses = Array.from({ length: 6 }, (_, i) => {
+    const d = new Date(`${hoy.slice(0, 7)}-15T12:00:00Z`);
+    d.setUTCMonth(d.getUTCMonth() - i);
+    return d.toISOString().slice(0, 7);
+  });
 
   const supabase = await crearClienteServidor();
 
@@ -89,7 +111,11 @@ export default async function Finanzas({
         <div className="shrink-0">
           <h1 className="text-2xl text-tinta">Finanzas</h1>
           <p className="mt-1 text-sm text-tinta-suave">
-            {periodo.dias === 0 ? "Hoy" : `Últimos ${periodo.dias + 1} días`}
+            {mes
+              ? mesEnPalabras(mes)
+              : periodo!.dias === 0
+                ? "Hoy"
+                : `Últimos ${periodo!.dias + 1} días`}
           </p>
         </div>
 
@@ -101,18 +127,32 @@ export default async function Finanzas({
           />
         </div>
 
-        <nav className="ml-auto flex shrink-0 gap-1.5">
+        <nav className="ml-auto flex shrink-0 flex-wrap items-center gap-1.5">
           {PERIODOS.map((x) => (
             <Link
               key={x.id}
               href={`/panel/finanzas?p=${x.id}`}
               className={`rounded-full border px-3 py-1.5 text-sm ${
-                x.id === periodo.id
+                !mes && x.id === periodo!.id
                   ? "border-marron bg-marron text-crema-alto"
                   : "border-borde bg-crema-alto text-tinta-suave"
               }`}
             >
               {x.nombre}
+            </Link>
+          ))}
+          <span aria-hidden className="mx-1 h-5 w-px bg-borde" />
+          {meses.map((x) => (
+            <Link
+              key={x}
+              href={`/panel/finanzas?m=${x}`}
+              className={`rounded-full border px-3 py-1.5 text-sm ${
+                mes === x
+                  ? "border-marron bg-marron text-crema-alto"
+                  : "border-borde bg-crema-alto text-tinta-suave"
+              }`}
+            >
+              {mesEnSiglas(x)}
             </Link>
           ))}
         </nav>
