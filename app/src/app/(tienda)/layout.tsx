@@ -18,8 +18,11 @@ export const metadata: Metadata = {
  */
 export default async function TiendaLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  /** La ficha de una prenda abierta encima, sin sacar a nadie del catálogo. */
+  modal: React.ReactNode;
 }) {
   // La tasa del euro vive aquí y no en cada página: el interruptor está en
   // todas, y pedirla tres veces sería tres viajes para el mismo número.
@@ -37,6 +40,7 @@ export default async function TiendaLayout({
         <Encabezado />
         {children}
         <Pie />
+        {modal}
       </div>
     </ProveedorMoneda>
   );

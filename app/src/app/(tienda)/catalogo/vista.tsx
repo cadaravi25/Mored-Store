@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import Carrito from "../carrito";
 import { colorVisible } from "@/lib/prendas";
@@ -83,25 +83,91 @@ export default function Vista({
   filas,
   whatsapp,
   coleccionInicial,
-  tipoInicial,
 }: {
   filas: FilaCatalogo[];
   whatsapp: string | null;
   coleccionInicial: Coleccion;
-  tipoInicial: string;
 }) {
-  const router = useRouter();
+  /**
+   * Los filtros viven en la dirección, no solo aquí dentro.
+   *
+   * Antes vivían en el estado y nada más. Quien filtraba por enterizos, abría
+   * una prenda y volvía, se encontraba el catálogo entero otra vez y tenía que
+   * filtrar de nuevo: al volver, el componente se monta desde cero y el estado
+   * no existía. En la dirección sí sobrevive, y de paso el enlace filtrado se
+   * puede pasar por WhatsApp.
+   */
+  const parametros = useSearchParams();
+  const lista = (clave: string) => {
+    const v = parametros.get(clave);
+    return v ? v.split(",").filter(Boolean) : [];
+  };
+
   const [coleccion, setColeccion] = useState<Coleccion>(coleccionInicial);
-  const [tipos, setTipos] = useState<string[]>(
-    tipoInicial ? [tipoInicial] : [],
+  const [tipos, setTipos] = useState<string[]>(() => lista("tipo"));
+  const [tallas, setTallas] = useState<string[]>(() => lista("talla"));
+  const [colores, setColores] = useState<string[]>(() => lista("color"));
+  const [soloDisponible, setSoloDisponible] = useState(
+    () => parametros.get("hay") === "1",
   );
-  const [tallas, setTallas] = useState<string[]>([]);
-  const [colores, setColores] = useState<string[]>([]);
-  const [soloDisponible, setSoloDisponible] = useState(false);
-  const [orden, setOrden] = useState<Orden>("nombre");
-  const [columnas, setColumnas] = useState(3);
+  const [orden, setOrden] = useState<Orden>(
+    () => (parametros.get("orden") as Orden) || "nombre",
+  );
+  const [columnas, setColumnas] = useState(
+    () => Number(parametros.get("cols")) || 3,
+  );
   const [panel, setPanel] = useState(false);
   const { moneda, tasa } = useMoneda();
+
+  /**
+   * Escribe los filtros en la dirección sin volver al servidor.
+   *
+   * Con `router.replace` cada toque de un filtro sería un viaje, y filtrar
+   * tiene que verse al instante. `replaceState` es la forma que Next da para
+   * esto: cambia la dirección, el encabezado se entera porque lee los mismos
+   * parámetros, y no se vuelve a pedir nada.
+   *
+   * Reemplaza en vez de apilar a propósito: si cada filtro dejara su huella,
+   * salir del catálogo con el botón atrás serían quince toques.
+   */
+  function anotar(cambios: Record<string, string | null>) {
+    const p = new URLSearchParams(window.location.search);
+    for (const [k, v] of Object.entries(cambios)) {
+      if (!v) p.delete(k);
+      else p.set(k, v);
+    }
+    const q = p.toString();
+    window.history.replaceState(
+      null,
+      "",
+      q ? `${window.location.pathname}?${q}` : window.location.pathname,
+    );
+  }
+
+  const ponerTipos = (v: string[]) => {
+    setTipos(v);
+    anotar({ tipo: v.join(",") });
+  };
+  const ponerTallas = (v: string[]) => {
+    setTallas(v);
+    anotar({ talla: v.join(",") });
+  };
+  const ponerColores = (v: string[]) => {
+    setColores(v);
+    anotar({ color: v.join(",") });
+  };
+  const ponerDisponible = (v: boolean) => {
+    setSoloDisponible(v);
+    anotar({ hay: v ? "1" : null });
+  };
+  const ponerOrden = (v: Orden) => {
+    setOrden(v);
+    anotar({ orden: v === "nombre" ? null : v });
+  };
+  const ponerColumnas = (n: number) => {
+    setColumnas(n);
+    anotar({ cols: n === 3 ? null : String(n) });
+  };
 
   /**
    * La colección se cambia desde dos sitios y hay que atender los dos.
@@ -130,9 +196,7 @@ export default function Vista({
    */
   function cambiarColeccion(c: Coleccion) {
     setColeccion(c);
-    router.replace(c === "active" ? "/catalogo" : `/catalogo?c=${c}`, {
-      scroll: false,
-    });
+    anotar({ c: c === "active" ? null : c });
   }
 
   const acento = ACENTOS[coleccion];
@@ -226,6 +290,7 @@ export default function Vista({
     setTallas([]);
     setColores([]);
     setSoloDisponible(false);
+    anotar({ tipo: null, talla: null, color: null, hay: null });
   }
 
 
@@ -253,7 +318,7 @@ export default function Vista({
       <Grupo titulo="Disponibilidad">
         <Casilla
           marcada={soloDisponible}
-          onCambiar={() => setSoloDisponible(!soloDisponible)}
+          onCambiar={() => ponerDisponible(!soloDisponible)}
         >
           Solo lo que hay ahora
         </Casilla>
@@ -266,7 +331,7 @@ export default function Vista({
               <button
                 key={t}
                 type="button"
-                onClick={() => alternar(tallas, setTallas, t)}
+                onClick={() => alternar(tallas, ponerTallas, t)}
                 className={`min-w-11 rounded-lg border px-3 py-2 text-[13px] transition-colors ${
                   tallas.includes(t)
                     ? "border-carbon bg-carbon text-nieve"
@@ -292,7 +357,7 @@ export default function Vista({
                 <button
                   key={nombre}
                   type="button"
-                  onClick={() => alternar(colores, setColores, nombre)}
+                  onClick={() => alternar(colores, ponerColores, nombre)}
                   title={nombre}
                   aria-label={nombre}
                   aria-pressed={puesto}
@@ -328,7 +393,7 @@ export default function Vista({
               <Casilla
                 key={t}
                 marcada={tipos.includes(t)}
-                onCambiar={() => alternar(tipos, setTipos, t)}
+                onCambiar={() => alternar(tipos, ponerTipos, t)}
               >
                 {t}
               </Casilla>
@@ -402,7 +467,7 @@ export default function Vista({
                 <button
                   key={n}
                   type="button"
-                  onClick={() => setColumnas(n)}
+                  onClick={() => ponerColumnas(n)}
                   aria-label={`${n} columnas`}
                   className={`flex h-8 w-8 items-center justify-center gap-[2px] rounded border ${
                     columnas === n ? "border-carbon" : "border-linea"
@@ -427,7 +492,7 @@ export default function Vista({
                 <span className="hidden sm:inline">Ordenar</span>
                 <select
                   value={orden}
-                  onChange={(e) => setOrden(e.target.value as Orden)}
+                  onChange={(e) => ponerOrden(e.target.value as Orden)}
                   className="min-w-0 rounded-lg border border-linea bg-nieve px-2 py-1.5 text-carbon outline-none sm:px-3"
                 >
                   {ORDENES.map((o) => (

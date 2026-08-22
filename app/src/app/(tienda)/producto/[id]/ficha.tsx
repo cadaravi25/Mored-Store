@@ -15,10 +15,14 @@ export default function Ficha({
   filas,
   colorInicial,
   whatsapp,
+  enOverlay = false,
 }: {
   filas: FilaCatalogo[];
   colorInicial: string | null;
   whatsapp: string | null;
+  /** Puesta cuando la ficha va encima del catálogo. Entonces el carrito no se
+   *  pinta: el de la página de detrás sigue ahí y saldrían dos. */
+  enOverlay?: boolean;
 }) {
   const colores = [...new Set(filas.map((f) => f.color))];
   const [color, setColor] = useState(
@@ -267,7 +271,7 @@ export default function Ficha({
         </div>
       </div>
 
-      <Carrito whatsapp={whatsapp} />
+      {!enOverlay && <Carrito whatsapp={whatsapp} />}
     </main>
   );
 }

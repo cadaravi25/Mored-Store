@@ -15,9 +15,9 @@ export const metadata: Metadata = {
 export default async function Catalogo({
   searchParams,
 }: {
-  searchParams: Promise<{ c?: string; tipo?: string }>;
+  searchParams: Promise<{ c?: string }>;
 }) {
-  const { c, tipo } = await searchParams;
+  const { c } = await searchParams;
   const supabase = await crearClienteServidor();
 
   const { data } = await supabase.rpc("catalogo_publico");
@@ -32,7 +32,6 @@ export default async function Catalogo({
         filas={(data ?? []) as FilaCatalogo[]}
         whatsapp={process.env.NEXT_PUBLIC_WHATSAPP ?? null}
         coleccionInicial={c === "swim" ? "swim" : "active"}
-        tipoInicial={tipo ?? ""}
       />
     </>
   );
