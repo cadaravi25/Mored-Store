@@ -213,3 +213,72 @@ llevan su propia copia porque corren fuera de Next.
 - Borrar `app/credenciales-iniciales.txt`.
 - No poner `SUPABASE_SERVICE_ROLE_KEY` en el hosting: solo la usan los programas
   locales.
+
+---
+
+## 22 de agosto de 2026
+
+**El catálogo ya no empieza de cero al entrar a una prenda.** Los filtros
+vivían solo en el estado de React: quien filtraba por enterizos, abría una
+prenda y volvía, encontraba el catálogo entero otra vez. Ahora viven en la
+dirección, así que sobreviven al ir y venir, y el enlace filtrado se puede
+pasar por WhatsApp. Se escriben con `history.replaceState`, no con
+`router.replace`: con router cada toque de un filtro sería un viaje al
+servidor.
+
+**Las fichas se abren encima del catálogo**, con rutas interceptadas. El
+catálogo se queda detrás con su desplazamiento intacto. Quien llegue por un
+enlace compartido o recargue ve la página entera de siempre, que es lo que
+tiene que pasar con un enlace de Instagram. En el teléfono ocupa toda la
+pantalla.
+
+**La caja se cierra por mes.** Un cierre abarca ahora un rango: `fecha` es el
+primer día y `hasta` el último. Los cierres diarios de antes son rangos de un
+día y no se perdió ninguno. El cálculo es uno solo: `resumen_caja` y
+`cerrar_caja` quedaron como envoltorios de las versiones por rango. La
+pantalla entra por el mes en curso, enseña el detalle por día dentro del mes y
+deja un rango a mano para lo que no cae en un mes limpio. Finanzas conserva sus
+7/30/90 días y suma los meses al lado.
+
+**El panel se instala en el teléfono y avisa de los pedidos.** El manifiesto se
+enlaza solo desde el layout del panel: puesto en la raíz, la tienda saldría
+también como aplicación instalable y quien entra desde Instagram recibiría un
+"instalar Mored" encima de la foto. El aviso lo dispara la base, colgado del
+update final de `crear_orden` (en el insert la venta todavía no tiene ni
+prendas ni monto). El resumen viaja dentro de la llamada porque eso corre en
+una transacción que aún no ha cerrado.
+
+**La clave de servicio no está en el alojamiento**, y no hace falta: dos
+funciones devuelven solo los teléfonos apuntados y piden el mismo secreto
+compartido con el que la base llama a la tienda.
+
+### Qué falta para que los avisos lleguen de verdad
+
+La cadena está probada de punta a punta contra el servidor real: la base llama
+a la tienda, la tienda valida el secreto y responde `{"enviados":0}` —cero
+porque todavía nadie tiene el panel instalado—. **Pero falta un despliegue.**
+
+Netlify **pausó los despliegues de producción**: la cuenta agotó los créditos
+del ciclo de facturación. El sitio publicado sigue en línea, pero el último
+commit no subió, y ese commit es justo el que hace públicos el manifiesto y el
+ayudante de los avisos. Mientras no suba:
+
+- `/panel/manifest` y `/panel-sw.js` contestan con la pantalla de entrada, así
+  que el teléfono no ofrece instalar el panel ni puede registrar el ayudante.
+- La clave pública VAPID se mete en el paquete del navegador al compilar, y el
+  despliegue que está en línea se hizo antes de que las variables existieran.
+
+En cuanto se amplíe el plan o empiece el ciclo siguiente, el despliegue entra
+solo y con eso quedan los avisos andando. No hace falta tocar nada más.
+
+### Sigue pendiente de los enterizos
+
+- **modelo 30**: hay que crear la prenda (leopardo manga corta, 4 colores).
+  Faltan descripción, colores, tallas y los dos precios.
+- **modelo 16**: crear desde cero.
+- **IMG_7557**: sin emparejar.
+- El color **Azul** del leopardo sigue sin foto propia y enseña la gris. Se
+  resuelve al decidir lo del modelo 30.
+- Las 51 variantes de los colores nuevos entraron con **una unidad por talla**,
+  que es una suposición. Cada movimiento lo dice en su nota. Hay que repasarlo
+  en Inventario.
