@@ -1,7 +1,22 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import { correoAUsuario } from "@/lib/auth";
 import { Lateral, Inferior } from "@/components/navegacion";
+
+/**
+ * El manifiesto se enlaza aquí y no en la raíz.
+ *
+ * Puesto en la raíz, Next lo mete en todas las páginas y la tienda saldría
+ * también como aplicación instalable. Quien entra desde Instagram a ver un
+ * enterizo no tiene por qué recibir un "instalar Mored" encima de la foto. Lo
+ * que se instala es el panel, que es la herramienta de trabajo.
+ */
+export const metadata: Metadata = {
+  title: "Panel · Mored",
+  manifest: "/panel/manifest",
+  appleWebApp: { capable: true, title: "Mored", statusBarStyle: "default" },
+};
 
 export default async function PanelLayout({
   children,

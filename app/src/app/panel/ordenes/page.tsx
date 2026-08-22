@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { crearClienteServidor } from "@/lib/supabase/server";
 import Lista, { type FilaOrden } from "./lista";
+import Avisos from "../avisos";
 
 export const dynamic = "force-dynamic";
 
@@ -30,6 +31,8 @@ export default async function Ordenes() {
           Lo que piden desde la tienda, con foto
         </p>
       </header>
+
+      <Avisos />
 
       <Lista
         filas={(filas ?? []) as FilaOrden[]}
