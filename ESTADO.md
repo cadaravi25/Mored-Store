@@ -282,3 +282,40 @@ solo y con eso quedan los avisos andando. No hace falta tocar nada más.
 - Las 51 variantes de los colores nuevos entraron con **una unidad por talla**,
   que es una suposición. Cada movimiento lo dice en su nota. Hay que repasarlo
   en Inventario.
+
+---
+
+## Las fotos buenas del catálogo
+
+Carlos dejó en `Catálogo/` una carpeta por prenda y, dentro de cada una, las
+fotos buenas más **una captura de la prenda tal como se ve hoy en la tienda**.
+Esa captura es la que dice de qué prenda se trata: lleva el nombre, la
+descripción y el precio, así que no hay que adivinar contra un catálogo de
+trescientas. La captura no se sube; se reconoce por la proporción.
+
+Lo cargado hasta ahora: **42 prendas** de Accesorios, Vestido, chaquetas, short
+y top (Enterizos ya estaba). Entraron **54 colores** que las fotos enseñaban y
+el inventario no tenía, con **104 variantes**. Y **8 prendas** que habían
+entrado del vídeo con el color "Por definir" ya tienen su nombre.
+
+Las de 276 píxeles recortadas del vídeo no se borran del depósito: dejan de
+estar enlazadas y ya. Quedan **96 fotos del vídeo**, casi todas de Swim, que
+todavía no tienen carpeta.
+
+**La faja ya se vende.** Era la única prenda de Active que seguía sin salir en
+la tienda porque sus seis cuadros del vídeo estaban todos movidos.
+
+### Lo que quedó fuera
+
+- `chaquetas/modelo 1/IMG_7811.heic`: sharp no trae el descompresor de HEIC y
+  no hay forma de leerla. Las otras cuatro de esa carpeta cubren sus cuatro
+  colores, así que no falta nada; si esa foto importa, hay que reexportarla
+  como jpg.
+- `short/modelo 4` es la misma prenda que el `modelo 3` —mismo bolsillo, mismo
+  botón, mismos cordones— con el fondo cambiado por uno de jardín que se ve
+  montado. Se quedaron las del 3, que además traen los cinco colores.
+- **Colores que solo salen en fotos de surtido**, tendidos junto a otros: no se
+  crean porque no hay forma de darle una foto a cada uno. Pasa en el vestido
+  modelo 1 (seis colores), el vestido modelo 3 (cinco), el short modelo 1 y el
+  azul marino del top modelo 6. Si hacen falta, lo que hace falta es una foto
+  suelta de cada color.
