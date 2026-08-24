@@ -314,8 +314,20 @@ la tienda porque sus seis cuadros del vídeo estaban todos movidos.
 - `short/modelo 4` es la misma prenda que el `modelo 3` —mismo bolsillo, mismo
   botón, mismos cordones— con el fondo cambiado por uno de jardín que se ve
   montado. Se quedaron las del 3, que además traen los cinco colores.
-- **Colores que solo salen en fotos de surtido**, tendidos junto a otros: no se
-  crean porque no hay forma de darle una foto a cada uno. Pasa en el vestido
-  modelo 1 (seis colores), el vestido modelo 3 (cinco), el short modelo 1 y el
-  azul marino del top modelo 6. Si hacen falta, lo que hace falta es una foto
-  suelta de cada color.
+- **Colores que solo salen en fotos de surtido**: se resolvieron con la regla
+  que dio Carlos, "si no tiene foto única, que salga la foto grupal donde
+  aparece ese color". La misma foto se repite en varios colores, cada uno con
+  la del grupo donde sale: el fucsia lleva la foto donde está el fucsia y el
+  lila la otra. Pasa en el vestido modelo 1 (seis colores en dos fotos), el
+  vestido modelo 3, el short modelo 1, la chaqueta modelo 5 y el azul marino
+  del top modelo 6.
+
+- **`short/modelo 3` está por crear.** No es la misma prenda que el modelo 4,
+  como se había dado por hecho: el 3 es liso en la pierna y el 4 trae cordones
+  para ajustar. El "Cargo estilo Y2K" de la tienda es el 4, y por eso la
+  captura del 3 es la del catálogo de WhatsApp y no la de la tienda. Para
+  crearlo hacen falta descripción, tallas y los dos precios; sus fotos son
+  IMG_7855 (marrón), 7856 (celeste), 7857 (rosado), 7858 (negro) y 7859 (rojo).
+
+- Quedan **4 colores "Por definir"** en Active, todos de prendas sin carpeta de
+  fotos: dos franelas, un leggin y un top.

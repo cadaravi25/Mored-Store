@@ -39,6 +39,15 @@ export const CAPTURA = 0.62;
  * precios que los que la prenda ya tenía.
  *
  * `renombrar` es para los colores que entraron mal desde el vídeo.
+ *
+ * UN COLOR SIN FOTO PROPIA LLEVA LA DEL GRUPO DONDE SALE
+ *
+ * Algunas prendas solo tienen fotos de surtido, con cuatro o seis colores
+ * tendidos juntos. Carlos: "si no tiene foto única, que salga la foto grupal
+ * donde aparece ese color". Así que la misma foto se repite en varios colores,
+ * cada uno con la suya: el fucsia lleva la foto donde está el fucsia y el lila
+ * la otra. No es lo ideal, pero es mejor que ofrecer un solo color cuando se
+ * venden seis.
  */
 export const PRENDAS = {
   // -------------------------------------------------------------- Accesorios
@@ -80,11 +89,18 @@ export const PRENDAS = {
   // ----------------------------------------------------------------- Vestido
   "Vestido/modelo 1": {
     externo: "48/0055",
-    // Las dos fotos son de surtido: seis colores tendidos juntos, ninguno
-    // suelto. No hay forma de darle una foto a cada color, así que se queda en
-    // uno. "Por definir" era lo que entró del vídeo.
-    renombrar: { "Por definir": "Multicolor" },
-    colores: { Multicolor: ["IMG_7730.jpg", "IMG_7731.jpg"] },
+    // Seis colores en dos fotos de surtido: en la 7730 están el azul marino,
+    // el verde oscuro y el fucsia; en la 7731 la menta, el lila y el rosado.
+    // Cada color lleva la foto donde sale.
+    renombrar: { Multicolor: "Azul marino" },
+    colores: {
+      "Azul marino": ["IMG_7730.jpg"],
+      "Verde oscuro": ["IMG_7730.jpg"],
+      Fucsia: ["IMG_7730.jpg"],
+      Menta: ["IMG_7731.jpg"],
+      Lila: ["IMG_7731.jpg"],
+      Rosado: ["IMG_7731.jpg"],
+    },
   },
   "Vestido/modelo 2": {
     externo: "48/0029",
@@ -95,8 +111,15 @@ export const PRENDAS = {
   },
   "Vestido/modelo 3": {
     externo: "48/0033",
-    // La segunda es de surtido, con cinco colores tendidos. Va de galería.
-    colores: { Marrón: ["IMG_7746.jpg", "IMG_7747.jpg"] },
+    // El marrón es el único con foto puesta; los otros cuatro solo salen en el
+    // surtido de la 7747, así que esa llevan.
+    colores: {
+      Marrón: ["IMG_7746.jpg", "IMG_7747.jpg"],
+      "Azul marino": ["IMG_7747.jpg"],
+      Celeste: ["IMG_7747.jpg"],
+      Negro: ["IMG_7747.jpg"],
+      Blanco: ["IMG_7747.jpg"],
+    },
   },
   "Vestido/modelo 4": {
     externo: "48/0037",
@@ -156,6 +179,10 @@ export const PRENDAS = {
       Marrón: ["IMG_7825.JPG"],
       Blanco: ["IMG_7826.JPG"],
       Beige: ["IMG_7829.AVIF"],
+      // En el surtido de la 7822 hay además un amarillo y un rosa claro, que
+      // no es el fucsia de la 7823. Ninguno tiene foto suelta.
+      Amarillo: ["IMG_7822.AVIF"],
+      Rosado: ["IMG_7822.AVIF"],
     },
   },
   "chaquetas/modelo 6": {
@@ -176,9 +203,14 @@ export const PRENDAS = {
   // ------------------------------------------------------------------ Shorts
   "short/modelo 1": {
     externo: "55/0109",
-    // Solo hay una foto de un color suelto; la otra es el surtido tendido.
+    // El verde es el único con foto suelta. El gris y el lila solo salen en el
+    // surtido de la 7847.
     renombrar: { "Por definir": "Verde" },
-    colores: { Verde: ["IMG_7848.JPG", "IMG_7847.JPG"] },
+    colores: {
+      Verde: ["IMG_7848.JPG", "IMG_7847.JPG"],
+      Gris: ["IMG_7847.JPG"],
+      Lila: ["IMG_7847.JPG"],
+    },
   },
   "short/modelo 2": {
     externo: "55/0117",
@@ -275,9 +307,9 @@ export const PRENDAS = {
       Celeste: ["IMG_7969.jpg"],
       Rosado: ["IMG_7972.jpg"],
       Blanco: ["IMG_7973.jpg"],
-      // La última es el surtido tendido; ahí sale también un azul marino que
-      // no tiene foto propia, así que ese color no se crea.
       Negro: ["IMG_7974.jpg", "IMG_7975.jpg"],
+      // El azul marino solo sale en el surtido de la 7975.
+      "Azul marino": ["IMG_7975.jpg"],
     },
   },
   "top/modelo 7": {
