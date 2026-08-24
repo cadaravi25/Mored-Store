@@ -117,13 +117,15 @@ export const PRENDAS = {
   // --------------------------------------------------------------- Chaquetas
   "chaquetas/modelo 1": {
     externo: "35/0065",
-    // IMG_7811.heic queda fuera: sharp no trae el descompresor de HEIC y no
-    // hay forma de leerla. Las otras cuatro cubren los cuatro colores.
+    // El .heic no se puede leer, pero Carlos volvió a pasar esa foto en un
+    // formato que sí: es la amarilla, y trae los recuadros de detalle que el
+    // proveedor le monta encima. Es la única de ese color.
     colores: {
       Rosado: ["IMG_7812.AVIF"],
       Negro: ["IMG_7814.AVIF"],
       Burdeos: ["IMG_7815.AVIF"],
       Marrón: ["IMG_7816.AVIF"],
+      Amarillo: ["IMG_7811.jpg"],
     },
   },
   "chaquetas/modelo 2": {
@@ -190,20 +192,18 @@ export const PRENDAS = {
       Gris: ["IMG_7853.jpg", "IMG_7854.jpg"],
     },
   },
-  "short/modelo 3": {
+  // El "Cargo estilo Y2K" de la tienda es este: en la foto que tenía se le ven
+  // los cordones colgando del lateral. El modelo 3 es otra prenda, lisa en la
+  // pierna, que todavía no está cargada.
+  "short/modelo 4": {
     externo: "55/0137",
-    colores: {
-      Marrón: ["IMG_7855.AVIF"],
-      Celeste: ["IMG_7856.AVIF"],
-      Rosado: ["IMG_7857.AVIF"],
-      Negro: ["IMG_7858.AVIF"],
-      Rojo: ["IMG_7859.AVIF"],
-    },
+    colores: { Marrón: ["IMG_7860.JPG"], Negro: ["IMG_7861.AVIF"] },
   },
-  // "short/modelo 4" es la misma prenda que el modelo 3 —mismo bolsillo, mismo
-  // botón, mismos cordones— con el fondo cambiado por uno de jardín que se ve
-  // montado. Se queda con las del 3, que son las de estudio y traen los cinco
-  // colores.
+  // "short/modelo 3" es el mismo corte pero liso en la pierna, sin cordones.
+  // Su captura es la del catálogo de WhatsApp, no la de la tienda, porque no
+  // está en la tienda. Falta crearlo: hacen falta descripción, tallas y los
+  // dos precios. Sus fotos son IMG_7855 (marrón), 7856 (celeste), 7857
+  // (rosado), 7858 (negro) y 7859 (rojo).
   "short/modelo 5": {
     externo: "55/0126",
     colores: { "Verde limón": ["IMG_7863.JPG", "IMG_7864.WEBP"] },
