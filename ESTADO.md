@@ -424,13 +424,14 @@ en vivo, así que todo lo de esta tanda ya se ve en producción **sin gastar un
 solo crédito**. Lo único que cambió en el repositorio fueron los guiones de
 carga.
 
-### Lo único que espera tu mano
+### Quitar un color ya aguanta las recepciones
 
-La migración **`20260825120038_retirar_color_completo.sql`** sigue sin correr.
-Hace falta el editor SQL de Supabase, y la sesión vive en el otro perfil de
-Chrome: elegir perfil es algo que tienes que confirmar tú.
+La migración **`20260825120038_retirar_color_completo.sql`** ya corrió (25 de
+agosto). Antes el botón "Quitar" del inventario se rompía con una prenda que
+hubiera entrado por un pedido de compra: la línea del pedido seguía apuntando
+a la variante y la base no dejaba borrarla.
 
-Sin ella el botón "Quitar" del inventario funciona, pero se rompe con una
-prenda que haya entrado por un pedido de compra: la línea del pedido sigue
-apuntando a la variante y la base no deja borrarla. La migración añade las
-recepciones a la regla de "esto no se borra, se desactiva".
+Ahora una recepción cuenta igual que una venta. Si de ese color llegó
+mercancía, se desactiva en vez de borrarse: desaparece de la tienda y del
+inventario, pero Caja, Finanzas y el historial de entradas siguen cuadrando.
+Solo lo que nunca se vendió ni se recibió se borra de verdad.
