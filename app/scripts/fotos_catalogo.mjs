@@ -35,7 +35,15 @@ import { PRENDAS, CAPTURA } from "./catalogo.mjs";
 import { PRENDAS2 } from "./catalogo2.mjs";
 
 const ensayo = process.argv.includes("--ensayo");
-const solo = process.argv.find((a) => a.startsWith("--solo="))?.slice(7);
+// Una familia entera ("--solo=Conjuntos"), una carpeta suelta, o varias
+// separadas por coma. Con 50 carpetas que se cargan de siete en siete, repasar
+// las ya subidas no solo sobra: vuelve a subir fotos que ya están.
+const solo = process.argv
+  .find((a) => a.startsWith("--solo="))
+  ?.slice(7)
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
 // Cada tanda tiene su tabla. Las familias se repiten entre tandas, así que
 // mezclarlas obligaría a mirar la fecha de cada carpeta para saber cuál es.
 const tanda = process.argv.includes("--tanda=2") ? PRENDAS2 : PRENDAS;
@@ -107,7 +115,8 @@ const cuenta = {
 const sobran = [];
 
 for (const [clave, ficha] of Object.entries(tanda)) {
-  if (solo && !clave.startsWith(`${solo}/`)) continue;
+  if (solo && !solo.some((s) => clave === s || clave.startsWith(`${s}/`)))
+    continue;
 
   const carpeta = join(RAIZ, clave);
   if (!existsSync(carpeta) || !statSync(carpeta).isDirectory()) {
@@ -145,8 +154,9 @@ for (const [clave, ficha] of Object.entries(tanda)) {
   }
 
   // Lo que hay en la carpeta, sin las capturas de pantalla.
+  const todos = readdirSync(carpeta).sort();
   const enDisco = [];
-  for (const f of readdirSync(carpeta).sort()) {
+  for (const f of todos) {
     const m = await sharp(join(carpeta, f), { failOn: "none" }).metadata();
     if (m.width / m.height < CAPTURA) {
       cuenta.capturas++;
@@ -154,6 +164,20 @@ for (const [clave, ficha] of Object.entries(tanda)) {
     }
     enDisco.push(f);
   }
+
+  /**
+   * Una foto se puede pedir por nombre o por su posición en la carpeta.
+   *
+   * Hay carpetas donde los archivos se llaman "Captura de pantalla 2026-08-24
+   * a la(s) 11.08.34 p. m..png". Escribir eso a mano catorce veces es pedir
+   * una errata. Con el número se dice la posición que ocupa en la hoja de
+   * contacto, que es justo como se miraron.
+   *
+   * El número se resuelve contra la carpeta entera, no contra lo ya filtrado:
+   * si se pide una posición es porque se vio en la hoja y se sabe qué es.
+   */
+  const resolver = (f) =>
+    typeof f === "number" ? (todos[f - 1] ?? `#${f}`) : f;
 
   const tallas = [...new Set(producto.variantes.map((v) => v.talla))]
     .filter((t) => t !== "POR DEFINIR")
@@ -167,7 +191,11 @@ for (const [clave, ficha] of Object.entries(tanda)) {
 
   const usadas = new Set();
 
-  for (const [nombreColor, fotos] of Object.entries(ficha.colores)) {
+  for (const [nombreColor, pedidas] of Object.entries(ficha.colores)) {
+    const fotos = pedidas.map(resolver);
+    // Una pedida por número puede ser una que el filtro dio por captura; si se
+    // pidió a mano, manda lo pedido.
+    for (const f of fotos) if (todos.includes(f) && !enDisco.includes(f)) enDisco.push(f);
     const faltan = fotos.filter((f) => !enDisco.includes(f));
     if (faltan.length) {
       console.log(`  ojo: ${faltan.join(", ")} no está en la carpeta`);
