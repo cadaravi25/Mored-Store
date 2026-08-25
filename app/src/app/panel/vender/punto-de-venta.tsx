@@ -12,6 +12,7 @@ interface Variante {
   variante_id: string;
   producto_id: string;
   producto_nombre: string;
+  coleccion: string;
   color_nombre: string;
   color_hex: string | null;
   foto_url: string | null;
@@ -52,6 +53,7 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
   const router = useRouter();
 
   const [termino, setTermino] = useState("");
+  const [coleccion, setColeccion] = useState<"" | "active" | "swim">("");
   const [resultados, setResultados] = useState<Variante[]>([]);
   const [carrito, setCarrito] = useState<Linea[]>([]);
   const [pagos, setPagos] = useState<Pago[]>([]);
@@ -180,6 +182,14 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
   }, [resultados]);
 
   const fotoDe = (v: Variante) => v.foto_url ?? fotoPorProducto.get(v.producto_id) ?? null;
+
+  // El filtro de colección se hace aquí y no en la búsqueda: buscar_variantes
+  // ya devuelve la colección, así que cambiarla no cuesta un viaje al
+  // servidor y se ve al instante.
+  const visibles = useMemo(
+    () => (coleccion ? resultados.filter((v) => v.coleccion === coleccion) : resultados),
+    [resultados, coleccion],
+  );
 
   const enBs = pagos.length > 0 && pagos[0].moneda === "BS";
   const precioDe = (l: { precio_usd: number; precio_bs: number }) =>
@@ -316,8 +326,33 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
           className="w-full rounded-xl border border-borde bg-crema-alto px-4 py-3.5 text-base outline-none placeholder:text-tinta-suave/50 focus:border-marron"
         />
 
+        {/* Las dos colecciones se venden en el mismo mostrador pero casi nunca
+            en la misma venta: quien viene por un traje de baño no se lleva una
+            chaqueta deportiva. Filtrar de un toque ahorra escribir. */}
+        <div className="flex gap-1.5">
+          {[
+            { id: "" as const, nombre: "Todo" },
+            { id: "active" as const, nombre: "Active" },
+            { id: "swim" as const, nombre: "Swim" },
+          ].map((c) => (
+            <button
+              key={c.id || "todo"}
+              type="button"
+              onClick={() => setColeccion(c.id)}
+              aria-pressed={coleccion === c.id}
+              className={`rounded-full border px-4 py-1.5 text-sm ${
+                coleccion === c.id
+                  ? "border-marron bg-marron text-crema-alto"
+                  : "border-borde bg-crema-alto text-tinta-suave"
+              }`}
+            >
+              {c.nombre}
+            </button>
+          ))}
+        </div>
+
         <ul className="grid gap-2 sm:grid-cols-2">
-          {resultados.map((v) => (
+          {visibles.map((v) => (
             <li key={v.variante_id}>
               <button
                 type="button"
@@ -359,9 +394,11 @@ export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | nu
           ))}
         </ul>
 
-        {resultados.length === 0 && (
+        {visibles.length === 0 && (
           <p className="rounded-xl border border-borde bg-crema-alto px-5 py-10 text-center text-sm text-tinta-suave">
-            {termino ? "Nada disponible con esa búsqueda." : "Busca una prenda para empezar."}
+            {termino || coleccion
+              ? "Nada disponible con esa búsqueda."
+              : "Busca una prenda para empezar."}
           </p>
         )}
       </section>

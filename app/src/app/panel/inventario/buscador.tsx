@@ -6,6 +6,7 @@ import Foto from "./foto";
 import Destacar from "./destacar";
 import Completar from "./completar";
 import Precios from "./precios";
+import Editar from "./editar";
 import { COLOR_PENDIENTE, SIN_DEFINIR } from "@/lib/prendas";
 
 interface Variante {
@@ -26,6 +27,7 @@ interface Variante {
   stock: number;
   disponible: number;
   destacado: boolean;
+  descripcion: string | null;
 }
 
 const ORDEN_TALLAS = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -299,6 +301,11 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
                       ? "Sin color"
                       : v.color_nombre}
                   </p>
+                  {v.descripcion && (
+                    <p className="mt-0.5 line-clamp-2 text-xs text-tinta-suave/80">
+                      {v.descripcion}
+                    </p>
+                  )}
                   {/* Sin foto la prenda no sale en la tienda, y eso desde el
                       panel no se notaba: se cargaba el inventario, se miraba
                       la web y no estaba, sin ninguna explicación.
@@ -316,10 +323,25 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
                       </p>
                     )
                   )}
-                  <Destacar
-                    productoId={v.producto_id}
-                    inicial={v.destacado}
-                  />
+                  <div className="flex flex-wrap items-center gap-x-3">
+                    <Destacar
+                      productoId={v.producto_id}
+                      inicial={v.destacado}
+                    />
+                    <Editar
+                      productoId={v.producto_id}
+                      colorId={v.color_id}
+                      nombre={v.producto_nombre}
+                      descripcion={v.descripcion}
+                      color={v.color_nombre}
+                      tallas={tallas.map((t) => ({
+                        variante_id: t.variante_id,
+                        talla: t.talla,
+                        stock: t.stock,
+                      }))}
+                      onGuardado={buscar}
+                    />
+                  </div>
                 </div>
                 <div className="shrink-0 text-right">
                   <span className="text-sm tabular-nums text-tinta-suave">
