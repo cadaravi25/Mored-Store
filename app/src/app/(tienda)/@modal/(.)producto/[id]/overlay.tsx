@@ -51,7 +51,10 @@ export default function Overlay({
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-start justify-center overscroll-contain bg-carbon/50 p-0 backdrop-blur-md lg:items-center lg:p-8"
+      // En el teléfono la ficha se pega abajo y deja asomar una franja del
+      // catálogo: sin ella la ficha ocupa la pantalla entera y no hay forma de
+      // saber que estás encima de algo y no en otra página.
+      className="fixed inset-0 z-[60] flex items-end justify-center overscroll-contain bg-carbon/50 p-0 backdrop-blur-md lg:items-center lg:p-8"
       onClick={(e) => {
         // Solo el fondo cierra. Un clic dentro de la ficha no.
         if (e.target === e.currentTarget) router.back();
@@ -63,15 +66,23 @@ export default function Overlay({
         aria-modal="true"
         aria-label={titulo}
         tabIndex={-1}
-        // En el teléfono ocupa casi toda la pantalla: un 80% en un móvil se ve
-        // como un error de maquetación, no como una ventana.
-        className="relative h-dvh w-full overflow-y-auto overscroll-contain bg-nieve outline-none lg:h-auto lg:max-h-[90dvh] lg:w-[80%] lg:rounded-2xl lg:shadow-2xl"
+        className="hoja relative h-[92dvh] w-full overflow-y-auto overscroll-contain rounded-t-2xl bg-nieve shadow-2xl outline-none lg:h-auto lg:max-h-[90dvh] lg:w-[80%] lg:rounded-2xl"
       >
+        {/* El asa de las hojas del teléfono. Es decorativa: quien la ve ya sabe
+            que esto se baja. Cerrar de verdad es la equis, el fondo, Escape o
+            el botón de atrás. */}
+        <div
+          aria-hidden="true"
+          className="sticky top-0 z-10 flex justify-center bg-nieve pb-1 pt-2.5 lg:hidden"
+        >
+          <span className="h-1 w-10 rounded-full bg-gris/30" />
+        </div>
+
         <button
           type="button"
           onClick={() => router.back()}
           aria-label="Cerrar"
-          className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-nieve/90 text-lg leading-none text-gris shadow-sm backdrop-blur hover:text-carbon"
+          className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-nieve/90 text-lg leading-none text-gris shadow-sm backdrop-blur hover:text-carbon"
         >
           ×
         </button>
