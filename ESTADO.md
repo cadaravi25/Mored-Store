@@ -322,12 +322,14 @@ la tienda porque sus seis cuadros del vídeo estaban todos movidos.
   vestido modelo 3, el short modelo 1, la chaqueta modelo 5 y el azul marino
   del top modelo 6.
 
-- **`short/modelo 3` está por crear.** No es la misma prenda que el modelo 4,
-  como se había dado por hecho: el 3 es liso en la pierna y el 4 trae cordones
-  para ajustar. El "Cargo estilo Y2K" de la tienda es el 4, y por eso la
-  captura del 3 es la del catálogo de WhatsApp y no la de la tienda. Para
-  crearlo hacen falta descripción, tallas y los dos precios; sus fotos son
-  IMG_7855 (marrón), 7856 (celeste), 7857 (rosado), 7858 (negro) y 7859 (rojo).
+- **Los dos cargo Y2K ya están separados.** No eran la misma prenda: el liso y
+  el de cordones. El que estaba en la tienda era el de los cordones, así que se
+  le añadió "cinta ajustable" a la descripción, y el liso entró como prenda
+  nueva con la descripción que el otro tenía, que es lo que pidió Carlos.
+  Hereda tallas y precios: son la misma prenda con y sin cordón.
 
-- Quedan **4 colores "Por definir"** en Active, todos de prendas sin carpeta de
-  fotos: dos franelas, un leggin y un top.
+- **Ya no queda ningún color "Por definir" en toda la tienda.** Las cuatro
+  prendas que faltaban —dos franelas, un leggin y un top— no tienen carpeta de
+  fotos nuevas, así que sus colores salen de la foto de surtido del vídeo, con
+  la misma regla del resto: todos comparten esa foto. Cuando lleguen las
+  buenas, basta anotar la carpeta y correr `fotos_catalogo.mjs`.

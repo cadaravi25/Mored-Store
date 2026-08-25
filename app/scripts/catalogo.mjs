@@ -231,11 +231,18 @@ export const PRENDAS = {
     externo: "55/0137",
     colores: { Marrón: ["IMG_7860.JPG"], Negro: ["IMG_7861.AVIF"] },
   },
-  // "short/modelo 3" es el mismo corte pero liso en la pierna, sin cordones.
-  // Su captura es la del catálogo de WhatsApp, no la de la tienda, porque no
-  // está en la tienda. Falta crearlo: hacen falta descripción, tallas y los
-  // dos precios. Sus fotos son IMG_7855 (marrón), 7856 (celeste), 7857
-  // (rosado), 7858 (negro) y 7859 (rojo).
+  // El mismo corte pero liso en la pierna, sin cordones. Se creó aparte con
+  // short_liso.mjs, heredando tallas y precios del de cordones.
+  "short/modelo 3": {
+    externo: "55/0137-liso",
+    colores: {
+      Marrón: ["IMG_7855.AVIF"],
+      Negro: ["IMG_7858.AVIF"],
+      Celeste: ["IMG_7856.AVIF"],
+      Rosado: ["IMG_7857.AVIF"],
+      Rojo: ["IMG_7859.AVIF"],
+    },
+  },
   "short/modelo 5": {
     externo: "55/0126",
     colores: { "Verde limón": ["IMG_7863.JPG", "IMG_7864.WEBP"] },
