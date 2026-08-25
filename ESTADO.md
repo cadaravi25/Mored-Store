@@ -339,3 +339,29 @@ la tienda porque sus seis cuadros del vídeo estaban todos movidos.
   fotos nuevas, así que sus colores salen de la foto de surtido del vídeo, con
   la misma regla del resto: todos comparten esa foto. Cuando lleguen las
   buenas, basta anotar la carpeta y correr `fotos_catalogo.mjs`.
+
+---
+
+## Cómo se despliega, a partir de ahora
+
+Netlify cobra **15 créditos por cada despliegue a producción**, y el plan
+gratis da 300 al mes: exactamente 20 despliegues. En el ciclo de agosto se
+gastaron los 300 en dos días, casi todos por desplegar después de cada cambio
+pequeño en vez de agrupar.
+
+Lo que de verdad cuesta no es la tienda. En ese mismo ciclo, todo el tráfico
+—diez mil peticiones, el ancho de banda y el cómputo— sumó **9,4 créditos**.
+El 97% se fue en despliegues.
+
+**Las vistas previas son gratis e ilimitadas.** Cualquier pull request contra
+`main` levanta una copia entera de la tienda en su propia dirección, y eso no
+gasta créditos ni cuenta como despliegue de producción. Así que:
+
+1. El trabajo va en una rama, no en `main`.
+2. Se abre un pull request y Netlify da una dirección para verlo.
+3. Cuando está aprobado, se junta con `main`: **un solo despliegue** por tanda
+   de trabajo, no uno por cada arreglo.
+
+Y sirve además cuando los despliegues están pausados por créditos: producción
+se queda como está, pero la vista previa sigue construyéndose, así que se
+puede seguir trabajando y enseñando el resultado.
