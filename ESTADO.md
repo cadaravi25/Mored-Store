@@ -271,6 +271,12 @@ ayudante de los avisos. Mientras no suba:
 En cuanto se amplíe el plan o empiece el ciclo siguiente, el despliegue entra
 solo y con eso quedan los avisos andando. No hace falta tocar nada más.
 
+**Lo mismo pasa con todo lo que se hizo después.** Sigue esperando el mismo
+despliegue: el filtro de Active/Swim al vender y el editar/quitar del
+inventario. Lo que sí está en producción es todo lo que vive en la base —las
+fotos, los colores y las funciones nuevas—, porque eso no depende de
+desplegar.
+
 ### Sigue pendiente de los enterizos
 
 - **modelo 30**: hay que crear la prenda (leopardo manga corta, 4 colores).
