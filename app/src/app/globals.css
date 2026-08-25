@@ -97,6 +97,30 @@ body {
   }
 }
 
+/* La ficha que se abre encima del catálogo.
+   En el teléfono sube desde abajo como una hoja, que es el gesto con el que
+   todo el mundo ya entiende "esto está encima, y al bajarlo sigo donde
+   estaba". En pantalla grande no hace falta: ahí ya se ve el catálogo
+   alrededor, así que solo se acerca un poco. */
+@keyframes subir-hoja {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.hoja {
+  animation: subir-hoja 0.42s var(--curva) both;
+}
+
+@media (min-width: 1024px) {
+  .hoja {
+    animation: acercar 0.28s var(--curva) both;
+  }
+}
+
 .surge {
   animation: surgir 1s var(--curva) both;
 }
@@ -185,7 +209,8 @@ html:has(.paradas) {
 @media (prefers-reduced-motion: reduce) {
   .surge,
   .acerca,
-  .abre-letras {
+  .abre-letras,
+  .hoja {
     animation: none;
   }
   .revela[data-revela] {
