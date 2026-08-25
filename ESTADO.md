@@ -365,3 +365,61 @@ gasta créditos ni cuenta como despliegue de producción. Así que:
 Y sirve además cuando los despliegues están pausados por créditos: producción
 se queda como está, pero la vista previa sigue construyéndose, así que se
 puede seguir trabajando y enseñando el resultado.
+
+---
+
+## La segunda tanda de fotos: `Catálogo/Mored 2`
+
+Aquí entraron **95 prendas** en total: suéteres, sudadera, enterizo, short,
+tops, faldas, franelas, catorce leggins, catorce conjuntos de la carpeta
+"conjuntos 2" y los **cincuenta** de la carpeta "Conjuntos". Con eso el árbol
+de `Mored 2` queda entero: no queda ni una carpeta sin cargar ni vacía.
+
+De los **62 colores** que todavía enseñaban un cuadro borroso del vídeo
+quedan **10**. Y ninguno de ellos por falta de trabajo: es que no hay foto.
+
+### Los diez que siguen con la foto del vídeo
+
+- **`Conjunto` "Deportivo sensación nube…"**: el que Carlos dijo que revisaba
+  él. Es el único sin `id_externo`, así que ni siquiera está en la tanda.
+- **`48/0104` amarillo**: en la carpeta solo vino la versión negra.
+- **`48/0165` lila**: se agotó, ver abajo.
+- **`35/0125` negro**, **`35/0141` lila y celeste**: leggins de la primera
+  tanda, sin carpeta de fotos.
+- **`36/0151` marrón y azul**: el enterizo de leopardo, ya conocido.
+- **`55/0169` negro**: el sujetador sin costuras.
+- **Un bikini rosado de Swim**: Swim casi no tiene fotos buenas todavía.
+
+### Tres carpetas que conviene mirar
+
+- **`Conjuntos/modelo 12`**: las fotos 3 y 4 son otro corte (manga corta, una
+  con cierre), no el top de tirantes acanalado de la ficha. Se subió solo la
+  del lila; si son de esta prenda, faltan dos colores por poner.
+- **`Conjuntos/modelo 15`**: la foto de frente trae el rótulo de la marca china
+  encima. Va sola la de espaldas, que está limpia.
+- **`Conjuntos/modelo 30`**: la única carpeta sin captura de la tienda dentro.
+  Se emparejó por lo que se ve —top de espalda descubierta y minishorts de
+  cintura alta, `55/0085`— pero eso es a ojo, no por la captura.
+
+### Lo que mandó Lau por captura
+
+- **El halter cruzado lila (`48/0165`) quedó en cero.** No se borró ni se
+  desactivó: vuelve cuando llegue el pedido, y con cero la tienda ya lo enseña
+  como agotado.
+- **El de pádel (`55/0017`) entra también en S**, con sus once colores. Antes
+  era un solo color en una sola talla; ahora son once colores en S y M.
+
+### Ojo con el color que se ve primero
+
+La tienda ordena los colores alfabéticamente, así que al agregar colores
+nuevos cambió cuál sale de portada en varias prendas: el color-block que
+enseñaba el burdeos ahora enseña el azul marino, porque la A va antes. Si
+alguna prenda debe entrar por un color concreto, hay que decirlo y se cambia
+el orden.
+
+### Nada de esto necesitó un despliegue
+
+Las fotos y los colores viven en Supabase, no en el código. La tienda los lee
+en vivo, así que todo lo de esta tanda ya se ve en producción **sin gastar un
+solo crédito**. Lo único que cambió en el repositorio fueron los guiones de
+carga.
