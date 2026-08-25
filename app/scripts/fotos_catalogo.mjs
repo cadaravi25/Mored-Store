@@ -32,9 +32,13 @@ import { createClient } from "@supabase/supabase-js";
 import sharp from "sharp";
 import { enRuta } from "./rutas.mjs";
 import { PRENDAS, CAPTURA } from "./catalogo.mjs";
+import { PRENDAS2 } from "./catalogo2.mjs";
 
 const ensayo = process.argv.includes("--ensayo");
 const solo = process.argv.find((a) => a.startsWith("--solo="))?.slice(7);
+// Cada tanda tiene su tabla. Las familias se repiten entre tandas, así que
+// mezclarlas obligaría a mirar la fecha de cada carpeta para saber cuál es.
+const tanda = process.argv.includes("--tanda=2") ? PRENDAS2 : PRENDAS;
 // slice(2) y no find sobre todo argv: la ruta del propio guion tambien
 // contiene "Catalogo" y se colaba como si fuera la carpeta pedida.
 const RAIZ = process.argv.slice(2).find((a) => !a.startsWith("--"));
@@ -102,7 +106,7 @@ const cuenta = {
 };
 const sobran = [];
 
-for (const [clave, ficha] of Object.entries(PRENDAS)) {
+for (const [clave, ficha] of Object.entries(tanda)) {
   if (solo && !clave.startsWith(`${solo}/`)) continue;
 
   const carpeta = join(RAIZ, clave);
