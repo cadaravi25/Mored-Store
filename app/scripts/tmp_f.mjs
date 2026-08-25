@@ -10,6 +10,5 @@ const { data } = await sb.from("productos")
 for (const p of data.sort((a,b)=>(a.descripcion??"").localeCompare(b.descripcion??""))) {
   const t=[...new Set(p.variantes.map(v=>v.talla))].join(" ");
   console.log(`[${p.id_externo}] ${p.descripcion}`);
-  console.log(`     ${t} · ${p.variantes[0]?.precio_usd}/${p.variantes[0]?.precio_bs} · ${p.colores.map(c=>c.nombre+(c.foto_url?.includes("-video")?"(video)":"")).join(", ")}`);
+  console.log(`     ${t} · ${p.variantes[0]?.precio_usd}/${p.variantes[0]?.precio_bs} · ${p.colores.map(c=>c.nombre+(c.foto_url?.includes("-video")?"(v)":"")).join(", ")}`);
 }
-console.log(`total ${data.length}`);
