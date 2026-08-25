@@ -423,3 +423,14 @@ Las fotos y los colores viven en Supabase, no en el código. La tienda los lee
 en vivo, así que todo lo de esta tanda ya se ve en producción **sin gastar un
 solo crédito**. Lo único que cambió en el repositorio fueron los guiones de
 carga.
+
+### Lo único que espera tu mano
+
+La migración **`20260825120038_retirar_color_completo.sql`** sigue sin correr.
+Hace falta el editor SQL de Supabase, y la sesión vive en el otro perfil de
+Chrome: elegir perfil es algo que tienes que confirmar tú.
+
+Sin ella el botón "Quitar" del inventario funciona, pero se rompe con una
+prenda que haya entrado por un pedido de compra: la línea del pedido sigue
+apuntando a la variante y la base no deja borrarla. La migración añade las
+recepciones a la regla de "esto no se borra, se desactiva".
