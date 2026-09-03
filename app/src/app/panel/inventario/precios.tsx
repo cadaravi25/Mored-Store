@@ -5,7 +5,7 @@ import { crearClienteNavegador } from "@/lib/supabase/client";
 
 const eur = new Intl.NumberFormat("es-VE", {
   style: "currency",
-  currency: "EUR",
+  currency: "USD",
 });
 
 /**
@@ -30,9 +30,9 @@ function leerMonto(texto: string): number {
  * No es un recargo automático: son dos números que ellas deciden prenda por
  * prenda, y por eso van los dos a mano.
  *
- * Los DOS se escriben en euros. El de bolívares se multiplica por la tasa del
- * BCV del día para mostrarlo en la tienda, así que aquí nunca se escriben
- * bolívares: serían un número que caduca cada mañana.
+ * El de divisas se enseña en dólares. El de bolívares es otro número, y se
+ * multiplica por la tasa del BCV del EURO para mostrarlo en la tienda, así que
+ * aquí nunca se escriben bolívares: serían un número que caduca cada mañana.
  *
  * Se guarda por color y no por talla porque la misma prenda vale igual en S que
  * en M.
@@ -132,8 +132,8 @@ export default function Precios({
         </label>
       </div>
 
-      {/* Los dos se escriben en euros, así que hay que enseñar en qué se
-          convierte el segundo: es la cifra que va a ver la clienta. */}
+      {/* El segundo no se escribe en bolívares, así que hay que enseñar en qué
+          se convierte: es la cifra que va a ver la clienta. */}
       <p className="mt-2 text-xs text-tinta-suave">
         {tasa && enBs > 0 ? (
           <>
@@ -148,7 +148,7 @@ export default function Precios({
             a {tasa.toLocaleString("es-VE", { maximumFractionDigits: 2 })} por euro
           </>
         ) : (
-          "Los dos se escriben en euros. El de bolívares se multiplica por la tasa del día."
+          "El de bolívares se multiplica por la tasa del BCV del día para llegar al precio que sale en la tienda."
         )}
       </p>
 

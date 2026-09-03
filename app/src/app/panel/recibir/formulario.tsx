@@ -101,6 +101,10 @@ export default function Formulario({
   const [listaEstilos, setListaEstilos] = useState(estilos);
   const [talla, setTalla] = useState("");
   const [piezas, setPiezas] = useState(1);
+  // Lo que escriben cuando no es ninguno de los seis chips. Va aparte del
+  // número para que se pueda teclear "12" sin que el campo se borre al pasar
+  // por el 1.
+  const [otraCantidad, setOtraCantidad] = useState("");
   // Cuántas piezas de cada color trae esta línea. Un pack de 3 puede venir con
   // tres colores distintos, o con dos negros y un blanco: cualquier reparto.
   const [asignado, setAsignado] = useState<Record<string, number>>({});
@@ -195,6 +199,9 @@ export default function Formulario({
     setEstiloNuevo(false);
     setTalla(p.talla ?? "");
     setPiezas(p.piezas);
+    // Si el lector trae más de seis, el número tiene que aparecer en el
+    // campo libre: si no, no hay chip encendido y no se ve de dónde salió.
+    setOtraCantidad(p.piezas > 6 ? String(p.piezas) : "");
 
     // Un color por pieza si la cuenta cuadra; si no, se reparte lo que hay y
     // el contador de "faltan por repartir" se encarga de avisar.
@@ -304,10 +311,20 @@ export default function Formulario({
           </span>
           <span className="min-w-0">
             <span className="block text-sm text-tinta">
-              {leyendo ? "Leyendo la captura…" : "Leer la captura del pedido"}
+              {leyendo
+                ? "Leyendo la captura…"
+                : "Leer la captura del pedido al proveedor"}
             </span>
             <span className="block text-xs text-tinta-suave">
               Saca las prendas, colores y tallas. Los precios se escriben a mano.
+            </span>
+            {/* Un icono de imagen arriba de "Recibir" se lee como "subir la
+                foto de la prenda". Se subía la prenda, el lector no encontraba
+                ningún pedido y parecía que la pantalla no dejaba. Decirlo aquí
+                sale más barato que explicarlo cada vez. */}
+            <span className="mt-1 block text-xs text-tinta-suave/80">
+              No es la foto de la prenda: esa se monta en Inventario, tocando el
+              recuadro, después de guardar.
             </span>
           </span>
         </label>
@@ -482,18 +499,51 @@ export default function Formulario({
         </div>
 
         <div>
-          <p className="mb-2 text-sm text-tinta-suave">¿Cuántas piezas trae?</p>
-          <div className="flex flex-wrap gap-2">
+          {/* La pregunta era "¿cuántas piezas trae?", pensada para un pack
+              comprado. Pero lo que más entra es lo contrario: diez del mismo
+              modelo. Con seis chips y nada más, esa carga no tenía dónde
+              escribirse, y era justo lo que pedían. */}
+          <p className="mb-2 text-sm text-tinta-suave">
+            ¿Cuántas prendas iguales entran?
+          </p>
+          <div className="flex flex-wrap items-center gap-2">
             {[1, 2, 3, 4, 5, 6].map((n) => (
-              <Chip key={n} activo={piezas === n} onClick={() => cambiarPiezas(n)}>
-                {n === 1 ? "Suelta" : n}
+              <Chip
+                key={n}
+                activo={piezas === n}
+                onClick={() => {
+                  setOtraCantidad("");
+                  cambiarPiezas(n);
+                }}
+              >
+                {n}
               </Chip>
             ))}
+            <input
+              type="number"
+              inputMode="numeric"
+              min={1}
+              max={999}
+              value={otraCantidad}
+              onChange={(e) => {
+                const texto = e.target.value;
+                setOtraCantidad(texto);
+                const n = Number(texto);
+                if (Number.isFinite(n) && n >= 1) cambiarPiezas(Math.min(n, 999));
+              }}
+              placeholder="Más"
+              aria-label="Otra cantidad"
+              className={`w-24 rounded-full border py-2.5 text-center text-sm tabular-nums outline-none ${
+                piezas > 6
+                  ? "border-marron bg-marron text-crema-alto placeholder:text-crema-alto/70"
+                  : "border-borde bg-crema-alto text-tinta placeholder:text-tinta-suave"
+              }`}
+            />
           </div>
           {piezas > 1 && (
             <p className="mt-2 text-xs text-tinta-suave">
-              El pack es solo la forma en que lo compraron. Entran{" "}
-              {piezas} prendas sueltas al inventario y se venden por separado.
+              Entran {piezas} prendas sueltas al inventario y se venden por
+              separado, aunque las hayan comprado juntas.
             </p>
           )}
         </div>
@@ -558,9 +608,28 @@ export default function Formulario({
             })}
           </div>
 
+          {/* Doce del mismo color eran doce toques. El atajo sale solo cuando
+              ya hay un color elegido y queda gente por repartir: ahí no hay
+              duda de dónde va el resto. */}
+          {faltan > 0 && Object.keys(asignado).length === 1 && (
+            <button
+              type="button"
+              onClick={() =>
+                setAsignado((prev) => {
+                  const [unico] = Object.keys(prev);
+                  return { ...prev, [unico]: (prev[unico] ?? 0) + faltan };
+                })
+              }
+              className="mt-2 block text-sm text-marron-hondo underline-offset-4 hover:underline"
+            >
+              Poner {faltan === 1 ? "la restante" : `las ${faltan} restantes`} en{" "}
+              {Object.keys(asignado)[0]}
+            </button>
+          )}
+
           {piezas > 1 && (
             <p className="mt-2 text-xs text-tinta-suave">
-              Toca un color una vez por cada pieza de ese color. Si vienen dos
+              Toca un color una vez por cada prenda de ese color. Si vienen dos
               negros y un blanco, toca Negro dos veces y Blanco una.
             </p>
           )}
@@ -571,7 +640,7 @@ export default function Formulario({
             <label htmlFor="pagado" className="mb-2 block text-sm text-tinta-suave">
               Precio pagado
               {piezas > 1 && (
-                <span className="text-tinta-suave/60"> por el pack</span>
+                <span className="text-tinta-suave/60"> por las {piezas}</span>
               )}
             </label>
             <input

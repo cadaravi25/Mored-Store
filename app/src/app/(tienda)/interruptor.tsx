@@ -20,7 +20,7 @@ export default function Interruptor() {
   if (!tasa) return null;
 
   const opciones: { id: Moneda; texto: string }[] = [
-    { id: "eur", texto: "€" },
+    { id: "eur", texto: "$" },
     { id: "bs", texto: "Bs" },
   ];
 
@@ -39,10 +39,8 @@ export default function Interruptor() {
             aria-pressed={moneda === o.id}
             title={
               o.id === "eur"
-                ? "Precios en euros"
-                : `Precios en bolívares, a ${tasa.toLocaleString("es-VE", {
-                    maximumFractionDigits: 2,
-                  })} por euro`
+                ? "Precios en dólares"
+                : "Precios en bolívares, a la tasa del BCV del día"
             }
             className={`px-3.5 py-1.5 text-[13px] transition-colors ${
               moneda === o.id

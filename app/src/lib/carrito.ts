@@ -116,7 +116,7 @@ export function baseBsCarrito(items: ItemCarrito[]): number {
 
 const dinero = new Intl.NumberFormat("es-VE", {
   style: "currency",
-  currency: "EUR",
+  currency: "USD",
 });
 
 /** El mensaje que llega al WhatsApp de la tienda. */

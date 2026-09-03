@@ -71,11 +71,11 @@ export interface Tarjeta {
 
 export const ORDEN_TALLAS = ["XS", "S", "M", "L", "XL", "XXL"];
 
-/** Los precios de la tienda son euros. La columna se llama precio_usd por
+/** Los precios de la tienda se enseñan en dólares. La columna se llama así por
  *  herencia del esquema inicial, pero nunca tuvo dólares dentro. */
 export const dinero = new Intl.NumberFormat("es-VE", {
   style: "currency",
-  currency: "EUR",
+  currency: "USD",
 });
 
 /**

@@ -30,7 +30,7 @@ export interface FilaOrden {
 
 const eur = new Intl.NumberFormat("es-VE", {
   style: "currency",
-  currency: "EUR",
+  currency: "USD",
 });
 
 const cuando = new Intl.DateTimeFormat("es-VE", {

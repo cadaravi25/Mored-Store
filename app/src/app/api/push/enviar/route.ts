@@ -25,7 +25,7 @@ const SECRETO = process.env.PUSH_SECRETO;
 
 const eur = new Intl.NumberFormat("es-VE", {
   style: "currency",
-  currency: "EUR",
+  currency: "USD",
 });
 
 export async function POST(peticion: Request) {

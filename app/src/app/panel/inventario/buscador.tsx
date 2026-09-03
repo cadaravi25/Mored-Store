@@ -32,10 +32,24 @@ interface Variante {
 
 const ORDEN_TALLAS = ["XS", "S", "M", "L", "XL", "XXL"];
 
-// Los precios de la tienda son euros pese al nombre de la columna.
+/** Un resultado de la lista es un producto en un color, con sus tallas dentro.
+ *  La misma cuenta sirve para agrupar y para decir cuántas hay en cada
+ *  colección, así que la clave se escribe una sola vez. */
+const claveGrupo = (v: Variante) => v.producto_id + "|" + v.color_nombre;
+
+/** Active y Swim son las dos únicas que acepta la base. Van escritas y no
+ *  sacadas de los resultados: que una colección esté vacía hoy es justo lo
+ *  que hay que poder ver, no un botón que desaparece. */
+const COLECCIONES = [
+  { id: "", nombre: "Todo" },
+  { id: "active", nombre: "Active" },
+  { id: "swim", nombre: "Swim" },
+] as const;
+
+// Los precios de la tienda se enseñan en dólares, igual que la columna.
 const dinero = new Intl.NumberFormat("es-VE", {
   style: "currency",
-  currency: "EUR",
+  currency: "USD",
 });
 
 /** Desplegable nativo: en el teléfono abre el selector del sistema, que es
@@ -75,6 +89,7 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
   const [termino, setTermino] = useState("");
   const [resultados, setResultados] = useState<Variante[]>([]);
   const [cargando, setCargando] = useState(true);
+  const [coleccion, setColeccion] = useState("");
   const [color, setColor] = useState("");
   const [talla, setTalla] = useState("");
   const [estilo, setEstilo] = useState("");
@@ -116,7 +131,10 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
     };
   }, [resultados]);
 
-  const visibles = useMemo(
+  // Todo menos la colección. Se separa para que las cuentas de Active y Swim
+  // no se cuenten a sí mismas: al pararse en Swim hay que seguir viendo
+  // cuántas hay en Active, o el botón no dice nada.
+  const filtradas = useMemo(
     () =>
       resultados.filter(
         (v) =>
@@ -127,12 +145,27 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
     [resultados, color, talla, estilo],
   );
 
+  const visibles = useMemo(
+    () =>
+      coleccion ? filtradas.filter((v) => v.coleccion === coleccion) : filtradas,
+    [filtradas, coleccion],
+  );
+
+  const cuenta = useMemo(() => {
+    const cuantas = (lista: Variante[]) => new Set(lista.map(claveGrupo)).size;
+    return {
+      "": cuantas(filtradas),
+      active: cuantas(filtradas.filter((v) => v.coleccion === "active")),
+      swim: cuantas(filtradas.filter((v) => v.coleccion === "swim")),
+    } as Record<string, number>;
+  }, [filtradas]);
+
   // Agrupado por producto y color: es como preguntan las clientas. "El top
   // blanco, ¿en qué tallas lo tienes?"
   const grupos = useMemo(() => {
     const mapa = new Map<string, { v: Variante; tallas: Variante[] }>();
     for (const v of visibles) {
-      const clave = v.producto_id + "|" + v.color_nombre;
+      const clave = claveGrupo(v);
       if (!mapa.has(clave)) mapa.set(clave, { v, tallas: [] });
       mapa.get(clave)!.tallas.push(v);
     }
@@ -178,7 +211,7 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [base, orden]);
 
-  const hayFiltro = Boolean(color || talla || estilo || soloSinFoto);
+  const hayFiltro = Boolean(coleccion || color || talla || estilo || soloSinFoto);
 
   return (
     <div className="space-y-4">
@@ -191,6 +224,40 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
         spellCheck={false}
         className="w-full rounded-xl border border-borde bg-crema-alto px-4 py-3.5 text-base outline-none placeholder:text-tinta-suave/50 focus:border-marron"
       />
+
+      {/* La colección es el corte más grueso del inventario: Active y Swim se
+          compran, se cuentan y se venden aparte aunque compartan panel. Va
+          antes que los demás filtros porque es lo primero que se elige. */}
+      <div className="flex gap-2">
+        {COLECCIONES.map((c) => (
+          <button
+            key={c.id}
+            type="button"
+            onClick={() => setColeccion(c.id)}
+            aria-pressed={coleccion === c.id}
+            className={`flex-1 rounded-full border px-4 py-2.5 text-sm transition-colors ${
+              coleccion === c.id
+                ? "border-marron bg-marron text-crema-alto"
+                : "border-borde bg-crema-alto text-tinta"
+            }`}
+          >
+            {c.nombre}
+            {/* Mientras busca no hay número: un "Active 0" antes de que llegue
+                la respuesta se lee como que no hay nada, y es mentira.
+                El tono es el mismo de la etiqueta cuando el botón está puesto;
+                bajarle la opacidad lo dejaba en 2,3:1 contra el marrón. */}
+            {!cargando && (
+              <span
+                className={`ml-1.5 ${
+                  coleccion === c.id ? "text-crema-alto" : "text-tinta-suave"
+                }`}
+              >
+                {cuenta[c.id]}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
 
       <div className="flex gap-2">
         <Selector etiqueta="Color" opciones={opciones.colores} valor={color} onChange={setColor} />
@@ -246,6 +313,7 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
           <button
             type="button"
             onClick={() => {
+              setColeccion("");
               setColor("");
               setTalla("");
               setEstilo("");
@@ -287,8 +355,14 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
             />
 
             <div className="min-w-0 flex-1">
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
+              {/* En el teléfono el nombre y el precio no caben en el mismo
+                  renglón: el precio pesa cuarenta caracteres y dejaba al
+                  nombre sin un pixel donde escribirse, así que la prenda se
+                  reconocía solo por el color. Partidos en dos renglones caben
+                  los dos. De sm en adelante sobra sitio y siguen lado a lado
+                  como estaban. */}
+              <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-1.5">
+                <div className="min-w-0 flex-1">
                   <p className="truncate text-tinta">{v.producto_nombre}</p>
                   <p
                     className={`mt-0.5 text-sm ${
@@ -343,8 +417,11 @@ export default function Buscador({ tasa }: { tasa: number | null }) {
                     />
                   </div>
                 </div>
-                <div className="shrink-0 text-right">
-                  <span className="text-sm tabular-nums text-tinta-suave">
+                <div className="w-full text-left sm:w-auto sm:shrink-0 sm:text-right">
+                  {/* En bloque y no en línea: pegado al de abajo se leía
+                      "EUR 20,00EUR 20,00 en divisas", dos precios sin nada
+                      que los separe. Pasaba en el teléfono y en el escritorio. */}
+                  <span className="block text-sm tabular-nums text-tinta-suave">
                     {dinero.format(v.precio_usd)}
                   </span>
                   <Precios

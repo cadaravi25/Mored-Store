@@ -44,9 +44,9 @@ const METODOS: { id: string; nombre: string; moneda: "USD" | "BS" }[] = [
   { id: "punto", nombre: "Punto", moneda: "BS" },
 ];
 
-// Los precios de la tienda son euros. La columna se llama precio_usd por
+// Los precios de la tienda se enseñan en dólares. La columna se llama así por
 // herencia del esquema inicial, pero nunca tuvo dólares dentro.
-const usd = new Intl.NumberFormat("es-VE", { style: "currency", currency: "EUR" });
+const usd = new Intl.NumberFormat("es-VE", { style: "currency", currency: "USD" });
 const bs = new Intl.NumberFormat("es-VE", { maximumFractionDigits: 2 });
 
 export default function PuntoDeVenta({ tasaInicial }: { tasaInicial: number | null }) {

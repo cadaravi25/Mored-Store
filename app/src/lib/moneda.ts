@@ -6,9 +6,14 @@
  * eso el interruptor no es una comodidad, es parte del precio, y tiene que
  * estar siempre a la vista.
  *
- * Los dos precios se guardan en euros. El de bolívares se multiplica por la
- * tasa del BCV del día, que llega desde el servidor: si se guardaran bolívares
- * ya calculados, el número caducaría cada mañana.
+ * El precio en divisas se enseña en dólares, que es como cobran.
+ *
+ * El de bolívares NO sale de convertir ese dólar: es su propio número, y se
+ * multiplica por la tasa del BCV del EURO, no la del dólar. Suena raro escrito
+ * y por eso queda escrito: los montos en bolívares que ya están puestos están
+ * calibrados contra la tasa del euro, y cambiarla por la del dólar les bajaría
+ * el precio a todos de golpe. La tasa llega desde el servidor porque si se
+ * guardaran bolívares ya calculados, el número caducaría cada mañana.
  */
 
 export type Moneda = "eur" | "bs";
@@ -35,9 +40,9 @@ export function ponerMoneda(m: Moneda) {
   window.dispatchEvent(new CustomEvent("moneda"));
 }
 
-const euros = new Intl.NumberFormat("es-VE", {
+const divisas = new Intl.NumberFormat("es-VE", {
   style: "currency",
-  currency: "EUR",
+  currency: "USD",
 });
 
 const bolivares = new Intl.NumberFormat("es-VE", {
@@ -60,5 +65,5 @@ export function precioVisible(
   if (moneda === "bs" && tasa) {
     return `Bs ${bolivares.format(Number(precioBsBase) * tasa)}`;
   }
-  return euros.format(Number(precioEur));
+  return divisas.format(Number(precioEur));
 }
