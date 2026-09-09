@@ -45,7 +45,7 @@ const ITEMS: Item[] = [
   },
   {
     href: "/panel/recibir",
-    etiqueta: "Recibir",
+    etiqueta: "Cargar",
     icono: (
       <svg viewBox="0 0 24 24" {...trazo}>
         <path d="M21 8v11a2 2 0 01-2 2H5a2 2 0 01-2-2V8" />

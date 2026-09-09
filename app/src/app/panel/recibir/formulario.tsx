@@ -318,7 +318,7 @@ export default function Formulario({
             <span className="block text-xs text-tinta-suave">
               Saca las prendas, colores y tallas. Los precios se escriben a mano.
             </span>
-            {/* Un icono de imagen arriba de "Recibir" se lee como "subir la
+            {/* Un icono de imagen arriba de "Cargar" se lee como "subir la
                 foto de la prenda". Se subía la prenda, el lector no encontraba
                 ningún pedido y parecía que la pantalla no dejaba. Decirlo aquí
                 sale más barato que explicarlo cada vez. */}

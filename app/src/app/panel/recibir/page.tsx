@@ -4,7 +4,7 @@ import Formulario, { type Tipo, type Color, type Estilo } from "./formulario";
 
 export const dynamic = "force-dynamic";
 
-export default async function Recibir() {
+export default async function Cargar() {
   const supabase = await crearClienteServidor();
 
   const {
@@ -35,9 +35,9 @@ export default async function Recibir() {
     <main className="mx-auto w-full max-w-lg px-4 pb-32 pt-6">
       <header className="mb-6 flex items-baseline justify-between gap-4">
         <div>
-          <h1 className="text-2xl text-tinta">Recibir</h1>
+          <h1 className="text-2xl text-tinta">Cargar</h1>
           <p className="mt-1 text-sm text-tinta-suave">
-            Carga lo que llegó en esta caja
+            Lo que llegó en esta caja
           </p>
         </div>
         
